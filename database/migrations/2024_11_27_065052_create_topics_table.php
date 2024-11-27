@@ -13,6 +13,30 @@ return new class extends Migration
     {
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_minuta')
+                ->references('id')->on('minutas')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->timestamps();
+        });
+
+        Schema::create('decisions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('id_topics')
+                ->references('id')->on('topics')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->longText('description');
+            $table->timestamps();
+        });
+
+        Schema::create('elements_action', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('id_topics')
+                ->references('id')->on('topics')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->longText('description');
             $table->timestamps();
         });
     }
@@ -22,6 +46,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('decisions');
+        Schema::dropIfExists('elements_action');
         Schema::dropIfExists('topics');
     }
 };

@@ -25,16 +25,15 @@ return new class extends Migration
 
         Schema::create('attendance', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_project')
-                ->references('id')->on('projects')
+            $table->foreignId('id_minuta')
+                ->references('id')->on('minutas')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->foreignId('created_by')
+            $table->foreignId('id_user')
                 ->references('id')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->dateTime('date');
-            $table->longText('direction');
+            $table->enum('status',['Confirmado','Justificado','Ausente']);
             $table->timestamps();
         });
     }
@@ -42,5 +41,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('minutas');
+        Schema::dropIfExists('attendance');
     }
 };
