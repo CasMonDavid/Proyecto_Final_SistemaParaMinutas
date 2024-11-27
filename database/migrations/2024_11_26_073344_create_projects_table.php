@@ -22,6 +22,20 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
+
+        Schema::create('user_project', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('id_user')
+                ->references('id')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->foreignId('id_proyect')
+                ->references('id')->on('projects')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->string('role');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -30,5 +44,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('projects');
+        Schema::dropIfExists('user_project');
     }
 };
