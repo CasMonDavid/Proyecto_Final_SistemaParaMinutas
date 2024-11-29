@@ -30,7 +30,7 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
           <div class="container-fluid pe-0">
-            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="../pages/dashboard.html">
+            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="/home">
               Riondave - Minutas
             </a>
             <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,23 +71,26 @@
                   <p class="mb-0">Ingresa tu email y tu contraseña para iniciar sesión</p>
                 </div>
                 <div class="card-body">
-                  <form role="form">
+
+                  <form action="/home" method="POST">
+                  @csrf <!-- Token de seguridad -->
                     <label>Email</label>
                     <div class="mb-3">
-                      <input type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
+                      <input type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon" required>
                     </div>
                     <label>Contraseña</label>
                     <div class="mb-3">
-                      <input type="email" class="form-control" placeholder="Contraseña" aria-label="Password" aria-describedby="password-addon">
+                      <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password" aria-describedby="password-addon" required>
                     </div>
                     <div class="form-check form-switch">
                       <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
                       <label class="form-check-label" for="rememberMe">Recordarme</label>
                     </div>
                     <div class="text-center">
-                      <button type="button" class="btn bg-gradient-info w-100 mt-4 mb-0">Iniciar sesión</button>
+                      <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Iniciar sesión</button>
                     </div>
                   </form>
+
                 </div>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-4 text-sm mx-auto">
@@ -159,10 +162,10 @@
   </footer>
   <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="{{asset('/assets/js/core/popper.min.js')}}"></script>
+  <script src="{{asset('/assets/js/core/bootstrap.min.js')}}"></script>
+  <script src="{{asset('/assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
+  <script src="{{asset('/assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
