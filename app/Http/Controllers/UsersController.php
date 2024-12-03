@@ -11,11 +11,11 @@ use App\Models\User;
 class UsersController extends Controller
 {
 
-    public function add(Request $request){
+    public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:100|unique:App\Models\User,email',
-            'password' => 'required|string|min:5',
+            'email' => 'required|email|max:255|unique:App\Models\User,email',
+            'password' => 'required|string|min:5|max:255',
             'birthday' => 'required|date',
         ]);
     
@@ -37,25 +37,36 @@ class UsersController extends Controller
                 'user' => $user,
             ], 201);
         } else {
-            return view('user.home', compact('user'));
+            return redirect()->route('user.index');
         }
     }
 
-    public function details(Request $request){
-        return "Hola soy details";
+    public function destroy(User $user_id){
+        $user_id->delete();
+        return true;
     }
 
-    public function delete(Request $request){
-        return "Hola soy deleteUser";
+    public function update(Request $request, User $user_id){  
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => "required|email|max:255|unique:App\Models\User,email,{$user_id->id}",
+            'password' => 'required|string|min:5|max:255',
+            'birthday' => 'required|date',
+        ]);
+
+        $user_id->update($request->all());
+
+        return redirect()->route('user.show', $user_id->id);
     }
 
-    public function get(Request $request){
-        return "Hola soy get";
+    public function show(int $user_id){
+        $user = User::find($user_id);
+        return $user;
     }
 
-    public function getAll(Request $request){
+    public function index(){
         $users = User::all();
-
         return $users;
     }
 }

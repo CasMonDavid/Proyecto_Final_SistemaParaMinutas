@@ -5,6 +5,9 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 
+// UTILICEN EL COMANDO: php artisan r:l
+// ESTO LES PERMITIRA VER LAS RUTAS EN SU TOTALIDAD
+
 Route::redirect('/', '/login');
 
 /*Route::get('/', function () {
@@ -19,10 +22,6 @@ Route::post('/home', function() {
     return view('dashboard');
 });
 
-Route::get('/user', function () {
-    return 'Hola mundo';
-});
-
 //Controladores para front de laravel
 // AUTENTICACIÓN
 Route::get('/auth', [AuthController::class, 'getUser']);
@@ -30,13 +29,13 @@ Route::post('/auth', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 // USUARIOS
-Route::post('/user', [UsersController::class, 'add']);
+Route::resource('usuarios', UsersController::class)
+    ->parameters(['usuarios' => 'user_id'])
+    ->names('user');
 
 //RUTAS PARA PRUENAS POSTMAN ( ELIMINAR AL FINALIZAR )
 Route::get('/token', function (Request $request) {
     $token = $request->session()->token();
- 
     $token = csrf_token();
- 
-    return "token, hola: ".$token;
+    return "token: ".$token;
 });
