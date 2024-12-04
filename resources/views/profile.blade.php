@@ -313,7 +313,7 @@
                 <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 me-4">
                   <div class="card h-100 card-plain border">
                     <div class="card-body d-flex flex-column justify-content-center text-center">
-                      <a href="javascript:;">
+                      <a href="/addproject">
                         <i class="fa fa-plus text-secondary mb-3"></i>
                         <h5 class="text-secondary"> Nuevo proyecto </h5>
                       </a>
