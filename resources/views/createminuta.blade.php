@@ -167,7 +167,7 @@
       <div class="row">
         
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/create-minuta'">
+          <div class="card h-100 cursor-pointer">
             <span class="mask bg-white opacity-10 border-radius-lg"></span>
             <div class="card-body p-3 position-relative">
               <div class="row h-100 d-flex justify-content-center align-items-center">
@@ -180,7 +180,7 @@
         </div>
         
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/minuta'">
+          <div class="card h-100 cursor-pointer">
             <span class="mask bg-dark opacity-10 border-radius-lg"></span>
             <div class="card-body p-3 position-relative">
               <div class="row">
@@ -211,7 +211,7 @@
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/minuta'">
+          <div class="card h-100 cursor-pointer">
             <span class="mask bg-dark opacity-10 border-radius-lg"></span>
             <div class="card-body p-3 position-relative">
               <div class="row">
@@ -242,8 +242,8 @@
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/minuta'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></spa>
+          <div class="card h-100 cursor-pointer">
+            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
             <div class="card-body p-3 position-relative">
               <div class="row">
                 <div class="col-8 text-start">
@@ -275,7 +275,7 @@
         <!-- Segunda fila (de ejemplo (Se acomodan sola en otra fila cuando son mas de 4)) -->
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/minuta'">
+          <div class="card h-100 cursor-pointer">
             <span class="mask bg-dark opacity-10 border-radius-lg"></span>
             <div class="card-body p-3 position-relative">
               <div class="row">
@@ -306,7 +306,7 @@
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/minuta'">
+          <div class="card h-100 cursor-pointer">
             <span class="mask bg-dark opacity-10 border-radius-lg"></span>
             <div class="card-body p-3 position-relative">
               <div class="row">
@@ -337,7 +337,7 @@
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/minuta'">
+          <div class="card h-100 cursor-pointer">
             <span class="mask bg-dark opacity-10 border-radius-lg"></span>
             <div class="card-body p-3 position-relative">
               <div class="row">
@@ -368,7 +368,7 @@
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/minuta'">
+          <div class="card h-100 cursor-pointer">
             <span class="mask bg-dark opacity-10 border-radius-lg"></span>
             <div class="card-body p-3 position-relative">
               <div class="row">

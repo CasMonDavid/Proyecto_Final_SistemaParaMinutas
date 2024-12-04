@@ -32,6 +32,14 @@ Route::get('/home', function() {
     return view('dashboard');
 });
 
+Route::get('/minuta', function() {
+    return view('minuta');
+});
+
+Route::get('/create-minuta', function() {
+    return view('createminuta');
+});
+
 Route::get('/project', function() {
     return view('project');
 });
