@@ -22,6 +22,22 @@ Route::post('/home', function() {
     return view('dashboard');
 });
 
+Route::get('/project', function() {
+    return view('project');
+});
+
+Route::get('/addproject', function() {
+    return view('addproject');
+});
+
+Route::get('/profile', function() {
+    return view('profile');
+});
+
+Route::get('/users', function() {
+    return view('users');
+});
+
 //Controladores para front de laravel
 // AUTENTICACIÓN
 Route::get('/auth', [AuthController::class, 'getUser']);
