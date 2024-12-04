@@ -21,6 +21,19 @@
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+
+  <style>
+    #addTopicButton {
+      background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+      color: #000; /* Texto negro */
+      border-radius: 50px; /* Bordes redondeados */
+      transition: all 0.3s ease; /* Suavizar hover */
+    }
+    #addTopicButton:hover {
+      background-color: rgba(255, 255, 255, 1); /* Fondo sólido al pasar el mouse */
+      transform: scale(1.05); /* Efecto de zoom */
+    }
+  </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -153,6 +166,26 @@
             <option value="activo">Activo</option>
             <option value="Inactivo">Inactivo</option>
           </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="adduser" class="form-label">Agregar usuario</label>
+          <select class="form-select" id="adduser" required>
+            <option value="" disabled selected>Selecciona el usuario</option>
+            <option value="activo">Usuario 1</option>
+            <option value="Inactivo">Usuario n</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="rol" class="form-label">Rol</label>
+          <input type="text" class="form-control" id="rol" placeholder="Rol del usuario" required>
+        </div>
+
+        <div class="d-flex">
+          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+            <i class="bi bi-plus-circle"></i> Agregar otro usuario
+          </button>
         </div>
         
         <!-- Submit Button -->
