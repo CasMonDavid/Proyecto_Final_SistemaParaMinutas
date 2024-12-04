@@ -25,4 +25,10 @@ class User extends Authenticatable
             },
         );
     }
+
+    public function projects(){
+        return $this->belongsToMany(Project::class, 'user_project', 'user_id', 'project_id')
+            ->withPivot('role')
+            ->withTimestamps();
+    }
 }

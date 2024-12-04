@@ -13,27 +13,34 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        
         $userUno = new User();
-        $userDos = new User();
-        $userTres = new User();
-
         $userUno->name =  'David Alejandro';
         $userUno->email = 'david@gmail.com';
         $userUno->password = bcrypt('123456789');
         $userUno->birthday = '2003-08-20';
-
-        $userDos->name =  'Israel Antonio';
-        $userDos->email = 'israel@gmail.com';
+        $userUno->save();
+        
+        $userDos = new User();
+        $userDos->name =  'Angel Ivan';
+        $userDos->email = 'ivan@gmail.com';
         $userDos->password = bcrypt('123456789');
         $userDos->birthday = '2003-05-01';
-
+        $userDos->save();
+        
+        $userTres = new User();
         $userTres->name =  'Miguel Angel';
-        $userTres->email = 'angel@gmail.com';
+        $userTres->email = 'miguel@gmail.com';
         $userTres->password = bcrypt('123456789');
         $userTres->birthday = '2003-11-27';
-
-        $userUno->save();
-        $userDos->save();
         $userTres->save();
+
+        $userCuatro = new User();
+        $userCuatro->name =  'John Carlos';
+        $userCuatro->email = 'john@gmail.com';
+        $userCuatro->password = bcrypt('123456789');
+        $userCuatro->birthday = '2003-11-27';
+        $userCuatro->save();
+
     }
 }

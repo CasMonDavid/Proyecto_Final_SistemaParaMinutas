@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProjectsController;
 use Illuminate\Http\Request;
 
 // UTILICEN EL COMANDO: php artisan r:l
@@ -70,6 +71,11 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::resource('usuarios', UsersController::class)
     ->parameters(['usuarios' => 'user_id'])
     ->names('user');
+
+// PROYECTOS
+Route::resource('proyectos', ProjectsController::class)
+    ->parameters(['proyectos' => 'project_id'])
+    ->names('projects');
 
 //RUTAS PARA PRUENAS POSTMAN ( ELIMINAR AL FINALIZAR )
 Route::get('/token', function (Request $request) {

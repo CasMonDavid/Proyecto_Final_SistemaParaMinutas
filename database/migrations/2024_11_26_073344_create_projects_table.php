@@ -22,11 +22,11 @@ return new class extends Migration
 
         Schema::create('user_project', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_user')
+            $table->foreignId('user_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->foreignId('id_proyect')
+            $table->foreignId('project_id')
                 ->references('id')->on('projects')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
