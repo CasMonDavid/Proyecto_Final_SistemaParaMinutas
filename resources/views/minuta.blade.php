@@ -198,15 +198,35 @@
               <label for="lugar" class="form-label">Lugar</label>
               <input type="text" class="form-control" id="lugar" placeholder="Ingresa el lugar" required>
             </div>
-            <!-- Asistencia -->
+
             <div class="mb-3">
-              <label for="asistencia" class="form-label">Asistentes</label>
-              <input type="text" class="form-control" id="asistencia" placeholder="Asistentes" required>
+              <label for="asistencia" class="form-label">Asistencia</label>
+              <select class="form-select" id="asistencia" required>
+                <option value="" disabled selected>Elige una opción</option>
+                <option value="activo">Usuario 1</option>
+                <option value="Inactivo">Usuario n</option>
+              </select>
             </div>
-             <!-- ausente -->
+
+            <div class="d-flex">
+              <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+                <i class="bi bi-plus-circle"></i> Agregar otra asistencia
+              </button>
+            </div>
+
             <div class="mb-3">
-              <label for="ausente" class="form-label">Ausente</label>
-              <input type="text" class="form-control" id="ausente" placeholder="Ausente" required>
+              <label for="ausencia" class="form-label">Ausencia</label>
+              <select class="form-select" id="ausencia" required>
+                <option value="" disabled selected>Elige una opción</option>
+                <option value="activo">Usuario 1</option>
+                <option value="Inactivo">Usuario n</option>
+              </select>
+            </div>
+
+            <div class="d-flex">
+              <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+                <i class="bi bi-plus-circle"></i> Agregar otra ausencia
+              </button>
             </div>
 
             <!-- tema -->

@@ -158,12 +158,9 @@
         <div class="card-body p-3 position-relative">
           <div class="row">
             <div class="col-8 text-start">
-              <h5 
-              class="bg-transparent border-0 text-white font-weight-bolder mb-0 mt-3" 
-              contenteditable="true" 
-              spellcheck="false">
-              Nombre de la minuta
-            </h5>
+              <h5 class="text-white">
+              Crear minuta
+              </h5>
 
               <span class="text-white text-sm">Nombre del proyecto</span>
             </div>
@@ -187,6 +184,12 @@
       <!-- formulario -->
       
       <form action="/project">
+
+        <!-- nombre -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre de la minuta</label>
+          <input type="text" class="form-control" id="name" placeholder="Nombre de la minuta" required>
+        </div>
         <!-- fecha -->
         <div class="mb-3">
           <label for="fecha" class="form-label">Fecha</label>
@@ -202,17 +205,36 @@
           <label for="lugar" class="form-label">Lugar</label>
           <input type="text" class="form-control" id="lugar" placeholder="Ingresa el lugar" required>
         </div>
-        <!-- Asistencia -->
+
         <div class="mb-3">
-          <label for="asistencia" class="form-label">Asistentes</label>
-          <input type="text" class="form-control" id="asistencia" placeholder="Asistentes" required>
-        </div>
-         <!-- ausente -->
-        <div class="mb-3">
-          <label for="ausente" class="form-label">Ausente</label>
-          <input type="text" class="form-control" id="ausente" placeholder="Ausente" required>
+          <label for="asistencia" class="form-label">Asistencia</label>
+          <select class="form-select" id="asistencia" required>
+            <option value="" disabled selected>Elige una opción</option>
+            <option value="activo">Usuario 1</option>
+            <option value="Inactivo">Usuario n</option>
+          </select>
         </div>
 
+        <div class="d-flex">
+          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+            <i class="bi bi-plus-circle"></i> Agregar otra asistencia
+          </button>
+        </div>
+
+        <div class="mb-3">
+          <label for="ausencia" class="form-label">Ausencia</label>
+          <select class="form-select" id="ausencia" required>
+            <option value="" disabled selected>Elige una opción</option>
+            <option value="activo">Usuario 1</option>
+            <option value="Inactivo">Usuario n</option>
+          </select>
+        </div>
+
+        <div class="d-flex">
+          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+            <i class="bi bi-plus-circle"></i> Agregar otra ausencia
+          </button>
+        </div>
         <!-- tema -->
         <div class="mb-3"> <!-- Para el front este se debe de repetir n veces -->
           <label for="decisiones" class="form-label">Tema numero n</label>
