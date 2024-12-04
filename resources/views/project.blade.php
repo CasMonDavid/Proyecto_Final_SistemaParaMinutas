@@ -36,7 +36,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <l class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link  active" href="../pages/dashboard.html">
+          <a class="nav-link" href="/home">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>shop </title>
@@ -56,7 +56,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/tables.html">
+          <a class="nav-link  " href="/users">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -79,7 +79,7 @@
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Cuenta</h6>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/profile.html">
+          <a class="nav-link  " href="profile">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>customer-support</title>
@@ -117,7 +117,6 @@
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Proyectos</li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Minutas</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Proyectos</h6>
         </nav>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
@@ -132,7 +131,37 @@
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-    <h6>Proyectos</h6>
+
+    <div class="col-lg-12 col-md-12 col-sm- col-12 mb-4">
+      <div class="card h-100 cursor-pointer">
+        <span class="mask bg-primary opacity-10 border-radius-lg"></span>
+        <div class="card-body p-3 position-relative">
+          <div class="row">
+            <div class="col-8 text-start">
+              <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                Nombre del proyecto
+              </h5>
+              <span class="text-white text-sm">Creador del proyecto</span>
+            </div>
+            <div class="col-4">
+              <div class="dropstart text-end mb-6">
+                <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fa fa-ellipsis-h text-white"></i>
+                </a>
+                <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
+                  <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
+                  <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
+                  <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
+                </ul>
+              </div>
+              <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">Fecha de creacion</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h6>Minutas</h6>
 
       <!-- Cartas -->
       <div class="row">
@@ -160,9 +189,8 @@
                     <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
                   </div>
                   <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Nombre del proyecto
+                    Nombre de la minuta
                   </h5>
-                  <span class="text-white text-sm">Creador del proyecto</span>
                 </div>
                 <div class="col-4">
                   <div class="dropstart text-end mb-6">
@@ -194,7 +222,6 @@
                   <h5 class="text-white font-weight-bolder mb-0 mt-3">
                     Minuta Microsoft
                   </h5>
-                  <span class="text-white text-sm">Microsoft Company</span>
                 </div>
                 <div class="col-4">
                   <div class="dropstart text-end mb-6">
@@ -226,7 +253,6 @@
                   <h5 class="text-white font-weight-bolder mb-0 mt-3">
                     Minuta Microsoft
                   </h5>
-                  <span class="text-white text-sm">Microsoft Company</span>
                 </div>
                 <div class="col-4">
                   <div class="dropstart text-end mb-6">
@@ -260,7 +286,6 @@
                   <h5 class="text-white font-weight-bolder mb-0 mt-3">
                     Minuta Microsoft
                   </h5>
-                  <span class="text-white text-sm">Microsoft Company</span>
                 </div>
                 <div class="col-4">
                   <div class="dropstart text-end mb-6">
@@ -292,7 +317,6 @@
                   <h5 class="text-white font-weight-bolder mb-0 mt-3">
                     Minuta Microsoft
                   </h5>
-                  <span class="text-white text-sm">Microsoft Company</span>
                 </div>
                 <div class="col-4">
                   <div class="dropstart text-end mb-6">
@@ -324,7 +348,6 @@
                   <h5 class="text-white font-weight-bolder mb-0 mt-3">
                     Minuta Microsoft
                   </h5>
-                  <span class="text-white text-sm">Microsoft Company</span>
                 </div>
                 <div class="col-4">
                   <div class="dropstart text-end mb-6">
@@ -356,7 +379,6 @@
                   <h5 class="text-white font-weight-bolder mb-0 mt-3">
                     Minuta Microsoft
                   </h5>
-                  <span class="text-white text-sm">Microsoft Company</span>
                 </div>
                 <div class="col-4">
                   <div class="dropstart text-end mb-6">
@@ -378,51 +400,6 @@
 
       </div>
       <!-- Final de las cartas -->
-
-      <div class="row mt-4">
-        <div class="col-lg-7 mb-lg-0 mb-4">
-          <div class="card">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="d-flex flex-column h-100">
-                    <p class="mb-1 pt-2 text-bold">Impulsa tu empresa</p>
-                    <h5 class="font-weight-bolder">Software administrativos</h5>
-                    <p class="mb-5">Descubre los mejores software administrativos para gestionar tu negocio.</p>
-                    <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" target="_blank" href="https://www.holded.com/es/blog/software-administrativo">
-                      Leer mas
-                      <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
-                    </a>
-                  </div>
-                </div>
-                <div class="col-lg-5 ms-auto text-center mt-5 mt-lg-0">
-                  <div class="bg-primary border-radius-lg h-100">
-                    <img src="../assets/img/shapes/waves-white.svg" class="position-absolute h-100 w-50 top-0 d-lg-block d-none" alt="waves">
-                    <div class="position-relative d-flex align-items-center justify-content-center h-100">
-                      <img class="w-100 position-relative z-index-2 pt-4" src="../assets/img/illustrations/rocket-white.png" alt="rocket">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-5">
-          <div class="card h-100 p-3">
-            <div class="overflow-hidden position-relative border-radius-lg bg-cover h-100" style="background-image: url('../assets/img/ivancik.jpg');">
-              <span class="mask bg-gradient-dark"></span>
-              <div class="card-body position-relative z-index-1 d-flex flex-column h-100 p-3">
-                <h5 class="text-white font-weight-bolder mb-4 pt-2">Mejorar minutas</h5>
-                <p class="text-white">Puedes usar de inspiracion minutas ya realizadas en la pagina de Microsoft.</p>
-                <a class="text-white text-sm font-weight-bold mb-0 icon-move-right mt-auto" target="_blank" href="https://create.microsoft.com/es-es/templates/acta">
-                  Ir a Microsoft
-                  <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">

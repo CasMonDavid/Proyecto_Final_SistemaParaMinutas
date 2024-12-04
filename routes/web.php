@@ -18,7 +18,17 @@ Route::get('/login', function () {
     return view('sign-in');
 });
 
-Route::post('/home', function() {
+Route::get('/register', function () {
+    return view('sign-up');
+});
+
+Route::post('/home.post', function() {
+    return view('dashboard');
+});
+
+Route::redirect('/home.post', '/home');
+
+Route::get('/home', function() {
     return view('dashboard');
 });
 
