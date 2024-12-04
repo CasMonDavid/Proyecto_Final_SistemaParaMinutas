@@ -9,6 +9,11 @@
   <title>
     Home
   </title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -21,6 +26,20 @@
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+
+  <style>
+    #addTopicButton {
+      background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+      color: #000; /* Texto negro */
+      border-radius: 50px; /* Bordes redondeados */
+      transition: all 0.3s ease; /* Suavizar hover */
+    }
+    #addTopicButton:hover {
+      background-color: rgba(255, 255, 255, 1); /* Fondo sólido al pasar el mouse */
+      transform: scale(1.05); /* Efecto de zoom */
+    }
+  </style>
+  
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -116,6 +135,7 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Paginas</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Proyectos</li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Minutas</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Nombre de la minuta</li>
           </ol>
         </nav>
           <ul class="navbar-nav  justify-content-end">
@@ -162,10 +182,10 @@
     </div>
       <!-- formulario -->
       
-      <form>
+      <form action="/project">
             <!-- fecha -->
             <div class="mb-3">
-              <label for="fecha" class="form-label">Date</label>
+              <label for="fecha" class="form-label">Fecha</label>
               <input type="date" class="form-control" id="fecha" required>
             </div>
             <!-- Hora -->
@@ -183,23 +203,43 @@
               <label for="asistencia" class="form-label">Asistentes</label>
               <input type="text" class="form-control" id="asistencia" placeholder="Asistentes" required>
             </div>
+             <!-- ausente -->
             <div class="mb-3">
               <label for="ausente" class="form-label">Ausente</label>
               <input type="text" class="form-control" id="ausente" placeholder="Ausente" required>
             </div>
-            <!-- Select -->
-            <div class="mb-3">
-              <label for="options" class="form-label">Select an Option</label>
-              <select class="form-select" id="options" required>
-                <option selected disabled>Choose an option</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-              </select>
+
+            <!-- tema -->
+            <div class="mb-3"> <!-- Para el front este se debe de repetir n veces -->
+              <label for="decisiones" class="form-label">Tema numero n</label>
+              <input type="text" class="form-control mb-3" id="decisiones" placeholder="Decision n" required><!-- Para el front este se debe de repetir n veces igual -->
+              <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+                <i class="bi bi-plus-circle"></i> Decision
+              </button>
+              <input type="text" class="form-control mb-3" id="accion" placeholder="Elemento de accion n" required><!-- Para el front este se debe de repetir n veces igual -->
+              <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+                <i class="bi bi-plus-circle"></i> accion
+              </button>
+              <div class="d-flex">
+                <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+                  <i class="bi bi-plus-circle"></i> Agregar Tema
+                </button>
+              </div>
+
             </div>
+            
             <!-- Submit Button -->
-            <div class="d-grid">
-              <button type="submit" class="btn bg-gradient-dark">Submit</button>
+            <div class="collapse navbar-collapse d-flex" id="navigation">
+              <div class="ms-auto d-flex align-items-center">
+                <li class="nav-item d-flex align-items-center">
+                  <button class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" target="_blank" href="https://create.microsoft.com/es-es/templates/acta">Descargar</button>
+                </li>
+                <ul class="navbar-nav d-lg-block d-none">
+                  <li class="nav-item">
+                    <button type="submit" class="btn btn-lg btn-round mb-0 me-1 bg-gradient-dark">Guardar</button>
+                  </li>
+                </ul>
+              </div>
             </div>
           </form>
 

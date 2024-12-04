@@ -9,6 +9,11 @@
   <title>
     Home
   </title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -21,6 +26,20 @@
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+
+  <style>
+    #addTopicButton {
+      background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+      color: #000; /* Texto negro */
+      border-radius: 50px; /* Bordes redondeados */
+      transition: all 0.3s ease; /* Suavizar hover */
+    }
+    #addTopicButton:hover {
+      background-color: rgba(255, 255, 255, 1); /* Fondo sólido al pasar el mouse */
+      transform: scale(1.05); /* Efecto de zoom */
+    }
+  </style>
+  
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -116,6 +135,7 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Paginas</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Proyectos</li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Minutas</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Crear minuta</li>
           </ol>
         </nav>
           <ul class="navbar-nav  justify-content-end">
@@ -138,10 +158,14 @@
         <div class="card-body p-3 position-relative">
           <div class="row">
             <div class="col-8 text-start">
-              <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                Nombre del proyecto
-              </h5>
-              <span class="text-white text-sm">Creador del proyecto</span>
+              <h5 
+              class="bg-transparent border-0 text-white font-weight-bolder mb-0 mt-3" 
+              contenteditable="true" 
+              spellcheck="false">
+              Nombre de la minuta
+            </h5>
+
+              <span class="text-white text-sm">Nombre del proyecto</span>
             </div>
             <div class="col-4">
               <div class="dropstart text-end mb-6">
@@ -160,246 +184,71 @@
         </div>
       </div>
     </div>
+      <!-- formulario -->
+      
+      <form action="/project">
+        <!-- fecha -->
+        <div class="mb-3">
+          <label for="fecha" class="form-label">Fecha</label>
+          <input type="date" class="form-control" id="fecha" required>
+        </div>
+        <!-- Hora -->
+        <div class="mb-3">
+          <label for="hora" class="form-label">Hora</label>
+          <input type="time" class="form-control" id="hora" required>
+        </div>
+        <!-- Lugar -->
+        <div class="mb-3">
+          <label for="lugar" class="form-label">Lugar</label>
+          <input type="text" class="form-control" id="lugar" placeholder="Ingresa el lugar" required>
+        </div>
+        <!-- Asistencia -->
+        <div class="mb-3">
+          <label for="asistencia" class="form-label">Asistentes</label>
+          <input type="text" class="form-control" id="asistencia" placeholder="Asistentes" required>
+        </div>
+         <!-- ausente -->
+        <div class="mb-3">
+          <label for="ausente" class="form-label">Ausente</label>
+          <input type="text" class="form-control" id="ausente" placeholder="Ausente" required>
+        </div>
 
-    <h6>Minutas</h6>
-
-      <!-- Cartas -->
-      <div class="row">
-        
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-white opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row h-100 d-flex justify-content-center align-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="black" class="bi bi-plus" viewBox="0 0 16 16">
-                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                </svg>
-              </div>
-            </div>
+        <!-- tema -->
+        <div class="mb-3"> <!-- Para el front este se debe de repetir n veces -->
+          <label for="decisiones" class="form-label">Tema numero n</label>
+          <input type="text" class="form-control mb-3" id="decisiones" placeholder="Decision n" required><!-- Para el front este se debe de repetir n veces igual -->
+          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+            <i class="bi bi-plus-circle"></i> Decision
+          </button>
+          <input type="text" class="form-control mb-3" id="accion" placeholder="Elemento de accion n" required><!-- Para el front este se debe de repetir n veces igual -->
+          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+            <i class="bi bi-plus-circle"></i> accion
+          </button>
+          <div class="d-flex">
+            <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+              <i class="bi bi-plus-circle"></i> Agregar Tema
+            </button>
           </div>
+
         </div>
         
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Nombre de la minuta
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">Fecha de creacion</p>
-                </div>
-              </div>
-            </div>
+        <!-- Submit Button -->
+        <div class="collapse navbar-collapse d-flex" id="navigation">
+          <div class="ms-auto d-flex align-items-center">
+            <li class="nav-item d-flex align-items-center">
+              <button class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" target="_blank" href="">Descargar</button>
+            </li>
+            <ul class="navbar-nav d-lg-block d-none">
+              <li class="nav-item">
+                <button type="submit" class="btn btn-lg btn-round mb-0 me-1 bg-gradient-dark">Guardar</button>
+              </li>
+            </ul>
           </div>
         </div>
+      </form>
 
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- Final del formulario -->
 
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Segunda fila (de ejemplo (Se acomodan sola en otra fila cuando son mas de 4)) -->
-
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <!-- Final de las cartas -->
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
