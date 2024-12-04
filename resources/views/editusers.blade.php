@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="{{asset('/assets/img/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="{{asset('/assets/img/favicon.png')}}">
   <title>
-    Home
+    Editar Usuario
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
@@ -56,7 +56,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active " href="/users">
+          <a class="nav-link  " href="/users">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -115,6 +115,7 @@
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Paginas</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Usuarios</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Editar usuario</li>
           </ol>
         </nav>
           <ul class="navbar-nav  justify-content-end">
@@ -131,60 +132,35 @@
     <!-- End Navbar -->
     <div class="container-fluid py-4">
 
-      <h6>Minutas</h6>
+      <h6>Editar usuario</h6>
 
-      <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-              <h6>Usuarios</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Usuario</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Correo</th>
-                      <th class="text-secondary opacity-7"></th>
-                      <th class="text-secondary opacity-7"></th>
-                      <th class="text-secondary opacity-7"></th>
+      <form action="/users">
+        <!-- Nombre -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre del usuario</label>
+          <input type="text" class="form-control" id="name" placeholder="Nombre del usuario" required>
+        </div>
 
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">John Michael</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs text-secondary mb-0">dasdsa@dsads.dsada</p>
-                      </td>
-                      <td class="align-middle">
-                        <a href="/users/edit-users" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
-                          Editar
-                        </a>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Eliminar
-                        </a>
-                        
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Correo</label>
+          <input type="email" class="form-control" id="email" placeholder="Ingresa el email" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="password" placeholder="Contraseña" required></input>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="collapse navbar-collapse d-flex" id="navigation">
+          <div class="ms-auto d-flex align-items-center">
+            <a class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" href="/users">Cancelar</a>
+            <button type="submit" class="btn btn-lg btn-round mb-0 me-1 bg-gradient-dark">Guardar</button>
           </div>
         </div>
-      </div>  
+      </form>
 
+      <!-- Final de las cartas -->
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">

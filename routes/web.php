@@ -32,11 +32,15 @@ Route::get('/home', function() {
     return view('dashboard');
 });
 
-Route::get('/minuta', function() {
+Route::get('/users/edit-users', function() {
+    return view('editusers');
+});
+
+Route::get('/project/minuta', function() {
     return view('minuta');
 });
 
-Route::get('/create-minuta', function() {
+Route::get('/project/create-minuta', function() {
     return view('createminuta');
 });
 

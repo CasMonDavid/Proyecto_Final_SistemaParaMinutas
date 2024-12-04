@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="{{asset('/assets/img/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="{{asset('/assets/img/favicon.png')}}">
   <title>
-    Home
+    Perfil
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
@@ -114,8 +114,7 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Paginas</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Proyectos</li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Minutas</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Perfil</li>
           </ol>
         </nav>
           <ul class="navbar-nav  justify-content-end">
@@ -132,273 +131,202 @@
     <!-- End Navbar -->
     <div class="container-fluid py-4">
 
-    <div class="col-lg-12 col-md-12 col-sm- col-12 mb-4">
-      <div class="card h-100 cursor-pointer">
-        <span class="mask bg-primary opacity-10 border-radius-lg"></span>
-        <div class="card-body p-3 position-relative">
-          <div class="row">
-            <div class="col-8 text-start">
-              <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                Nombre del proyecto
-              </h5>
-              <span class="text-white text-sm">Creador del proyecto</span>
-            </div>
-            <div class="col-4">
-              <div class="dropstart text-end mb-6">
-                <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-ellipsis-h text-white"></i>
-                </a>
-                <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                  <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                  <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                  <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                </ul>
+      <div class="page-header min-height-250 border-radius-lg d-flex flex-column justify-content-end">
+        <span class="mask bg-primary opacity-9"></span>
+        <div class="w-100 position-relative p-3">
+          <div class="d-flex justify-content-between align-items-end">
+            <div class="d-flex align-items-center">
+              <div class="avatar avatar-xl position-relative me-3">
+                <img src="../assets/img/bruce-mars.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
               </div>
-              <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">Fecha de creacion</p>
+              <div>
+                <h5 class="mb-1 text-white font-weight-bolder">
+                  Alec Thompson
+                </h5>
+                <p class="mb-0 text-white text-sm">
+                  fsdfds@sdad.dsdas
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <h6>Minutas</h6>
-
-      <!-- Cartas -->
-      <div class="row">
-        
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-white opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row h-100 d-flex justify-content-center align-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="black" class="bi bi-plus" viewBox="0 0 16 16">
-                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                </svg>
-              </div>
-            </div>
+      <div class="col-12 mt-4">
+        <div class="card mb-4">
+          <div class="card-header pb-0 p-3">
+            <h6 class="mb-1">Proyectos</h6>
+            <p class="text-sm">Has creado los siguientes proyectos</p>
           </div>
-        </div>
-        
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+          <div class="card-body p-3">
+            <div class="overflow-auto">
+              <div class="d-flex flex-nowrap">
+                
+                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 me-4">
+                  <div class="card card-blog card-plain">
+                    <div class="position-relative">
+                      <a class="d-block">
+                        <img src="../assets/img/home-decor-3.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-md">
+                      </a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                      <a href="javascript:;">
+                        <h5 class="font-weight-bolder">
+                          Titulo del proyecto
+                        </h5>
+                      </a>
+                      <p class="mb-4 text-sm">
+                        Descripcion del proyecto
+                      </p>
+                      <div class="d-flex align-items-center justify-content-between">
+                        <a type="button" href="/project" class="btn btn-outline-primary btn-sm mb-0">Ver proyecto</a>
+                        <div class="avatar-group mt-2">
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
+                            <img alt="Image placeholder" src="../assets/img/team-4.jpg">
+                          </a>
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
+                            <img alt="Image placeholder" src="../assets/img/team-3.jpg">
+                          </a>
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
+                            <img alt="Image placeholder" src="../assets/img/team-2.jpg">
+                          </a>
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
+                            <img alt="Image placeholder" src="../assets/img/team-1.jpg">
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Nombre de la minuta
-                  </h5>
                 </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">Fecha de creacion</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 me-4">
+                  <div class="card card-blog card-plain">
+                    <div class="position-relative">
+                      <a class="d-block">
+                        <img src="../assets/img/home-decor-3.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-md">
+                      </a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                      <a href="javascript:;">
+                        <h5 class="font-weight-bolder">
+                          Titulo del proyecto
+                        </h5>
+                      </a>
+                      <p class="mb-4 text-sm">
+                        Descripcion del proyecto
+                      </p>
+                      <div class="d-flex align-items-center justify-content-between">
+                        <a type="button" href="/project" class="btn btn-outline-primary btn-sm mb-0">Ver proyecto</a>
+                        <div class="avatar-group mt-2">
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
+                            <img alt="Image placeholder" src="../assets/img/team-4.jpg">
+                          </a>
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
+                            <img alt="Image placeholder" src="../assets/img/team-3.jpg">
+                          </a>
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
+                            <img alt="Image placeholder" src="../assets/img/team-2.jpg">
+                          </a>
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
+                            <img alt="Image placeholder" src="../assets/img/team-1.jpg">
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
                 </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 me-4">
+                  <div class="card card-blog card-plain">
+                    <div class="position-relative">
+                      <a class="d-block">
+                        <img src="../assets/img/home-decor-3.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-md">
+                      </a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                      <a href="javascript:;">
+                        <h5 class="font-weight-bolder">
+                          Titulo del proyecto
+                        </h5>
+                      </a>
+                      <p class="mb-4 text-sm">
+                        Descripcion del proyecto
+                      </p>
+                      <div class="d-flex align-items-center justify-content-between">
+                        <a type="button" href="/project" class="btn btn-outline-primary btn-sm mb-0">Ver proyecto</a>
+                        <div class="avatar-group mt-2">
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
+                            <img alt="Image placeholder" src="../assets/img/team-4.jpg">
+                          </a>
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
+                            <img alt="Image placeholder" src="../assets/img/team-3.jpg">
+                          </a>
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
+                            <img alt="Image placeholder" src="../assets/img/team-2.jpg">
+                          </a>
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
+                            <img alt="Image placeholder" src="../assets/img/team-1.jpg">
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
                 </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Segunda fila (de ejemplo (Se acomodan sola en otra fila cuando son mas de 4)) -->
+                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 me-4">
+                  <div class="card card-blog card-plain">
+                    <div class="position-relative">
+                      <a class="d-block">
+                        <img src="../assets/img/home-decor-3.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-md">
+                      </a>
+                    </div>
+                    <div class="card-body px-1 pb-0">
+                      <a href="javascript:;">
+                        <h5 class="font-weight-bolder">
+                          Titulo del proyecto
+                        </h5>
+                      </a>
+                      <p class="mb-4 text-sm">
+                        Descripcion del proyecto
+                      </p>
+                      <div class="d-flex align-items-center justify-content-between">
+                        <a type="button" href="/project" class="btn btn-outline-primary btn-sm mb-0">Ver proyecto</a>
+                        <div class="avatar-group mt-2">
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
+                            <img alt="Image placeholder" src="../assets/img/team-4.jpg">
+                          </a>
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
+                            <img alt="Image placeholder" src="../assets/img/team-3.jpg">
+                          </a>
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
+                            <img alt="Image placeholder" src="../assets/img/team-2.jpg">
+                          </a>
+                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
+                            <img alt="Image placeholder" src="../assets/img/team-1.jpg">
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 me-4">
+                  <div class="card h-100 card-plain border">
+                    <div class="card-body d-flex flex-column justify-content-center text-center">
+                      <a href="javascript:;">
+                        <i class="fa fa-plus text-secondary mb-3"></i>
+                        <h5 class="text-secondary"> Nuevo proyecto </h5>
+                      </a>
+                    </div>
                   </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
                 </div>
               </div>
             </div>
           </div>
+          
         </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
+
       <!-- Final de las cartas -->
       <footer class="footer pt-3  ">
         <div class="container-fluid">
