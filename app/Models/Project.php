@@ -21,6 +21,7 @@ class Project extends Model
 
     public function collaborators(){
         return $this->belongsToMany(User::class, 'user_project', 'project_id', 'user_id')
-            ->withPivot('role');
+            ->withPivot('role')
+            ->withTimestamps();
     }
 }

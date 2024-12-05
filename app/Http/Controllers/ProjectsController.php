@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\User_project;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -20,8 +21,9 @@ class ProjectsController extends Controller
             'description' => ['required','string','max:10000'],
             'status' => ['required',Rule::in($enum)],
             'created_by' => ['required','exists:users,id'],
-            'collaborators' => ['required','array'],
-            'collaborators.*' => ['exists:users,id']
+            'collaborators' => ['array'],
+            'collaborators.*.user_id' => ['required','exists:users,id'],
+            'collaborators.*.role' => ['required','string']
         ]);
         
         DB::transaction(function () use ($validated){
@@ -32,11 +34,15 @@ class ProjectsController extends Controller
                 'created_by' => $validated['created_by'],
             ]);
 
-            foreach ($validated['collaborators'] as $userId) {
-                $project->collaborators()->attach($userId, [
-                    'role' => 'Colaborador',
+            $collaborators = $validated['collaborators'];
+
+            foreach($collaborators as $collaborator){
+                User_project::create([
+                    'project_id' => $project->id,
+                    'user_id' => $collaborator['user_id'],
+                    'role' => $collaborator['role']
                 ]);
-            };
+            }
 
         });
 
@@ -50,29 +56,75 @@ class ProjectsController extends Controller
     }
 
     // Actualiza un proyecto en base a su id
-    public function update(Request $request, Project $project_id){
+    public function update(Request $request, int $project_id){
         $enum = ['En curso', 'En riesgo', 'Terminado'];
 
-        $request->validate([
+        $validated = $request->validate([
             'name' => ['required','string','max:255'],
             'description' => ['required','string','max:10000'],
-            'status' => ['required',Rule::in($enum)]
+            'status' => ['required',Rule::in($enum)],
+            'collaborators' => ['array'],
+            'collaborators.*.user_id' => ['required','exists:users,id'],
+            'collaborators.*.role' => ['required','string']
         ]);
 
-        $project_id->update($request->all());
+        DB::beginTransaction();
+        try{
+            $project = Project::findOrFail($project_id);
+            $project->update([
+                'name' => $validated['name'],
+                'description' => $validated['description'],
+                'status' => $validated['status'],
+            ]);
 
-        return redirect()->route('projects.show', $project_id->id);
+            $collaborators = $validated['collaborators'];
+
+            User_project::where('project_id',$project_id)->delete();
+
+            foreach($collaborators as $collaborator){
+                User_project::create([
+                    'project_id' => $project_id,
+                    'user_id' => $collaborator['user_id'],
+                    'role' => $collaborator['role']
+                ]);
+            }
+
+            DB::commit();
+
+            DB::rollBack();
+            return response()->json([
+                'status' => true,
+                'message' => 'Datos de proyectos y colaboradores acutalizado de forma éxitosa.',
+                'project' => $project,
+                'collaborators' => $collaborators,
+            ],200);
+
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => 'No fue posible actualizar projectos y colaboradores.',
+                'error' => $e->getMessage(),
+            ],500);
+        }
     }
 
     // Muestra un proyecto en base a su id
     public function show(int $project_id){
         $project = Project::find($project_id);
-        return $project;
+        $user_project = User_project::find($project_id);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'No fue posible actualizar projectos y colaboradores.',
+            'project' => $project,
+            'collaborators' => $user_project
+        ],200);
     }
 
     // Muestra todos los proyectos
     public function index(){
-        $project = Project::all();
+        $project = Project::with('collaborators')->get();
         return $project;
     }
 }
