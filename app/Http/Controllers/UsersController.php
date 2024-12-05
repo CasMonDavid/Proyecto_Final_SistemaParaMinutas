@@ -10,7 +10,7 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
-
+    // Guarda un usuario
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -41,11 +41,13 @@ class UsersController extends Controller
         }
     }
 
+    // Elimina un usuario en base a su id
     public function destroy(User $user_id){
         $user_id->delete();
         return true;
     }
 
+    // Actualiza un usuario en base a su id
     public function update(Request $request, User $user_id){  
 
         $request->validate([
@@ -60,11 +62,13 @@ class UsersController extends Controller
         return redirect()->route('user.show', $user_id->id);
     }
 
+    // Muestra un usuario en base a su id
     public function show(int $user_id){
         $user = User::find($user_id);
         return $user;
     }
 
+    // Muestra a todos los usuarios
     public function index(){
         $users = User::all();
         return $users;

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Users_ProjectsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
@@ -76,6 +77,9 @@ Route::resource('usuarios', UsersController::class)
 Route::resource('proyectos', ProjectsController::class)
     ->parameters(['proyectos' => 'project_id'])
     ->names('projects');
+Route::get('/user_project/getByProject/{project}', [Users_ProjectsController::class, 'getByProject']);
+Route::get('/user_project/getById/{id}', [Users_ProjectsController::class, 'show']);
+Route::get('/user_project', [Users_ProjectsController::class, 'index']);
 
 //RUTAS PARA PRUENAS POSTMAN ( ELIMINAR AL FINALIZAR )
 Route::get('/token', function (Request $request) {
