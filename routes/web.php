@@ -50,8 +50,12 @@ Route::get('/project', function() {
     return view('project');
 });
 
-Route::get('/addproject', function() {
+Route::get('/create-project', function() {
     return view('addproject');
+});
+
+Route::get('/edit-project', function() {
+    return view('editproject');
 });
 
 Route::get('/profile', function() {

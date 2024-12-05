@@ -14,6 +14,9 @@
   <!-- Nucleo Icons -->
   <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- CSS Files -->
@@ -137,7 +140,7 @@
       <div class="row">
         
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/addproject'">
+          <div class="card h-100 cursor-pointer" onclick="window.location.href='/create-project'">
             <span class="mask bg-white opacity-10 border-radius-lg"></span>
             <div class="card-body p-3 position-relative">
               <div class="row h-100 d-flex justify-content-center align-items-center">
@@ -150,97 +153,98 @@
         </div>
         
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+          <div class="position-relative">
+
+            <div class="card h-100 cursor-pointer position-relative" onclick="window.location.href='/project'">
+              <span class="mask bg-dark opacity-10 border-radius-lg"></span>
+              <div class="card-body p-3 position-relative">
+                <div class="row">
+                  <div class="col-12 text-start">
+                    <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
+                      <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                    </div>
+                    <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                      Nombre del proyecto
+                    </h5>
+                    <span class="text-white text-sm">Creador del proyecto - Fecha de creacion</span>
                   </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Nombre del proyecto
-                  </h5>
-                  <span class="text-white text-sm">Creador del proyecto</span>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">Fecha de creacion</p>
                 </div>
               </div>
+            </div>
+
+            <div class="dropstart mb-6 position-absolute top-10 end-0 w-10 h-5">
+              <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-ellipsis-h text-white"></i>
+              </a>
+              <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
+                <li><a class="dropdown-item border-radius-md" href="/project">Ver</a></li>
+                <li><a class="dropdown-item border-radius-md" href="/edit-project">Editar</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Eliminar</a></li>
+              </ul>
+            </div>
+
+          </div>
+          
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+          <div class="position-relative">
+            <div class="card h-100 cursor-pointer position-relative" onclick="window.location.href='/project'">
+              <span class="mask bg-dark opacity-10 border-radius-lg"></span>
+              <div class="card-body p-3 position-relative">
+                <div class="row">
+                  <div class="col-12 text-start">
+                    <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
+                      <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                    </div>
+                    <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                      Proyecto Microsoft
+                    </h5>
+                    <span class="text-white text-sm">Ivan Rios - 05-12-2024</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dropstart mb-6 position-absolute top-10 end-0 w-10 h-5">
+              <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-ellipsis-h text-white"></i>
+              </a>
+              <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
+                <li><a class="dropdown-item border-radius-md" href="/project">Ver</a></li>
+                <li><a class="dropdown-item border-radius-md" href="/edit-project">Editar</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Eliminar</a></li>
+              </ul>
             </div>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+          <div class="position-relative">
+            <div class="card h-100 cursor-pointer position-relative" onclick="window.location.href='/project'">
+              <span class="mask bg-dark opacity-10 border-radius-lg"></span>
+              <div class="card-body p-3 position-relative">
+                <div class="row">
+                  <div class="col-12 text-start">
+                    <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
+                      <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                    </div>
+                    <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                      Proyecto Microsoft
+                    </h5>
+                    <span class="text-white text-sm">Ivan Rios - 05-12-2024</span>
                   </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                  <span class="text-white text-sm">Microsoft Company</span>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                  <span class="text-white text-sm">Microsoft Company</span>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
+            <div class="dropstart mb-6 position-absolute top-10 end-0 w-10 h-5">
+              <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-ellipsis-h text-white"></i>
+              </a>
+              <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
+                <li><a class="dropdown-item border-radius-md" href="/project">Ver</a></li>
+                <li><a class="dropdown-item border-radius-md" href="/edit-project">Editar</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Eliminar</a></li>
+              </ul>
             </div>
           </div>
         </div>
@@ -248,129 +252,125 @@
         <!-- Segunda fila (de ejemplo (Se acomodan sola en otra fila cuando son mas de 4)) -->
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+          <div class="position-relative">
+            <div class="card h-100 cursor-pointer position-relative" onclick="window.location.href='/project'">
+              <span class="mask bg-dark opacity-10 border-radius-lg"></span>
+              <div class="card-body p-3 position-relative">
+                <div class="row">
+                  <div class="col-12 text-start">
+                    <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
+                      <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                    </div>
+                    <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                      Proyecto Microsoft
+                    </h5>
+                    <span class="text-white text-sm">Ivan Rios - 05-12-2024</span>
                   </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                  <span class="text-white text-sm">Microsoft Company</span>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
                 </div>
               </div>
+            </div>
+            <div class="dropstart mb-6 position-absolute top-10 end-0 w-10 h-5">
+              <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-ellipsis-h text-white"></i>
+              </a>
+              <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
+                <li><a class="dropdown-item border-radius-md" href="/project">Ver</a></li>
+                <li><a class="dropdown-item border-radius-md" href="/edit-project">Editar</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Eliminar</a></li>
+              </ul>
             </div>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+          <div class="position-relative">
+            <div class="card h-100 cursor-pointer position-relative" onclick="window.location.href='/project'">
+              <span class="mask bg-dark opacity-10 border-radius-lg"></span>
+              <div class="card-body p-3 position-relative">
+                <div class="row">
+                  <div class="col-12 text-start">
+                    <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
+                      <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                    </div>
+                    <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                      Proyecto Microsoft
+                    </h5>
+                    <span class="text-white text-sm">Ivan Rios - 05-12-2024</span>
                   </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                  <span class="text-white text-sm">Microsoft Company</span>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
                 </div>
               </div>
+            </div>
+            <div class="dropstart mb-6 position-absolute top-10 end-0 w-10 h-5">
+              <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-ellipsis-h text-white"></i>
+              </a>
+              <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
+                <li><a class="dropdown-item border-radius-md" href="/project">Ver</a></li>
+                <li><a class="dropdown-item border-radius-md" href="/edit-project">Editar</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Eliminar</a></li>
+              </ul>
             </div>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+          <div class="position-relative">
+            <div class="card h-100 cursor-pointer position-relative" onclick="window.location.href='/project'">
+              <span class="mask bg-dark opacity-10 border-radius-lg"></span>
+              <div class="card-body p-3 position-relative">
+                <div class="row">
+                  <div class="col-12 text-start">
+                    <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
+                      <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                    </div>
+                    <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                      Proyecto Microsoft
+                    </h5>
+                    <span class="text-white text-sm">Ivan Rios - 05-12-2024</span>
                   </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                  <span class="text-white text-sm">Microsoft Company</span>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
                 </div>
               </div>
+            </div>
+            <div class="dropstart mb-6 position-absolute top-10 end-0 w-10 h-5">
+              <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-ellipsis-h text-white"></i>
+              </a>
+              <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
+                <li><a class="dropdown-item border-radius-md" href="/project">Ver</a></li>
+                <li><a class="dropdown-item border-radius-md" href="/edit-project">Editar</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Eliminar</a></li>
+              </ul>
             </div>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+          <div class="position-relative">
+            <div class="card h-100 cursor-pointer position-relative" onclick="window.location.href='/project'">
+              <span class="mask bg-dark opacity-10 border-radius-lg"></span>
+              <div class="card-body p-3 position-relative">
+                <div class="row">
+                  <div class="col-12 text-start">
+                    <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
+                      <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                    </div>
+                    <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                      Proyecto Microsoft
+                    </h5>
+                    <span class="text-white text-sm">Ivan Rios - 05-12-2024</span>
                   </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                  <span class="text-white text-sm">Microsoft Company</span>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
                 </div>
               </div>
+            </div>
+            <div class="dropstart mb-6 position-absolute top-10 end-0 w-10 h-5">
+              <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-ellipsis-h text-white"></i>
+              </a>
+              <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
+                <li><a class="dropdown-item border-radius-md" href="/project">Ver</a></li>
+                <li><a class="dropdown-item border-radius-md" href="/edit-project">Editar</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Eliminar</a></li>
+              </ul>
             </div>
           </div>
         </div>
