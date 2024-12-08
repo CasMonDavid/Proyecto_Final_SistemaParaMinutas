@@ -138,14 +138,22 @@
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Nombre de la minuta</li>
           </ol>
         </nav>
-          <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
-              <a href="/" class="nav-link text-body font-weight-bold px-0">
-                <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Cerrar sesion</span>
-              </a>
-            </li>
-          </ul>
+        <ul class="navbar-nav justify-content-end">
+          <li class="nav-item d-flex align-items-center">
+             <!-- Formulario para el cierre de sesión -->
+             <form id="logoutForm" action="/logout" method="POST">
+                @csrf <!-- Token de seguridad para la solicitud POST -->
+                <button type="submit" class="nav-link text-body font-weight-bold px-0" style="background: none; border: none; padding: 0;">
+                    <i class="fa fa-user me-sm-1"></i>
+                    <span class="d-sm-inline d-none">Cerrar sesión</span>
+                </button>
+             </form>
+          </li>
+       </ul>
+       
+      
+      <!-- Incluir el script de cierre de sesión -->
+      <script src="{{ asset('assets/js/logout.js') }}"></script>
         </div>
       </div>
     </nav>
