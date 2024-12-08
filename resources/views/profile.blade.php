@@ -145,15 +145,20 @@
           <div class="d-flex justify-content-between align-items-end">
             <div class="d-flex align-items-center">
               <div class="avatar avatar-xl position-relative me-3">
-                <img src="../assets/img/bruce-mars.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                <!-- Se muestra la imagen del usuario y si no tiene se muestra una por defecto -->
+                <img src="{{ Auth::user() && Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : '../assets/img/bruce-mars.jpg' }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
               </div>
+            
               <div>
+
                 <h5 class="mb-1 text-white font-weight-bolder">
-                  Alec Thompson
+                  <!-- Mostrar el nombre del usuario directamente -->
+                  {{ Auth::user() ? Auth::user()->name : 'Invitado' }}
                 </h5>
                 <p class="mb-0 text-white text-sm">
-                  fsdfds@sdad.dsdas
+                  {{ Auth::user() ? Auth::user()->email : 'Invitado' }}
                 </p>
+
               </div>
             </div>
           </div>
@@ -170,42 +175,9 @@
             <div class="overflow-auto">
               <div class="d-flex flex-nowrap">
                 
-                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 me-4">
-                  <div class="card card-blog card-plain">
-                    <div class="position-relative">
-                      <a class="d-block">
-                        <img src="../assets/img/home-decor-3.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-md">
-                      </a>
-                    </div>
-                    <div class="card-body px-1 pb-0">
-                      <a href="javascript:;">
-                        <h5 class="font-weight-bolder">
-                          Titulo del proyecto
-                        </h5>
-                      </a>
-                      <p class="mb-4 text-sm">
-                        Descripcion del proyecto
-                      </p>
-                      <div class="d-flex align-items-center justify-content-between">
-                        <a type="button" href="/project" class="btn btn-outline-primary btn-sm mb-0">Ver proyecto</a>
-                        <div class="avatar-group mt-2">
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
-                            <img alt="Image placeholder" src="../assets/img/team-4.jpg">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
-                            <img alt="Image placeholder" src="../assets/img/team-3.jpg">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
-                            <img alt="Image placeholder" src="../assets/img/team-2.jpg">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
-                            <img alt="Image placeholder" src="../assets/img/team-1.jpg">
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
+                
+
 
                 <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 me-4">
                   <div class="card card-blog card-plain">
@@ -244,79 +216,9 @@
                   </div>
                 </div>
 
-                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 me-4">
-                  <div class="card card-blog card-plain">
-                    <div class="position-relative">
-                      <a class="d-block">
-                        <img src="../assets/img/home-decor-3.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-md">
-                      </a>
-                    </div>
-                    <div class="card-body px-1 pb-0">
-                      <a href="javascript:;">
-                        <h5 class="font-weight-bolder">
-                          Titulo del proyecto
-                        </h5>
-                      </a>
-                      <p class="mb-4 text-sm">
-                        Descripcion del proyecto
-                      </p>
-                      <div class="d-flex align-items-center justify-content-between">
-                        <a type="button" href="/project" class="btn btn-outline-primary btn-sm mb-0">Ver proyecto</a>
-                        <div class="avatar-group mt-2">
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
-                            <img alt="Image placeholder" src="../assets/img/team-4.jpg">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
-                            <img alt="Image placeholder" src="../assets/img/team-3.jpg">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
-                            <img alt="Image placeholder" src="../assets/img/team-2.jpg">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
-                            <img alt="Image placeholder" src="../assets/img/team-1.jpg">
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
-                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 me-4">
-                  <div class="card card-blog card-plain">
-                    <div class="position-relative">
-                      <a class="d-block">
-                        <img src="../assets/img/home-decor-3.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-md">
-                      </a>
-                    </div>
-                    <div class="card-body px-1 pb-0">
-                      <a href="javascript:;">
-                        <h5 class="font-weight-bolder">
-                          Titulo del proyecto
-                        </h5>
-                      </a>
-                      <p class="mb-4 text-sm">
-                        Descripcion del proyecto
-                      </p>
-                      <div class="d-flex align-items-center justify-content-between">
-                        <a type="button" href="/project" class="btn btn-outline-primary btn-sm mb-0">Ver proyecto</a>
-                        <div class="avatar-group mt-2">
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
-                            <img alt="Image placeholder" src="../assets/img/team-4.jpg">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
-                            <img alt="Image placeholder" src="../assets/img/team-3.jpg">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
-                            <img alt="Image placeholder" src="../assets/img/team-2.jpg">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
-                            <img alt="Image placeholder" src="../assets/img/team-1.jpg">
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
+
 
                 <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 me-4">
                   <div class="card h-100 card-plain border">
