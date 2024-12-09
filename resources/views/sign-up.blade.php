@@ -120,31 +120,52 @@
               </div>
               <div class="card-body">
 
-                <form action="/home.post" method="POST">
-                @csrf <!-- Token de seguridad -->
+
+
+                <!-- ......................................................................................... -->
+
+
+
+                <form id="registerForm" method="POST">
+                  @csrf <!-- Token de seguridad -->
                   <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Nombre" aria-label="name" aria-describedby="email-addon" required>
+                      <input type="text" name="name" class="form-control" placeholder="Nombre" aria-label="name" required>
                   </div>
                   <div class="mb-3">
-                    <input type="email" class="form-control" placeholder="Email" aria-label="email" aria-describedby="email-addon" required>
+                      <input type="email" name="email" class="form-control" placeholder="Email" aria-label="email" required>
                   </div>
                   <div class="mb-3">
-                    <input type="password" class="form-control" placeholder="Contrasena" aria-label="password" aria-describedby="password-addon" required>
+                      <input type="password" name="password" class="form-control" placeholder="Contraseña" aria-label="password" required>
                   </div>
                   <div class="mb-3">
-                    <input type="password" class="form-control" placeholder="Confirmar contrasena" aria-label="password" aria-describedby="password-addon" required>
+                      <input type="password" name="confirm_password" class="form-control" placeholder="Confirmar Contraseña" aria-label="confirm-password" required>
+                  </div>
+                  <div class="mb-3">
+                      <input type="date" name="birthday" class="form-control" placeholder="Fecha de Nacimiento" required>
                   </div>
                   <div class="form-check form-check-info text-left">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                    <label class="form-check-label" for="flexCheckDefault">
-                      Acepto los <a href="javascript:;" class="text-dark font-weight-bolder">Terminos y condiciones</a>
-                    </label>
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked required>
+                      <label class="form-check-label" for="flexCheckDefault">
+                          Acepto los <a href="#" class="text-dark font-weight-bolder">Términos y condiciones</a>
+                      </label>
                   </div>
                   <div class="text-center">
-                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Registrarme</button>
+                      <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Registrarme</button>
                   </div>
-                  <p class="text-sm mt-3 mb-0">Ya tienes una cuenta? <a href="/" class="text-dark font-weight-bolder">Inicia sesion</a></p>
-                </form>
+                  <p class="text-sm mt-3 mb-0">¿Ya tienes una cuenta? <a href="/" class="text-dark font-weight-bolder">Inicia sesión</a></p>
+              </form>
+              <script src="/assets/js/register.js"></script>
+              
+              
+
+
+
+
+
+
+                <!-- ......................................................................................... -->
+
+
 
               </div>
             </div>
