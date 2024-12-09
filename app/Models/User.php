@@ -31,4 +31,13 @@ class User extends Authenticatable
             ->withPivot('role')
             ->withTimestamps();
     }
+
+    public function minutas(){
+        return $this->belongsToMany(Minuta::class,'minutas');
+    }
+
+    public function attendance(){
+        return $this->belongsToMany(Attendance::class, 'attendance')
+            ->withPivotValue('status');
+    }
 }

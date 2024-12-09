@@ -4,6 +4,7 @@ use App\Http\Controllers\Users_ProjectsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MinutasController;
 use App\Http\Controllers\ProjectsController;
 use Illuminate\Http\Request;
 
@@ -88,10 +89,9 @@ Route::get('/user_project/getById/{id}', [Users_ProjectsController::class, 'show
 Route::get('/user_project', [Users_ProjectsController::class, 'index']);
 
 // MINUTAS
-Route::resource('minutas', ProjectsController::class)
+Route::resource('minutas', MinutasController::class)
     ->except(['create', 'edit'])
-    ->parameters(['minutas' => 'minuta_id'])
-    ->names('minutas');
+    ->parameters(['minutas' => 'minuta_id']);
 
 //RUTAS PARA PRUENAS POSTMAN ( ELIMINAR AL FINALIZAR )
 Route::get('/token', function (Request $request) {
