@@ -34,7 +34,7 @@ Route::get('/home', function() {
     return view('dashboard');
 });
 
-Route::get('/users/edit-users', function() {
+Route::get('/users/edit-users/{id}', function() {
     return view('editusers');
 });
 
@@ -74,16 +74,24 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 // USUARIOS
 Route::resource('usuarios', UsersController::class)
+    ->except(['create', 'edit'])
     ->parameters(['usuarios' => 'user_id'])
     ->names('user');
 
 // PROYECTOS
 Route::resource('proyectos', ProjectsController::class)
+    ->except(['create', 'edit'])
     ->parameters(['proyectos' => 'project_id'])
     ->names('projects');
 Route::get('/user_project/getByProject/{project}', [Users_ProjectsController::class, 'getByProject']);
 Route::get('/user_project/getById/{id}', [Users_ProjectsController::class, 'show']);
 Route::get('/user_project', [Users_ProjectsController::class, 'index']);
+
+// MINUTAS
+Route::resource('minutas', ProjectsController::class)
+    ->except(['create', 'edit'])
+    ->parameters(['minutas' => 'minuta_id'])
+    ->names('minutas');
 
 //RUTAS PARA PRUENAS POSTMAN ( ELIMINAR AL FINALIZAR )
 Route::get('/token', function (Request $request) {

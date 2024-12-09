@@ -52,12 +52,13 @@ class ProjectsController extends Controller
                 'message' => 'Datos de proyectos y colaboradores guardados de forma éxitosa.',
             ],200);
         }catch(Exception $e){
-            return response()->json([
-                'status' => false,
-                'message' => 'No fue posible guardar projectos y colaboradores.',
-                'error' => $e->getMessage(),
-            ],500);
+            $mensaje = $e->getMessage();
         }
+        return response()->json([
+            'status' => false,
+            'message' => 'No fue posible guardar projectos y colaboradores.',
+            'error' => ($mensaje != null)? $mensaje : "Datos incorrectos, no pasaron la validacion." ,
+        ],500);
     }
 
     // Elimina un proyecto en base a su id
