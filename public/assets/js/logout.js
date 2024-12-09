@@ -17,13 +17,20 @@ document.querySelector('#logoutForm').addEventListener('submit', function (event
             showCustomAlert(data.message, 'success'); // Mostrar mensaje de éxito
             setTimeout(() => {
                 window.location.href = '/'; // Redirigir al login después de 2 segundos
-            }, 2000);
+            }, 1000);
         } else {
             showCustomAlert(data.message, 'error'); // Mostrar mensaje de error si no se pudo cerrar sesión
+            setTimeout(() => {
+                window.location.href = '/'; // Redirigir al login
+            }, 1000);
         }
     })
     .catch(() => {
-        showCustomAlert('No hay sesion que cerrar', 'error'); // Error genérico
+        // Si ocurre un error (como que no hay sesión activa)
+        showCustomAlert('No hay sesión activa', 'error');
+        setTimeout(() => {
+            window.location.href = '/'; // Redirigir al login
+        }, 1000);
     });
 });
 
@@ -46,5 +53,5 @@ function showCustomAlert(message, type) {
 
     setTimeout(() => {
         alertContainer.remove(); // Elimina la alerta después de 3 segundos
-    }, 3000);
+    }, 2000);
 }
