@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\User_project;
+use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -25,28 +26,38 @@ class ProjectsController extends Controller
             'collaborators.*.user_id' => ['required','exists:users,id'],
             'collaborators.*.role' => ['required','string']
         ]);
-        
-        DB::transaction(function () use ($validated){
-            $project = Project::create([
-                'name' => $validated['name'],
-                'description' => $validated['description'],
-                'status' => $validated['status'],
-                'created_by' => $validated['created_by'],
-            ]);
 
-            $collaborators = $validated['collaborators'];
-
-            foreach($collaborators as $collaborator){
-                User_project::create([
-                    'project_id' => $project->id,
-                    'user_id' => $collaborator['user_id'],
-                    'role' => $collaborator['role']
+        try{
+            DB::transaction(function () use ($validated){
+                $project = Project::create([
+                    'name' => $validated['name'],
+                    'description' => $validated['description'],
+                    'status' => $validated['status'],
+                    'created_by' => $validated['created_by'],
                 ]);
-            }
+    
+                $collaborators = $validated['collaborators'];
+    
+                foreach($collaborators as $collaborator){
+                    User_project::create([
+                        'project_id' => $project->id,
+                        'user_id' => $collaborator['user_id'],
+                        'role' => $collaborator['role']
+                    ]);
+                }
 
-        });
-
-        return redirect()->route('projects.index');
+            });
+            return response()->json([
+                'status' => true,
+                'message' => 'Datos de proyectos y colaboradores guardados de forma éxitosa.',
+            ],200);
+        }catch(Exception $e){
+            return response()->json([
+                'status' => false,
+                'message' => 'No fue posible guardar projectos y colaboradores.',
+                'error' => $e->getMessage(),
+            ],500);
+        }
     }
 
     // Elimina un proyecto en base a su id
@@ -90,16 +101,13 @@ class ProjectsController extends Controller
             }
 
             DB::commit();
-
-            DB::rollBack();
             return response()->json([
                 'status' => true,
                 'message' => 'Datos de proyectos y colaboradores acutalizado de forma éxitosa.',
                 'project' => $project,
                 'collaborators' => $collaborators,
             ],200);
-
-        }catch(\Exception $e){
+        }catch(Exception $e){
             DB::rollBack();
             return response()->json([
                 'status' => false,
