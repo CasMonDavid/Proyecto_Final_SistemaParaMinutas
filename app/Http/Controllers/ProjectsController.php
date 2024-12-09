@@ -116,7 +116,7 @@ class ProjectsController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'No fue posible actualizar projectos y colaboradores.',
+            'message' => 'Acción realizada con éxito.',
             'project' => $project,
             'collaborators' => $user_project
         ],200);
