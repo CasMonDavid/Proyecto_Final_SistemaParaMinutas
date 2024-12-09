@@ -21,7 +21,8 @@ class UsersController extends Controller
     
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Validation failed.',
+                'status' => false,
+                'message' => 'La validacion fallo.',
                 'errors' => $validator->errors(),
             ], 422);
         }
@@ -33,7 +34,8 @@ class UsersController extends Controller
         // Respuestas
         if ($request->expectsJson()) {
             return response()->json([
-                'message' => 'User added successfully!',
+                'status' => true,
+                'message' => 'Usuario añadido con exito.',
                 'user' => $user,
             ], 201);
         } else {
@@ -44,7 +46,10 @@ class UsersController extends Controller
     // Elimina un usuario en base a su id
     public function destroy(User $user_id){
         $user_id->delete();
-        return true;
+        return response()->json([
+            'status' => true,
+            'message' => 'Usuario eliminado con exito',
+        ],200);
     }
 
     // Actualiza un usuario en base a su id
@@ -57,6 +62,8 @@ class UsersController extends Controller
             'birthday' => 'required|date',
         ]);
 
+        $request['password'] = bcrypt($request['password']);
+
         $user_id->update($request->all());
 
         return redirect()->route('user.show', $user_id->id);
@@ -65,12 +72,12 @@ class UsersController extends Controller
     // Muestra un usuario en base a su id
     public function show(int $user_id){
         $user = User::find($user_id);
-        return $user;
+        return response()->json($user,200);
     }
 
     // Muestra a todos los usuarios
     public function index(){
         $users = User::all();
-        return $users;
+        return response()->json($users,200);
     }
 }

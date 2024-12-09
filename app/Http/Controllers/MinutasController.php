@@ -7,6 +7,7 @@ use App\Models\Minuta;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class MinutasController extends Controller
 {
@@ -20,13 +21,22 @@ class MinutasController extends Controller
             'direction' => ['required', 'string','min:3','max:1000'],
             'attendance' => ['required', 'array'],
             'attendance.*.id_user' => ['required','exists:users,id'],
+            'attendance.*.status' => ['required',Rule::in($enum)],
+            'topics' => ['required','array'],
+            'topics.decisions' => ['required','string','min:3','max:10000'],
+            'topics.elements_action' => ['required','string','min:3','max:10000'],
         ]);
 
         DB::beginTransaction();
         try{
-            $minuta = Minuta::create($validated);
+            $minuta = Minuta::create([
+                'id_project' => $validated['id_project'],
+                'created_by' => $validated['created_by'],
+                'date' => $validated['date'],
+                'direction' => $validated['direction'],
+            ]);
 
-
+            $attendance = $validated['attendance'];
 
         }catch(Exception $e){
             DB::rollBack();
