@@ -1,19 +1,19 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Función para obtener usuarios
     function loadUsers() {
-        fetch('/usuarios')  // Hacemos una solicitud GET a la ruta /usuarios
-            .then(response => response.json())  // Parseamos la respuesta JSON
+        fetch('/usuarios') // Solicitud GET para obtener la lista de usuarios
+            .then(response => response.json())
             .then(users => {
                 let usersList = document.getElementById("users-list");
-                usersList.innerHTML = '';  // Limpiamos la tabla antes de agregar los nuevos usuarios
+                usersList.innerHTML = ''; // Limpiar la tabla
 
-                // Iteramos sobre los usuarios y agregamos filas a la tabla
+                // Iterar sobre los usuarios y crear filas
                 users.forEach(user => {
                     let row = document.createElement("tr");
 
-                    // Columna de usuario (nombre y foto)
+                    // Columna de usuario
                     let nameCell = document.createElement("td");
-                    nameCell.innerHTML = `  
+                    nameCell.innerHTML = `
                         <div class="d-flex px-2 py-1">
                             <div>
                                 <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
@@ -35,25 +35,25 @@ document.addEventListener("DOMContentLoaded", function() {
                     actionsCell.classList.add("align-middle");
                     actionsCell.innerHTML = `
                         <a href="/users/edit-users/${user.id}" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
-                          Editar
-                        </a>
-                        <button class="text-secondary font-weight-bold text-xs delete-btn" data-id="${user.id}" data-name="${user.name}">
-                            Eliminar
-                        </button>
+      Editar
+    </a>
+    <button class="text-secondary font-weight-bold text-xs delete-btn" data-id="${user.id}" data-name="${user.name}">
+        Eliminar
+    </button>
                     `;
                     row.appendChild(actionsCell);
 
-                    // Agregamos la fila a la tabla
                     usersList.appendChild(row);
                 });
 
-                // Agregar eventos para los botones de eliminar
+                // Agregar eventos a los botones de eliminar
                 document.querySelectorAll('.delete-btn').forEach(button => {
                     button.addEventListener('click', function(e) {
+                        
                         const userId = e.target.getAttribute('data-id');
                         const userName = e.target.getAttribute('data-name');
 
-                        // Crear el modal de confirmación dinámicamente
+                        // Crear y mostrar el modal
                         const modal = document.createElement('div');
                         modal.classList.add('modal', 'fade');
                         modal.id = 'deleteModal';
@@ -80,13 +80,11 @@ document.addEventListener("DOMContentLoaded", function() {
                         `;
                         document.body.appendChild(modal);
 
-                        // Inicializar el modal con Bootstrap
                         const deleteModal = new bootstrap.Modal(modal);
                         deleteModal.show();
 
-                        // Agregar evento para el botón de confirmación
-                        document.getElementById("confirmDeleteBtn").addEventListener("click", function() {
-                            // Enviar la solicitud DELETE usando fetch
+                        // Evento de confirmación
+                        modal.querySelector('#confirmDeleteBtn').addEventListener('click', function() {
                             fetch(`/usuarios/${userId}`, {
                                 method: 'DELETE',
                                 headers: {
@@ -94,41 +92,33 @@ document.addEventListener("DOMContentLoaded", function() {
                                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                                 },
                             })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Error al eliminar el usuario');
-                                }
-                                return response.json();
-                            })
-                            .then(data => {
-                                // Verificar si la eliminación fue exitosa
-                                if (data.status) {
-                                    // Eliminar la fila de la tabla
-                                    e.target.closest('tr').remove();
-                                    alert('Usuario eliminado con éxito');
-                                } else {
-                                    alert('Error al eliminar el usuario');
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error deleting user:', error);
-                                alert('No se pudo eliminar el usuario. Intenta nuevamente');
-                            });
-
-                            // Cerrar el modal después de enviar la solicitud
-                            deleteModal.hide();
-
-                            // Eliminar el modal del DOM después de usarlo
-                            modal.remove();
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.status) {
+                                        alert('Usuario eliminado con éxito');
+                                        e.target.closest('tr').remove();
+                                    } else {
+                                        alert('Error al eliminar el usuario');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    alert('No se pudo eliminar el usuario.');
+                                })
+                                .finally(() => {
+                                    deleteModal.hide();
+                                    modal.addEventListener('hidden.bs.modal', () => modal.remove());
+                                });
                         });
+
+                        // Eliminar el modal del DOM al cerrarlo
+                        modal.addEventListener('hidden.bs.modal', () => modal.remove());
                     });
                 });
             })
-            .catch(error => {
-                console.error('Error loading users:', error);
-            });
+            .catch(error => console.error('Error loading users:', error));
     }
 
-    // Llamamos a la función para cargar los usuarios cuando la página cargue
+    // Cargar usuarios al cargar la página
     loadUsers();
 });
