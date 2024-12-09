@@ -4,6 +4,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <link rel="apple-touch-icon" sizes="76x76" href="{{asset('/assets/img/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="{{asset('/assets/img/favicon.png')}}">
   <title>
@@ -23,6 +25,29 @@
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 
   <style>
+
+    /* Estilo para el contenedor del botón */
+.mb-3.d-flex.justify-content-start {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Estilo para el botón de agregar colaborador */
+#addCollaboratorButton {
+  background-color: #007bff; /* Color de fondo más destacado */
+  color: white; /* Color del texto */
+  font-size: 16px; /* Aumenta el tamaño de la fuente */
+  padding: 12px 30px; /* Aumenta el padding para hacer el botón más grande */
+  border-radius: 8px; /* Bordes redondeados */
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+#addCollaboratorButton:hover {
+  background-color: #0056b3; /* Cambio de color al pasar el mouse */
+}
+
     #addTopicButton {
       background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
       color: #000; /* Texto negro */
@@ -151,53 +176,72 @@
         </div>
       </div>
     </nav>
-    <!-- End Navbar -->
+    <!-- End Navbar ....................................................-->
     <div class="container-fluid py-4">
-
       <h6>Crear proyecto</h6>
 
-      <form action="/home">
+
+
+
+
+
+
+      <form action="proyectos" method="POST" id="projectForm">
+        @csrf <!-- Laravel CSRF token -->
         <!-- Nombre -->
         <div class="mb-3">
           <label for="name" class="form-label">Nombre del proyecto</label>
-          <input type="text" class="form-control" id="name" placeholder="Nombre del proyecto" required>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Nombre del proyecto" required>
         </div>
-
+      
+        <!-- Descripción -->
         <div class="mb-3">
-          <label for="description" class="form-label">Descripcion</label>
-          <textarea type="text" class="form-control" id="description" required></textarea>
+          <label for="description" class="form-label">Descripción</label>
+          <textarea class="form-control" id="description" name="description" required></textarea>
         </div>
-
+      
+        <!-- Estado -->
         <div class="mb-3">
-          <label for="description" class="form-label">Estado</label>
-          <select class="form-select" id="options" required>
+          <label for="options" class="form-label">Estado</label>
+          <select class="form-select" id="options" name="status" required>
             <option value="" disabled selected>Elige una opción</option>
-            <option value="activo">Activo</option>
-            <option value="Inactivo">Inactivo</option>
+            <option value="En curso">En curso</option>
+            <option value="En riesgo">En riesgo</option>
+            <option value="Terminado">Terminado</option>
           </select>
         </div>
-
+      
+        <!-- Colaboradores -->
         <div class="mb-3">
           <label for="adduser" class="form-label">Agregar usuario</label>
-          <select class="form-select" id="adduser" required>
+          <select class="form-select" id="adduser">
             <option value="" disabled selected>Selecciona el usuario</option>
-            <option value="activo">Usuario 1</option>
-            <option value="Inactivo">Usuario n</option>
+            <!-- Se llenarán dinámicamente -->
           </select>
         </div>
-
+      
         <div class="mb-3">
           <label for="rol" class="form-label">Rol</label>
-          <input type="text" class="form-control" id="rol" placeholder="Rol del usuario" required>
+          <input type="text" class="form-control" id="rol" placeholder="Rol del usuario">
         </div>
-
-        <div class="d-flex">
-          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
-            <i class="bi bi-plus-circle"></i> Agregar otro usuario
+      
+        <!-- Contenedor del botón de agregar colaborador -->
+        <div class="mb-3 d-flex justify-content-start">
+          <button id="addCollaboratorButton" class="btn btn-primary btn-lg px-4 py-2">
+            <i class="bi bi-plus-circle"></i> Agregar colaborador
           </button>
         </div>
-        
-        <!-- Submit Button -->
+      
+        <!-- Campo oculto para colaboradores -->
+        <input type="hidden" id="collaborators" name="collaborators">
+        <!-- Campo oculto para el creador del proyecto (usuario autenticado) -->
+        <input type="hidden" id="created_by" name="created_by" value="{{ auth()->user()->id }}">
+
+      
+        <!-- Lista de colaboradores -->
+        <ul id="collaboratorList"></ul>
+      
+        <!-- Botones -->
         <div class="collapse navbar-collapse d-flex" id="navigation">
           <div class="ms-auto d-flex align-items-center">
             <a class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" href="/home">Cancelar</a>
@@ -205,8 +249,30 @@
           </div>
         </div>
       </form>
+      <script src="/assets/js/crearProyecto.js"></script>
+      
 
-      <!-- Final de las cartas -->
+      <!--................................................................................................ -->
+
+      
+     
+      
+
+
+
+
+
+
+
+      <!-- Final de las cartas ..............................-->
+
+
+
+
+
+
+
+
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">

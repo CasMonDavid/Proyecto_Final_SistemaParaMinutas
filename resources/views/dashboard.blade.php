@@ -137,9 +137,6 @@
       
       <!-- Incluir el script de cierre de sesión -->
       <script src="{{ asset('assets/js/logout.js') }}"></script>
-      
-      
-
 
         </div>
       </div>
@@ -203,7 +200,7 @@
                         </div>
                       </div>
         
-                      <!-- No modificar ni añadir funcionalidad -->
+                      <!-- No tiene funcionalidad -->
                       <div class="dropstart mb-6 position-absolute top-10 end-0 w-10 h-5">
                          <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
                          <i class="fa fa-ellipsis-h text-white"></i>
@@ -214,7 +211,7 @@
                          <li><a class="dropdown-item border-radius-md" href="javascript:;">Eliminar</a></li>
                          </ul>
                       </div>
-                      <!-- asta aca no hagas lo de añadir y funcionalidad -->
+                      <!-- No tiene funcionalidad -->
                     </div>
                   `;
                   projectContainer.appendChild(card);
