@@ -1,101 +1,113 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    const addUserSelect = document.getElementById('adduser');
-    const roleInput = document.getElementById('rol');
-    const addCollaboratorButton = document.getElementById('addCollaboratorButton');
-    const collaboratorList = document.getElementById('collaboratorList');
-    const collaboratorsField = document.getElementById('collaborators');
-    const form = document.getElementById('projectForm'); // Asegúrate de que el formulario tenga el id 'projectForm'
+document.addEventListener('DOMContentLoaded', () => {
 
-    let collaborators = [];
+    console.log("El DOM está listo y el script se está ejecutando");
 
-    // Cargar usuarios dinámicamente
-    try {
-        const response = await fetch('/usuarios', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            }
-        });
+    const form = document.getElementById('projectForm');
+    const addUserButton = document.getElementById('addTopicButton');
+    const collaboratorsContainer = document.createElement('div');
+    form.insertBefore(collaboratorsContainer, addUserButton.parentElement);
 
-        if (response.ok) {
-            const users = await response.json();
+    // Verificar si los elementos existen en el DOM
+    console.log('Formulario:', form);
+    console.log('Botón Agregar Usuario:', addUserButton);
 
-            // Itera sobre los usuarios y los agrega al select
-            users.forEach(user => {
-                const option = document.createElement('option');
-                option.value = user.id; // Usa el ID del usuario como valor
-                option.textContent = user.name; // Usa el nombre del usuario como texto
-                addUserSelect.appendChild(option);
-            });
-        } else {
-            console.error('Error al obtener los usuarios:', response.statusText);
-        }
-    } catch (error) {
-        console.error('Error en la solicitud:', error);
-    }
-
-    // Agregar colaborador
-    addCollaboratorButton.addEventListener('click', (e) => {
+    // Agregar colaborador dinámicamente
+    addUserButton.addEventListener('click', (e) => {
         e.preventDefault();
 
-        const userId = addUserSelect.value;
-        const userName = addUserSelect.options[addUserSelect.selectedIndex]?.text || '';
-        const role = roleInput.value;
+        console.log("Colaborador agregado");
 
-        if (!userId || !role) {
-            alert('Por favor selecciona un usuario y define un rol.');
-            return;
-        }
+        const collaboratorBlock = document.createElement('div');
+        collaboratorBlock.className = 'mb-3';
 
-        // Añadir al array de colaboradores
-        collaborators.push({ user_id: userId, role });
+        const userLabel = document.createElement('label');
+        userLabel.textContent = 'Agregar usuario';
+        userLabel.className = 'form-label';
+        const userSelect = document.createElement('select');
+        userSelect.className = 'form-select';
+        userSelect.required = true;
+        userSelect.innerHTML = document.getElementById('adduser').innerHTML;
 
-        // Actualizar campo oculto
-        collaboratorsField.value = JSON.stringify(collaborators);
+        const roleLabel = document.createElement('label');
+        roleLabel.textContent = 'Rol';
+        roleLabel.className = 'form-label';
+        const roleInput = document.createElement('input');
+        roleInput.type = 'text';
+        roleInput.className = 'form-control';
+        roleInput.placeholder = 'Rol del usuario';
+        roleInput.required = true;
 
-        // Mostrar en la lista
-        const listItem = document.createElement('li');
-        listItem.textContent = `${userName} - ${role}`;
-        collaboratorList.appendChild(listItem);
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Eliminar';
+        removeButton.className = 'btn btn-danger mt-2';
+        removeButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            collaboratorsContainer.removeChild(collaboratorBlock);
+            console.log("Colaborador eliminado");
+        });
 
-        // Limpiar campos
-        addUserSelect.value = '';
-        roleInput.value = '';
+        collaboratorBlock.appendChild(userLabel);
+        collaboratorBlock.appendChild(userSelect);
+        collaboratorBlock.appendChild(roleLabel);
+        collaboratorBlock.appendChild(roleInput);
+        collaboratorBlock.appendChild(removeButton);
+
+        collaboratorsContainer.appendChild(collaboratorBlock);
     });
 
     // Manejar el envío del formulario
-    form.addEventListener('submit', async function (e) {
-        e.preventDefault(); // Previene el envío tradicional del formulario
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();  // Prevenir envío tradicional
 
-        // Asegurarse de que el campo 'collaborators' esté actualizado
-        collaboratorsField.value = JSON.stringify(collaborators);
+        console.log("Formulario enviado");  // Verificar si el formulario se está enviando
 
-        // Crea un objeto FormData con los datos del formulario
-        const formData = new FormData(form);
+        const name = document.getElementById('name').value;
+        const description = document.getElementById('description').value;
+        const status = document.getElementById('options').value;
+        const createdBy = document.getElementById('adduser').value;
+
+        const collaborators = [];
+        Array.from(collaboratorsContainer.children).forEach(collaboratorBlock => {
+            const userId = collaboratorBlock.querySelector('select').value;
+            const userRole = collaboratorBlock.querySelector('input').value;
+            collaborators.push({ user_id: userId, role: userRole });
+        });
+
+        const payload = {
+            name,
+            description,
+            status,
+            created_by: createdBy,
+            collaborators,
+        };
+
+        // Imprimir el payload antes de enviarlo
+        console.log('Datos del formulario a enviar:', payload);
 
         try {
-            // Envía los datos del formulario
-            const response = await fetch(form.action, {
-                method: form.method, // Obtiene el método (POST)
-                body: formData, // Los datos del formulario
+            const response = await fetch('/proyectos', {
+                method: 'POST',
                 headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Añadir CSRF Token para Laravel
-                }
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                },
+                body: JSON.stringify(payload),
             });
 
+            // Mostrar la respuesta en consola
+            console.log('Respuesta del servidor:', response);
+
             if (response.ok) {
-                // Si la respuesta es exitosa, redirige a /home
-                window.location.href = '/home';
+                const result = await response.json();
+                alert(result.message);
+                
             } else {
-                // Si hay un error en la respuesta
-                console.error('Error al guardar el proyecto');
-                alert('Hubo un error al guardar el proyecto. Intenta nuevamente.');
+                const error = await response.json();
+                alert(`Error: ${error.message}`);
             }
-        } catch (error) {
-            // Si ocurre un error en el envío
-            console.error('Error al enviar el formulario:', error);
-            alert('Hubo un error al enviar el formulario. Intenta nuevamente.');
+        } catch (err) {
+            console.error('Error:', err);
+            alert('Ocurrió un error al enviar los datos.');
         }
     });
 });

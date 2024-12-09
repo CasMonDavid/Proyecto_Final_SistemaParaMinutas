@@ -151,41 +151,38 @@
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
                   <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Usuario</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Correo</th>
-                      <th class="text-secondary opacity-7"></th>
-                      <th class="text-secondary opacity-7"></th>
-                      <th class="text-secondary opacity-7"></th>
-
-                    </tr>
+                    
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">John Michael</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs text-secondary mb-0">dasdsa@dsads.dsada</p>
-                      </td>
-                      <td class="align-middle">
-                        <a href="/users/edit-users" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
-                          Editar
-                        </a>
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Eliminar
-                        </a>
-                        
-                      </td>
-                    </tr>
-                  </tbody>
+
+
+
+
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-list">
+                        <!-- Los usuarios se cargarán aquí -->
+                    </tbody>
+                </table>
+                
+                <!-- Script para cargar los usuarios -->
+                <script src="{{ asset('assets/js/EliminarUsers.js') }}"></script>
+                
+
+
+
+
+
+
+
+
+
+                  
                 </table>
               </div>
             </div>

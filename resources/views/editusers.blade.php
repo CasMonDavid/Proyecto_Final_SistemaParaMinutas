@@ -142,6 +142,10 @@
 
       <h6>Editar usuario</h6>
 
+
+
+      
+
       <form action="/users">
         <!-- Nombre -->
         <div class="mb-3">
@@ -167,6 +171,12 @@
           </div>
         </div>
       </form>
+
+
+
+
+
+
 
       <!-- Final de las cartas -->
       <footer class="footer pt-3  ">
