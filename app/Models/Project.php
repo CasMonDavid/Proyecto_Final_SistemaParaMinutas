@@ -24,4 +24,8 @@ class Project extends Model
             ->withPivot('role')
             ->withTimestamps();
     }
+
+    public function minuta(){
+        return $this->belongsToMany(Minuta::class, 'minutas');
+    }
 }
