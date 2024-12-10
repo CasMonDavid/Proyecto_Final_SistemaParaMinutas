@@ -6,15 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Topic extends Model
 {
-    protected $table = 'decisions';
+    protected $table = 'topics';
 
-    protected $fillable = ['id_minuta'];
+    protected $fillable = ['minuta_id'];
 
     public function minutas(){
-        return $this->belongsTo(Minuta::class);
+        return $this->belongsTo(Minuta::class,'minuta_id');
     }
 
     public function decisions(){
-        return $this->belongsToMany(Decision::class,'decisions','id_topic','id_minuta');
+        return $this->hasMany(Decision::class,'topic_id');
+    }
+
+    public function action(){
+        return $this->hasMany(Decision::class,'topic_id');
     }
 }

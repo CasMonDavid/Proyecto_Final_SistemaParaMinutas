@@ -21,22 +21,23 @@ class MinutasController extends Controller
         
         try{
             $validated = $request->validate([
-                'id_project' => ['required','exists:projects,id'],
+                'project_id' => ['required','exists:projects,id'],
                 'created_by' => ['required', 'exists:users,id'],
                 'date' => ['required','date_equals:date'],
                 'direction' => ['required', 'string','min:3','max:1000'],
                 'attendance' => ['required', 'array'],
                 'attendance.*.id_user' => ['required','exists:users,id'],
                 'attendance.*.status' => ['required',Rule::in($enum)],
-                'decisions' => ['required','array'],
-                'decisions.description' => ['required','string','min:3','max:10000'],
-                'action' => ['required','array'],
-                'action.description' => ['required','string','min:3','max:10000'],
+                'topics' => ['required', 'array'],
+                'topics.*.decisions' => ['required','array'],
+                'topics.*.decisions.*.description' => ['required', 'string', 'min:3', 'max:10000'],
+                'topics.*.actions' => ['required','array'],
+                'topics.*.actions.*.description' => ['required', 'string', 'min:3', 'max:10000']
             ]);
 
-            //Crea la minita
+            //Crea la minuta
             $minuta = Minuta::create([
-                'id_project' => $validated['id_project'],
+                'project_id' => $validated['project_id'],
                 'created_by' => $validated['created_by'],
                 'date' => $validated['date'],
                 'direction' => $validated['direction'],
@@ -46,33 +47,36 @@ class MinutasController extends Controller
             $assists = $validated['attendance'];
             foreach ($assists as $attendance){
                 Attendance::create([
-                    'id_minuta' => $minuta->id,
-                    'id_user' => $assists['id_user'],
-                    'status' => $assists['status'],
+                    'minuta_id' => $minuta->id,
+                    'user_id' => $attendance['id_user'],
+                    'status' => $attendance['status'],
                 ]);
             }
 
-            //Crea los temas
-            $topic = Topic::create([
-                'id_minuta' => $minuta->id
-            ]);
+            $topics = $validated['topics'];
 
-            //Crea las desiciones
-            $decisions = $validated['decisions'];
-            foreach ($decisions as $decision){
-                Decision::create([
-                    'id_topic' => $topic->id,
-                    'description' => $decisions['description']
+            foreach ($topics as $motif){
+                //Crea los temas
+                $topic = Topic::create([
+                    'minuta_id' => $minuta->id
                 ]);
-            }
-
-            //Crea las acciones
-            $actions = $validated['action'];
-            foreach ($actions as $action){
-                Elements_action::create([
-                    'id_topic' => $topic->id,
-                    'description' => $actions['description']
-                ]);
+                
+                //Crea las desiciones
+                $decisions = $motif['decisions'];
+                foreach ($decisions as $decision){
+                    Decision::create([
+                        'topic_id' => $topic->id,
+                        'description' => $decision['description']
+                    ]);
+                }
+                //Crea las acciones
+                $actions = $motif['actions'];
+                foreach ($actions as $action){
+                    Elements_action::create([
+                        'topic_id' => $topic->id,
+                        'description' => $action['description']
+                    ]);
+                }
             }
 
             DB::commit();
@@ -101,12 +105,13 @@ class MinutasController extends Controller
         
     }
 
-    public function show(){
-        
+    public function show(int $minuta_id){
+        $minuta = Minuta::with(['attendance','topics_decision','topics_action'])->find($minuta_id);
+        return response()->json($minuta,200);
     }
 
     public function index(){
-        $minuta = Minuta::all();
+        $minuta = Minuta::with(['attendance','topics_decision','topics_action'])->get();
         return response()->json($minuta,200);
     }
 }

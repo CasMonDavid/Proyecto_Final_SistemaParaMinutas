@@ -11,7 +11,7 @@ class Minuta extends Model
 
     protected $table = "minutas";
 
-    protected $fillable = ["id_project", "created_by", "date", "direction"];
+    protected $fillable = ["project_id", "created_by", "date", "direction"];
 
     public function user(){
         return $this->belongsToMany(User::class, 'users')
@@ -24,20 +24,14 @@ class Minuta extends Model
     }
 
     public function attendance(){
-        return $this->belongsToMany(Attendance::class,'attendance', 'id_minuta')
-            ->withPivot('status')
-            ->withTimestamps();
+        return $this->hasMany(Attendance::class,'minuta_id');
     }
 
-    public function topics_decsicion(){
-        return $this->belongsToMany(Topic::class,'decisions', 'id_minuta')
-            ->withPivot('description')
-            ->withTimestamps();
+    public function topics_decision(){
+        return $this->hasManyThrough(Decision::class, Topic::class, 'minuta_id','topic_id','id','id');
     }
 
     public function topics_action(){
-        return $this->belongsToMany(Topic::class,'elements_action', 'id_minuta')
-            ->withPivot('description')
-            ->withTimestamps();
+        return $this->hasManyThrough(Elements_action::class, Topic::class,'minuta_id','topic_id','id','id');
     }
 }

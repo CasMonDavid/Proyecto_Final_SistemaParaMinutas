@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_minuta')
+            $table->foreignId('minuta_id')
                 ->references('id')->on('minutas')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
@@ -22,7 +22,7 @@ return new class extends Migration
 
         Schema::create('decisions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_topics')
+            $table->foreignId('topic_id')
                 ->references('id')->on('topics')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
@@ -32,7 +32,7 @@ return new class extends Migration
 
         Schema::create('elements_action', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_topics')
+            $table->foreignId('topic_id')
                 ->references('id')->on('topics')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

@@ -8,9 +8,9 @@ class Decision extends Model
 {
     protected $table = 'decisions';
 
-    protected $fillable = ['id_topics','description'];
+    protected $fillable = ['topic_id','description'];
 
-    public function minutas(){
-        return $this->belongsTo(Minuta::class);
+    public function topics(){
+        return $this->belongsTo(Topic::class,'topic_id');
     }
 }

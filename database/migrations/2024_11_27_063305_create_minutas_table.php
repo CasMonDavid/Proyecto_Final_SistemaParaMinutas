@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('minutas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_project')
+            $table->foreignId('project_id')
                 ->references('id')->on('projects')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
@@ -25,11 +25,11 @@ return new class extends Migration
 
         Schema::create('attendance', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_minuta')
+            $table->foreignId('minuta_id')
                 ->references('id')->on('minutas')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->foreignId('id_user')
+            $table->foreignId('user_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
