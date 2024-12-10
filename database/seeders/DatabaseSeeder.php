@@ -18,6 +18,11 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ProjectSeeder::class,
             UserProjectSeeder::class,
+            MinutaSeeder::class,
+            AttendanceSeeder::class,
+            TopicSeeder::class,
+            DecisionSeeder::class,
+            ActionSeeder::class
         ]);
 
         //User::factory(10)->create();
