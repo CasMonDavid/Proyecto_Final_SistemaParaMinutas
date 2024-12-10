@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Users_ProjectsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
@@ -92,6 +93,9 @@ Route::get('/user_project', [Users_ProjectsController::class, 'index']);
 Route::resource('minutas', MinutasController::class)
     ->except(['create', 'edit'])
     ->parameters(['minutas' => 'minuta_id']);
+Route::get('/attendance/{attendance_id}',[AttendanceController::class, 'show']);
+Route::get('/minutas/attendance/{minuta_id}',[AttendanceController::class, 'getByIdMinuta']);
+Route::get('/attendance',[AttendanceController::class, 'index']);
 
 //RUTAS PARA PRUENAS POSTMAN ( ELIMINAR AL FINALIZAR )
 Route::get('/token', function (Request $request) {

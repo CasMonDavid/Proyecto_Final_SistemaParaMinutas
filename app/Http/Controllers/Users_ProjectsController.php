@@ -12,17 +12,17 @@ class Users_ProjectsController extends Controller
 {
     public function show(int $user_project_id){
         $user_project = User_project::find($user_project_id);
-        return $user_project;
+        return response()->json($user_project, 200);
     }
 
     public function getByProject(Request $request, Project $project){
-        $UserProject = User_project::where('project_id', '=', $project->id)
+        $user_project = User_project::where('project_id', '=', $project->id)
             ->get();
-        return $UserProject;
+            return response()->json($user_project, 200);
     }
 
     public function index(){
         $user_project = User_project::all();
-        return $user_project;
+        return response()->json($user_project, 200);
     }
 }

@@ -63,7 +63,10 @@ class ProjectsController extends Controller
     // Elimina un proyecto en base a su id
     public function destroy(Project $project_id){
         $project_id->delete();
-        return true;
+        return response()->json([
+            'status' => true,
+            'message' => 'Proyecto eliminado con exito.'
+        ]);
     }
 
     // Actualiza un proyecto en base a su id
@@ -133,6 +136,6 @@ class ProjectsController extends Controller
     // Muestra todos los proyectos
     public function index(){
         $project = Project::with('collaborators')->get();
-        return $project;
+        return response()->json($project,200);
     }
 }
