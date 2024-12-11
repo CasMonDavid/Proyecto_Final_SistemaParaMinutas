@@ -95,7 +95,7 @@
                     <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Cuenta</h6>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="profile">
+                    <a class="nav-link active " href="profile">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1"
@@ -176,103 +176,107 @@
 
 
             <form id="edit-user-form" action="" method="POST">
-              @csrf
-              @method('PUT')
-          
-              <!-- Nombre -->
-              <div class="mb-3">
-                  <label for="name" class="form-label">Nombre del usuario</label>
-                  <input type="text" class="form-control" id="name" name="name" placeholder="Nombre del usuario" required>
-              </div>
-          
-              <!-- Correo -->
-              <div class="mb-3">
-                  <label for="email" class="form-label">Correo</label>
-                  <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa el email" required>
-              </div>
-          
-              <!-- Contraseña -->
-              <div class="mb-3">
-                  <label for="password" class="form-label">Contraseña</label>
-                  <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" minlength="5" required>
-              </div>
-          
-              <!-- Fecha de cumpleaños -->
-              <div class="mb-3">
-                  <label for="birthday" class="form-label">Fecha de cumpleaños</label>
-                  <input type="date" class="form-control" id="birthday" name="birthday" placeholder="Ingresa la fecha de cumpleaños" required>
-              </div>
-          
-              <!-- Submit Button -->
-              <div class="collapse navbar-collapse d-flex" id="navigation">
-                  <div class="ms-auto d-flex align-items-center">
-                      <a class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" href="/users">Cancelar</a>
-                      <button type="submit" class="btn btn-lg btn-round mb-0 me-1 bg-gradient-dark">Guardar</button>
-                  </div>
-              </div>
-          </form>
-          
-          <script>
-            // Paso 1: Obtener el ID de la URL y guardarlo en una variable
-            const url = window.location.pathname;
-            const userId = url.split('/').pop(); // Obtener el último segmento de la URL
-        
-            // Paso 2: Modificar la acción del formulario con el ID
-            const formAction = `/usuarios/${userId}`; // Construir la URL para la acción del formulario
-            document.getElementById('edit-user-form').action = formAction;
-        
-            // Verifica en la consola si se está obteniendo correctamente el userId y la URL de acción
-            console.log("userId obtenido de la URL:", userId);
-            console.log("Formulario con action:", formAction);
-        
-            // Paso 3: Usar el userId para obtener los datos del usuario desde el servidor
-            fetch(`/usuarios/${userId}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Paso 4: Llenar el formulario con los datos del usuario
-                    document.getElementById('name').value = data.name;
-                    document.getElementById('email').value = data.email;
-                    document.getElementById('birthday').value = data.birthday; // Rellenar la fecha de cumpleaños
-                })
-                .catch(error => console.error('Error:', error));
-        
-            // Manejar el envío del formulario para redirigir después de guardar
-            document.getElementById('edit-user-form').addEventListener('submit', function (event) {
-                event.preventDefault(); // Prevenir el envío tradicional del formulario
-        
-                const form = event.target;
-                const formData = new FormData(form); // Capturar los datos del formulario
-        
-                const options = {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                        'X-HTTP-Method-Override': 'PUT', // Especificar que es un método PUT
-                        'Accept': 'application/json',
-                    },
-                    body: formData,
-                };
-        
-                fetch(formAction, options)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Error al guardar los cambios');
-                        }
-                        return response.json();
-                    })
+                @csrf
+                @method('PUT')
+
+                <!-- Nombre -->
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre del usuario</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nombre del usuario"
+                        required>
+                </div>
+
+                <!-- Correo -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa el email"
+                        required>
+                </div>
+
+                <!-- Contraseña -->
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña"
+                        minlength="5" required>
+                </div>
+
+                <!-- Fecha de cumpleaños -->
+                <div class="mb-3">
+                    <label for="birthday" class="form-label">Fecha de cumpleaños</label>
+                    <input type="date" class="form-control" id="birthday" name="birthday"
+                        placeholder="Ingresa la fecha de cumpleaños" required>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="collapse navbar-collapse d-flex" id="navigation">
+                    <div class="ms-auto d-flex align-items-center">
+                        <a class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" href="/users">Cancelar</a>
+                        <button type="submit" class="btn btn-lg btn-round mb-0 me-1 bg-gradient-dark">Guardar</button>
+                    </div>
+                </div>
+            </form>
+
+            <script>
+                // Paso 1: Obtener el ID de la URL y guardarlo en una variable
+                const url = window.location.pathname;
+                const userId = url.split('/').pop(); // Obtener el último segmento de la URL
+
+                // Paso 2: Modificar la acción del formulario con el ID
+                const formAction = `/usuarios/${userId}`; // Construir la URL para la acción del formulario
+                document.getElementById('edit-user-form').action = formAction;
+
+                // Verifica en la consola si se está obteniendo correctamente el userId y la URL de acción
+                console.log("userId obtenido de la URL:", userId);
+                console.log("Formulario con action:", formAction);
+
+                // Paso 3: Usar el userId para obtener los datos del usuario desde el servidor
+                fetch(`/usuarios/${userId}`)
+                    .then(response => response.json())
                     .then(data => {
-                        console.log('Usuario actualizado:', data);
-                        window.location.href = '/users'; // Redirigir a la página de usuarios
+                        // Paso 4: Llenar el formulario con los datos del usuario
+                        document.getElementById('name').value = data.name;
+                        document.getElementById('email').value = data.email;
+                        document.getElementById('birthday').value = data.birthday; // Rellenar la fecha de cumpleaños
                     })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Hubo un problema al guardar los cambios.');
-                    });
-            });
-        </script>
-        
-          
-          
+                    .catch(error => console.error('Error:', error));
+
+                // Manejar el envío del formulario para redirigir después de guardar
+                document.getElementById('edit-user-form').addEventListener('submit', function (event) {
+                    event.preventDefault(); // Prevenir el envío tradicional del formulario
+
+                    const form = event.target;
+                    const formData = new FormData(form); // Capturar los datos del formulario
+
+                    const options = {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                            'X-HTTP-Method-Override': 'PUT', // Especificar que es un método PUT
+                            'Accept': 'application/json',
+                        },
+                        body: formData,
+                    };
+
+                    fetch(formAction, options)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Error al guardar los cambios');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Usuario actualizado:', data);
+                            window.location.href = '/users'; // Redirigir a la página de usuarios
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Hubo un problema al guardar los cambios.');
+                        });
+                });
+            </script>
+
+
+
 
 
 

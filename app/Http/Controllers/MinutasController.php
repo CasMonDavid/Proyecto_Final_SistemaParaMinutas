@@ -15,23 +15,24 @@ use Illuminate\Validation\Rule;
 
 class MinutasController extends Controller
 {
-    public function store(Request $request){
-        $enum = ['Confirmado','Justificado','Ausente'];
+    public function store(Request $request)
+    {
+        $enum = ['Confirmado', 'Justificado', 'Ausente'];
         DB::beginTransaction();
-        
-        try{
+
+        try {
             $validated = $request->validate([
-                'project_id' => ['required','exists:projects,id'],
+                'project_id' => ['required', 'exists:projects,id'],
                 'created_by' => ['required', 'exists:users,id'],
-                'date' => ['required','date_equals:date'],
-                'direction' => ['required', 'string','min:3','max:1000'],
+                'date' => ['required', 'date_equals:date'],
+                'direction' => ['required', 'string', 'min:3', 'max:1000'],
                 'attendance' => ['required', 'array'],
-                'attendance.*.id_user' => ['required','exists:users,id'],
-                'attendance.*.status' => ['required',Rule::in($enum)],
+                'attendance.*.id_user' => ['required', 'exists:users,id'],
+                'attendance.*.status' => ['required', Rule::in($enum)],
                 'topics' => ['required', 'array'],
-                'topics.*.decisions' => ['required','array'],
+                'topics.*.decisions' => ['required', 'array'],
                 'topics.*.decisions.*.description' => ['required', 'string', 'min:3', 'max:10000'],
-                'topics.*.actions' => ['required','array'],
+                'topics.*.actions' => ['required', 'array'],
                 'topics.*.actions.*.description' => ['required', 'string', 'min:3', 'max:10000']
             ]);
 
@@ -45,7 +46,7 @@ class MinutasController extends Controller
 
             //Crea la asistencia
             $assists = $validated['attendance'];
-            foreach ($assists as $attendance){
+            foreach ($assists as $attendance) {
                 Attendance::create([
                     'minuta_id' => $minuta->id,
                     'user_id' => $attendance['id_user'],
@@ -55,15 +56,15 @@ class MinutasController extends Controller
 
             $topics = $validated['topics'];
 
-            foreach ($topics as $motif){
+            foreach ($topics as $motif) {
                 //Crea los temas
                 $topic = Topic::create([
                     'minuta_id' => $minuta->id
                 ]);
-                
+
                 //Crea las desiciones
                 $decisions = $motif['decisions'];
-                foreach ($decisions as $decision){
+                foreach ($decisions as $decision) {
                     Decision::create([
                         'topic_id' => $topic->id,
                         'description' => $decision['description']
@@ -71,7 +72,7 @@ class MinutasController extends Controller
                 }
                 //Crea las acciones
                 $actions = $motif['actions'];
-                foreach ($actions as $action){
+                foreach ($actions as $action) {
                     Elements_action::create([
                         'topic_id' => $topic->id,
                         'description' => $action['description']
@@ -84,20 +85,21 @@ class MinutasController extends Controller
                 'status' => true,
                 'message' => 'Minuta registrada con exito.',
                 'minuta' => $minuta
-            ],200);
+            ], 200);
 
-        }catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
             $massage = $e->getMessage();
         }
         return response()->json([
             'status' => false,
             'message' => 'No fue posible guardar la minuta.',
-            'error' => $massage?? "Error de validación",
-        ],422);
+            'error' => $massage ?? "Error de validación",
+        ], 422);
     }
 
-    public function destroy(Minuta $minuta_id){
+    public function destroy(Minuta $minuta_id)
+    {
         $minuta_id->delete();
         return response()->json([
             'status' => true,
@@ -105,21 +107,22 @@ class MinutasController extends Controller
         ]);
     }
 
-    public function update(Request $request, int $minuta_id){
-        $enum = ['Confirmado','Justificado','Ausente'];
+    public function update(Request $request, int $minuta_id)
+    {
+        $enum = ['Confirmado', 'Justificado', 'Ausente'];
         DB::beginTransaction();
-        
-        try{            
+
+        try {
             $validated = $request->validate([
-                'date' => ['required','date_equals:date'],
-                'direction' => ['required', 'string','min:3','max:1000'],
+                'date' => ['required', 'date_equals:date'],
+                'direction' => ['required', 'string', 'min:3', 'max:1000'],
                 'attendance' => ['required', 'array'],
-                'attendance.*.id_user' => ['required','exists:users,id'],
-                'attendance.*.status' => ['required',Rule::in($enum)],
+                'attendance.*.id_user' => ['required', 'exists:users,id'],
+                'attendance.*.status' => ['required', Rule::in($enum)],
                 'topics' => ['required', 'array'],
-                'topics.*.decisions' => ['required','array'],
+                'topics.*.decisions' => ['required', 'array'],
                 'topics.*.decisions.*.description' => ['required', 'string', 'min:3', 'max:10000'],
-                'topics.*.actions' => ['required','array'],
+                'topics.*.actions' => ['required', 'array'],
                 'topics.*.actions.*.description' => ['required', 'string', 'min:3', 'max:10000']
             ]);
 
@@ -131,10 +134,10 @@ class MinutasController extends Controller
                 'direction' => $validated['direction'],
             ]);
 
-            Attendance::where('minuta_id',$minuta_id)->delete();
+            Attendance::where('minuta_id', $minuta_id)->delete();
             //Crea la asistencia
             $assists = $validated['attendance'];
-            foreach ($assists as $attendance){
+            foreach ($assists as $attendance) {
                 Attendance::create([
                     'minuta_id' => $minuta->id,
                     'user_id' => $attendance['id_user'],
@@ -142,17 +145,17 @@ class MinutasController extends Controller
                 ]);
             }
 
-            Topic::where('minuta_id',$minuta_id)->delete();
+            Topic::where('minuta_id', $minuta_id)->delete();
             $topics = $validated['topics'];
-            foreach ($topics as $motif){
+            foreach ($topics as $motif) {
                 //Crea los temas
                 $topic = Topic::create([
                     'minuta_id' => $minuta->id
                 ]);
-                
+
                 //Crea las desiciones
                 $decisions = $motif['decisions'];
-                foreach ($decisions as $decision){
+                foreach ($decisions as $decision) {
                     Decision::create([
                         'topic_id' => $topic->id,
                         'description' => $decision['description']
@@ -160,7 +163,7 @@ class MinutasController extends Controller
                 }
                 //Crea las acciones
                 $actions = $motif['actions'];
-                foreach ($actions as $action){
+                foreach ($actions as $action) {
                     Elements_action::create([
                         'topic_id' => $topic->id,
                         'description' => $action['description']
@@ -173,26 +176,28 @@ class MinutasController extends Controller
                 'status' => true,
                 'message' => 'Minuta actualizada con exito.',
                 'minuta' => $minuta
-            ],200);
+            ], 200);
 
-        }catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
             $massage = $e->getMessage();
         }
         return response()->json([
             'status' => false,
             'message' => 'No fue posible actualizar la minuta.',
-            'error' => $massage?? "Error de validación",
-        ],422);
+            'error' => $massage ?? "Error de validación",
+        ], 422);
     }
 
-    public function show(int $minuta_id){
-        $minuta = Minuta::with(['attendance','topics_decision','topics_action'])->find($minuta_id);
-        return response()->json($minuta,200);
+    public function show(int $minuta_id)
+    {
+        $minuta = Minuta::with(['attendance', 'topics_decision', 'topics_action'])->find($minuta_id);
+        return response()->json($minuta, 200);
     }
 
-    public function index(){
-        $minuta = Minuta::with(['attendance','topics_decision','topics_action'])->get();
-        return response()->json($minuta,200);
+    public function index()
+    {
+        $minuta = Minuta::with(['attendance', 'topics_decision', 'topics_action'])->get();
+        return response()->json($minuta, 200);
     }
 }

@@ -11,14 +11,15 @@ use App\Models\User;
 class UsersController extends Controller
 {
     // Guarda un usuario
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:App\Models\User,email',
             'password' => 'required|string|min:5|max:255',
             'birthday' => 'required|date',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
@@ -30,7 +31,7 @@ class UsersController extends Controller
         $validated = $validator->validated();
         $validated['password'] = bcrypt($validated['password']);
         $user = User::create($validated);
-    
+
         // Respuestas
         if ($request->expectsJson()) {
             return response()->json([
@@ -44,16 +45,18 @@ class UsersController extends Controller
     }
 
     // Elimina un usuario en base a su id
-    public function destroy(User $user_id){
+    public function destroy(User $user_id)
+    {
         $user_id->delete();
         return response()->json([
             'status' => true,
             'message' => 'Usuario eliminado con exito',
-        ],200);
+        ], 200);
     }
 
     // Actualiza un usuario en base a su id
-    public function update(Request $request, User $user_id){  
+    public function update(Request $request, User $user_id)
+    {
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -70,14 +73,16 @@ class UsersController extends Controller
     }
 
     // Muestra un usuario en base a su id
-    public function show(int $user_id){
+    public function show(int $user_id)
+    {
         $user = User::find($user_id);
-        return response()->json($user,200);
+        return response()->json($user, 200);
     }
 
     // Muestra a todos los usuarios
-    public function index(){
+    public function index()
+    {
         $users = User::all();
-        return response()->json($users,200);
+        return response()->json($users, 200);
     }
 }

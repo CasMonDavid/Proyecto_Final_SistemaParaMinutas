@@ -26,45 +26,45 @@ Route::get('/register', function () {
     return view('sign-up');
 });
 
-Route::post('/home.post', function() {
+Route::post('/home.post', function () {
     return view('dashboard');
 });
 
 Route::redirect('/home.post', '/home');
 
-Route::get('/home', function() {
+Route::get('/home', function () {
     return view('dashboard');
 });
 
-Route::get('/users/edit-users/{id}', function() {
+Route::get('/users/edit-users/{id}', function () {
     return view('editusers');
 });
 
-Route::get('/project/minuta/{id}', function() {
+Route::get('/project/minuta/{id}', function () {
     return view('minuta');
 });
 
-Route::get('/project/create-minuta', function() {
+Route::get('/project/create-minuta', function () {
     return view('createminuta');
 });
 
-Route::get('/project/{id}', function() {
+Route::get('/project/{id}', function () {
     return view('project');
 });
 
-Route::get('/create-project', function() {
+Route::get('/create-project', function () {
     return view('addproject');
 });
 
-Route::get('/edit-project/{id}', function() {
+Route::get('/edit-project/{id}', function () {
     return view('editproject');
 });
 
-Route::get('/profile', function() {
+Route::get('/profile', function () {
     return view('profile');
 });
 
-Route::get('/users', function() {
+Route::get('/users', function () {
     return view('users');
 });
 
@@ -93,13 +93,13 @@ Route::get('/user_project', [Users_ProjectsController::class, 'index']);
 Route::resource('minutas', MinutasController::class)
     ->except(['create', 'edit'])
     ->parameters(['minutas' => 'minuta_id']);
-Route::get('/attendance/{attendance_id}',[AttendanceController::class, 'show']);
-Route::get('/minutas/attendance/{minuta_id}',[AttendanceController::class, 'getByIdMinuta']);
-Route::get('/attendance',[AttendanceController::class, 'index']);
+Route::get('/attendance/{attendance_id}', [AttendanceController::class, 'show']);
+Route::get('/minutas/attendance/{minuta_id}', [AttendanceController::class, 'getByIdMinuta']);
+Route::get('/attendance', [AttendanceController::class, 'index']);
 
 //RUTAS PARA PRUENAS POSTMAN ( ELIMINAR AL FINALIZAR )
 Route::get('/token', function (Request $request) {
     $token = $request->session()->token();
     $token = csrf_token();
-    return "token: ".$token;
+    return "token: " . $token;
 });
