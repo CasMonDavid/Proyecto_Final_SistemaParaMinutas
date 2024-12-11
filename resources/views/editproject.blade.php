@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="apple-touch-icon" sizes="76x76" href="{{asset('/assets/img/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="{{asset('/assets/img/favicon.png')}}">
   <title>
@@ -170,7 +171,7 @@
 
       <h6>Editar proyecto</h6>
 
-      <form action="/home">
+      <form id="projectForm" action="/home">
         <!-- Nombre -->
         <div class="mb-3">
             <label for="name" class="form-label">Nombre del proyecto</label>
@@ -199,8 +200,6 @@
             <label for="adduser" class="form-label">Agregar usuario</label>
             <select class="form-select" id="adduser" required>
                 <option value="" disabled selected>Selecciona el usuario</option>
-                <option value="activo">Usuario 1</option>
-                <option value="inactivo">Usuario n</option>
             </select>
         </div>
     
@@ -224,38 +223,121 @@
             </div>
         </div>
     </form>
-
     
     <script>
-
-document.addEventListener('DOMContentLoaded', function () {
-     // Obtener el ID del proyecto desde la URL
-    const projectId = window.location.pathname.split('/').pop();; 
-    fetch(`/proyectos/${projectId}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status) {
-                // Asignar los datos del proyecto al formulario
-                document.getElementById('name').value = data.project.name;
-                document.getElementById('description').value = data.project.description;
-                document.getElementById('status').value = data.project.status;
-
-                // Si tienes colaboradores, puedes cargar aquí también
-                const collaborators = data.collaborators;
-                const addUserSelect = document.getElementById('adduser');
-                // Aquí puedes añadir lógica para pre-seleccionar los colaboradores si es necesario.
-                collaborators.forEach(collaborator => {
-                    const option = document.createElement('option');
-                    option.value = collaborator.user_id;
-                    option.textContent = `Usuario ${collaborator.user_id}`; // Asegúrate de mostrar el nombre correcto
-                    addUserSelect.appendChild(option);
-                });
-            }
-        })
-        .catch(error => console.error('Error al cargar el proyecto:', error));
-});
-
-    </script>
+      document.addEventListener('DOMContentLoaded', function () {
+          // Obtener el ID del proyecto desde la URL
+          const projectId = window.location.pathname.split('/').pop();
+      
+          // Cargar el proyecto y sus colaboradores
+          fetch(`/proyectos/${projectId}`)
+              .then(response => response.json())
+              .then(data => {
+                  console.log('Datos del proyecto:', data); // Verifica los datos del proyecto
+                  if (data.status) {
+                      // Asignar los datos del proyecto al formulario
+                      document.getElementById('name').value = data.project.name;
+                      document.getElementById('description').value = data.project.description;
+                      document.getElementById('status').value = data.project.status;
+      
+                      // Obtener el ID del creador del proyecto
+                      const creatorId = data.project.creator_id;  // Asegúrate de que este campo exista en la respuesta
+      
+                      // Asegurarse de que 'collaborators' sea un arreglo, incluso si está vacío
+                      const collaborators = Array.isArray(data.collaborators) ? data.collaborators : [];
+                      console.log('Colaboradores:', collaborators);  // Verifica los colaboradores
+      
+                      const addUserSelect = document.getElementById('adduser');
+                      
+                      // Crear un conjunto de los IDs de colaboradores existentes
+                      const collaboratorIds = new Set(collaborators.map(collaborator => collaborator.user_id));
+      
+                      // Filtrar los usuarios para que no aparezcan los que ya son colaboradores ni el creador
+                      fetch(`/user_project/getByProject/${projectId}`)
+                          .then(response => response.json())
+                          .then(collaboratorsData => {
+                              // Obtener los IDs de los colaboradores actuales
+                              const existingCollaboratorIds = collaboratorsData.map(collaborator => collaborator.user_id);
+                              console.log('Colaboradores actuales:', existingCollaboratorIds);
+      
+                              // Obtener la lista de usuarios
+                              fetch('/usuarios')
+                                  .then(response => response.json())
+                                  .then(users => {
+                                      console.log('Usuarios:', users);  // Verifica los usuarios cargados
+                                      users.forEach(user => {
+                                          // Solo agregar usuarios que no están en el proyecto ni son el creador
+                                          if (!existingCollaboratorIds.includes(user.id) && user.id !== creatorId) {
+                                              const option = document.createElement('option');
+                                              option.value = user.id;
+                                              option.textContent = user.name; // Muestra el nombre real del usuario
+                                              addUserSelect.appendChild(option);
+                                          }
+                                      });
+                                  })
+                                  .catch(error => console.error('Error al cargar los usuarios:', error));
+                          })
+                          .catch(error => console.error('Error al obtener los colaboradores del proyecto:', error));
+                  }
+              })
+              .catch(error => console.error('Error al cargar el proyecto:', error));
+      
+          // Manejar la acción de guardar el formulario
+          const projectForm = document.getElementById('projectForm');
+          projectForm.addEventListener('submit', function (e) {
+              e.preventDefault();  // Evita que el formulario recargue la página
+      
+              // Obtener los datos del formulario
+              const name = document.getElementById('name').value;
+              const description = document.getElementById('description').value;
+              const status = document.getElementById('status').value;
+      
+              // Obtener los colaboradores
+              const collaborators = [];
+              const addUserSelect = document.getElementById('adduser');
+              const userId = parseInt(addUserSelect.value, 10);  // Convertir el ID de usuario a un número entero
+              const role = document.getElementById('rol').value;
+      
+              if (userId && role) {
+                  collaborators.push({ user_id: userId, role: role });
+              }
+      
+              // Mostrar los datos que se van a enviar en formato JSON en la consola
+              const dataToSend = {
+                  name: name,
+                  description: description,
+                  status: status,
+                  collaborators: collaborators,  // Enviar los colaboradores seleccionados
+              };
+              console.log('Datos que se enviarán al servidor:', JSON.stringify(dataToSend));
+      
+              // Enviar los datos al servidor
+              fetch(`proyectos/${projectId}`, {
+                  method: 'PUT',  // Usamos PUT porque es una actualización
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(dataToSend),
+              })
+              .then(response => response.json())
+              .then(data => {
+                  console.log('Proyecto actualizado:', data);
+                  if (data.status) {
+                      // Redirigir a la página principal o mostrar un mensaje de éxito
+                      window.location.href = '/home';
+                  } else {
+                      alert('Hubo un problema al actualizar el proyecto.');
+                  }
+              })
+              .catch(error => {
+                  console.error('Error al actualizar el proyecto:', error);
+                  alert('Hubo un error al actualizar el proyecto.');
+              });
+          });
+      });
+  </script>
+  
+      
 
 
 
