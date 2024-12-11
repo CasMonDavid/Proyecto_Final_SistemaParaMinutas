@@ -26,6 +26,26 @@
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+
+    <!-- Modal de Confirmación -->
+    <div class="modal" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar este proyecto?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -205,8 +225,8 @@
                             <span class="mask bg-white opacity-10 border-radius-lg"></span>
                             <div class="card-body p-3 position-relative">
                                 <div class="row h-100 d-flex justify-content-center align-items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"
-                                        fill="black" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="black"
+                                        class="bi bi-plus" viewBox="0 0 16 16">
                                         <path
                                             d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                                     </svg>
@@ -327,45 +347,53 @@
                                                 });
                                             });
 
-                                            // Añadir funcionalidad de eliminación de proyecto
                                             const deleteButtons = document.querySelectorAll('.delete-project');
+                                            let projectIdToDelete = null; // Variable para almacenar el ID del proyecto a eliminar
+
                                             deleteButtons.forEach(button => {
-                                                button.addEventListener('click', function(event) {
-                                                    event
-                                                .stopPropagation(); // Para evitar que el click en el botón dispare otros eventos
-                                                    const projectId = button.getAttribute('data-id');
+                                                button.addEventListener('click', function (event) {
+                                                    event.stopPropagation(); // Para evitar que el click en el botón dispare otros eventos
+                                                    projectIdToDelete = button.getAttribute('data-id'); // Guardamos el ID del proyecto
+
+                                                    // Mostrar el modal de confirmación
+                                                    const myModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+                                                    myModal.show();
+                                                });
+                                            });
+
+                                            // Evento para confirmar la eliminación
+                                            document.getElementById('confirmDeleteButton').addEventListener('click', function () {
+                                                if (projectIdToDelete) {
                                                     // Realizar solicitud de eliminación
-                                                    fetch(`/proyectos/${projectId}`, {
-                                                            method: 'DELETE',
-                                                            headers: {
-                                                                'Content-Type': 'application/json',
-                                                                'X-CSRF-TOKEN': document
-                                                                    .querySelector(
-                                                                        'meta[name="csrf-token"]')
-                                                                    .getAttribute(
-                                                                    'content') // Asegúrate de incluir el token CSRF
-                                                            }
-                                                        })
+                                                    fetch(`/proyectos/${projectIdToDelete}`, {
+                                                        method: 'DELETE',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF Token
+                                                        }
+                                                    })
                                                         .then(response => response.json())
                                                         .then(data => {
                                                             if (data.status) {
                                                                 // Eliminar la tarjeta del proyecto de la vista
-                                                                const cardToDelete = button.closest(
-                                                                    '.col-lg-3'
-                                                                    ); // Encuentra el contenedor de la tarjeta
+                                                                const cardToDelete = document.querySelector(`.delete-project[data-id="${projectIdToDelete}"]`).closest('.col-lg-3');
                                                                 cardToDelete.remove();
+                                                                //alert('Proyecto eliminado con éxito');
                                                             } else {
-                                                                alert(
-                                                                    "No se pudo eliminar el proyecto");
+                                                                alert("No se pudo eliminar el proyecto");
                                                             }
                                                         })
                                                         .catch(error => {
-                                                            console.error(
-                                                                'Error al eliminar el proyecto:',
-                                                                error);
+                                                            console.error('Error al eliminar el proyecto:', error);
+                                                        })
+                                                        .finally(() => {
+                                                            // Cerrar el modal después de la solicitud
+                                                            const myModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
+                                                            myModal.hide();
                                                         });
-                                                });
+                                                }
                                             });
+
 
                                         })
                                         .catch(error => {
