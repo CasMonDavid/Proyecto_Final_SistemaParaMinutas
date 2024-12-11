@@ -25,7 +25,5 @@ class DatabaseSeeder extends Seeder
             ActionSeeder::class
         ]);
 
-        //User::factory(10)->create();
-
     }
 }

@@ -52,5 +52,65 @@ class TopicSeeder extends Seeder
         $topic = new Topic();
         $topic->minuta_id = 3;
         $topic->save();
+
+        //Tema 9
+        $topic = new Topic();
+        $topic->minuta_id = 9;
+        $topic->save();
+
+        //Tema 10
+        $topic = new Topic();
+        $topic->minuta_id = 10;
+        $topic->save();
+
+        //Tema 11
+        $topic = new Topic();
+        $topic->minuta_id = 11;
+        $topic->save();
+
+        //Tema 12
+        $topic = new Topic();
+        $topic->minuta_id = 12;
+        $topic->save();
+
+        //Tema 13
+        $topic = new Topic();
+        $topic->minuta_id = 13;
+        $topic->save();
+
+        //Tema 14
+        $topic = new Topic();
+        $topic->minuta_id = 14;
+        $topic->save();
+
+        //Tema 15
+        $topic = new Topic();
+        $topic->minuta_id = 15;
+        $topic->save();
+
+        //Tema 16
+        $topic = new Topic();
+        $topic->minuta_id = 2;
+        $topic->save();
+
+        //Tema 17
+        $topic = new Topic();
+        $topic->minuta_id = 7;
+        $topic->save();
+
+        //Tema 18
+        $topic = new Topic();
+        $topic->minuta_id = 13;
+        $topic->save();
+
+        //Tema 19
+        $topic = new Topic();
+        $topic->minuta_id = 2;
+        $topic->save();
+
+        //Tema 20
+        $topic = new Topic();
+        $topic->minuta_id = 8;
+        $topic->save();
     }
 }
