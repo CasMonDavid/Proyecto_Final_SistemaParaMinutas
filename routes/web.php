@@ -40,7 +40,7 @@ Route::get('/users/edit-users/{id}', function() {
     return view('editusers');
 });
 
-Route::get('/project/minuta', function() {
+Route::get('/project/minuta/{id}', function() {
     return view('minuta');
 });
 
@@ -48,7 +48,7 @@ Route::get('/project/create-minuta', function() {
     return view('createminuta');
 });
 
-Route::get('/project', function() {
+Route::get('/project/{id}', function() {
     return view('project');
 });
 
@@ -56,7 +56,7 @@ Route::get('/create-project', function() {
     return view('addproject');
 });
 
-Route::get('/edit-project', function() {
+Route::get('/edit-project/{id}', function() {
     return view('editproject');
 });
 
