@@ -140,34 +140,89 @@
     <!-- End Navbar -->
     <div class="container-fluid py-4">
 
-    <div class="col-lg-12 col-md-12 col-sm- col-12 mb-4">
-      <div class="card h-100 cursor-pointer">
-        <span class="mask bg-primary opacity-10 border-radius-lg"></span>
-        <div class="card-body p-3 position-relative">
-          <div class="row">
-            <div class="col-8 text-start">
-              <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                Nombre del proyecto
-              </h5>
-              <span class="text-white text-sm">Creador del proyecto</span>
-            </div>
-            <div class="col-4">
-              <div class="dropstart text-end mb-6">
-                <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-ellipsis-h text-white"></i>
-                </a>
-                <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                  <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                  <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                  <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                </ul>
+
+
+      <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-4">
+        <div class="card h-100 cursor-pointer">
+          <span class="mask bg-primary opacity-10 border-radius-lg"></span>
+          <div class="card-body p-3 position-relative">
+            <div class="row">
+              <div class="col-8 text-start">
+                <h5 class="text-white font-weight-bolder mb-0 mt-3" id="project-name">
+                  Nombre del proyecto
+                </h5>
+                <span class="text-white text-sm" id="project-creator">
+                  Creador del proyecto
+                </span>
               </div>
-              <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">Fecha de creacion</p>
+              <div class="col-4">
+                <div class="dropstart text-end mb-6">
+                  <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-ellipsis-h text-white"></i>
+                  </a>
+                  <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
+                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
+                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
+                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
+                  </ul>
+                </div>
+                <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0" id="project-date">
+                  Fecha de creación
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      
+      <script>
+          document.addEventListener("DOMContentLoaded", () => {
+              // Obtener el ID del proyecto desde la URL
+              const projectId = window.location.pathname.split('/').pop();
+              
+              // Función para obtener los datos del proyecto
+              const fetchProjectDetails = async (projectId) => {
+                  try {
+                      // Realizamos la solicitud GET a la API para obtener el proyecto usando su ID
+                      const response = await fetch(`/proyectos/${projectId}`);
+                      if (response.ok) {
+                          const data = await response.json();
+                          const project = data.project;
+      
+                          // Actualizar el DOM con los datos del proyecto
+                          document.getElementById("project-name").textContent = project.name || "Nombre del proyecto";
+                          document.getElementById("project-creator").textContent = await fetchCreatorName(project.created_by);
+                          document.getElementById("project-date").textContent = project.created_at ? new Date(project.created_at).toLocaleDateString("es-ES") : "Fecha de creación";
+                      }
+                  } catch (error) {
+                      console.error("Error al obtener los detalles del proyecto:", error);
+                  }
+              };
+      
+              // Función para obtener el nombre del creador (basado en el ID del creador)
+              const fetchCreatorName = async (userId) => {
+                  if (!userId) return "Autor desconocido";
+                  
+                  try {
+                      const response = await fetch(`/usuarios/${userId}`);
+                      if (response.ok) {
+                          const user = await response.json();
+                          return user.name || "Autor desconocido";
+                      }
+                  } catch (error) {
+                      console.error(`Error al obtener el creador ${userId}:`, error);
+                  }
+                  return "Autor desconocido";
+              };
+      
+              // Obtener los detalles del proyecto con el ID obtenido
+              fetchProjectDetails(projectId);
+          });
+      </script>
+      
+
+
+    
 
     <h6>Minutas</h6>
 
@@ -186,295 +241,317 @@
             </div>
           </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project/minuta'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Nombre de la minuta
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">Fecha de creacion</p>
-                </div>
-              </div>
+        <div class="row" id="minutas-list">
+          <!-- Aquí se cargarán las minutas dinámicamente -->
+      </div>
+      
+      <script>
+          document.addEventListener("DOMContentLoaded", () => {
+              // Obtener el ID del proyecto desde la URL
+              const projectId = window.location.pathname.split('/').pop();
+      
+              const userCache = {}; // Caché para almacenar los nombres de los usuarios ya consultados
+      
+              // Función para obtener el nombre del creador
+              const fetchCreatorName = async (userId) => {
+                  if (!userId) return "Autor desconocido";
+      
+                  if (userCache[userId]) {
+                      return userCache[userId];
+                  }
+      
+                  try {
+                      const response = await fetch(`/usuarios/${userId}`);
+                      if (response.ok) {
+                          const user = await response.json();
+                          const userName = user.name || "Autor desconocido";
+                          userCache[userId] = userName;
+                          return userName;
+                      }
+                  } catch (error) {
+                      console.error(`Error al obtener el usuario ${userId}:`, error);
+                  }
+                  return "Autor desconocido";
+              };
+      
+              // Realizar solicitud para obtener todas las minutas
+              fetch("/minutas")
+                  .then((response) => response.json())
+                  .then(async (minutas) => {
+                      const minutasList = document.getElementById("minutas-list");
+                      minutasList.innerHTML = ""; // Limpiar cualquier contenido previo
+      
+                      // Filtrar las minutas por el ID del proyecto
+                      const filteredMinutas = minutas.filter(
+                          (minuta) => minuta.project_id == projectId // Comparar como número
+                      );
+      
+                      // Recorrer las minutas filtradas y agregarlas al DOM
+                      for (const [index, minuta] of filteredMinutas.entries()) {
+                          const creatorName = await fetchCreatorName(minuta.created_by);
+                          const fechaCreacion = minuta.created_at
+                              ? new Date(minuta.created_at).toLocaleDateString("es-ES")
+                              : "Fecha de creación";
+      
+                          const minutaCard = document.createElement("div");
+                          minutaCard.classList.add(
+                              "col-lg-3",
+                              "col-md-4",
+                              "col-sm-6",
+                              "col-12",
+                              "mb-4"
+                          );
+                          minutaCard.innerHTML = `
+                              <div class="card h-100 cursor-pointer" >
+                                  <span class="mask bg-dark opacity-10 border-radius-lg"></span>
+                                  <div class="card-body p-3 position-relative">
+                                      <div class="row">
+                                          <div class="col-8 text-start">
+                                              <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
+                                                  <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                                              </div>
+                                              <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                                  Minuta ${index + 1}
+                                              </h5>
+                                              <p class="text-white text-sm mb-0" style="font-size: 12px;">
+                                                  Creador: ${creatorName}
+                                              </p>
+                                              <p class="text-white text-sm mb-0" style="font-size: 12px;">
+                                                  Fecha de creación: ${fechaCreacion}
+                                              </p>
+                                          </div>
+                                          <div class="col-4">
+                                              <div class="dropstart text-end mb-6">
+                                                  <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                      <i class="fa fa-ellipsis-h text-white"></i>
+                                                  </a>
+                                                  <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
+                                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
+                                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
+                                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
+                                                  </ul>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          `;
+                          minutasList.appendChild(minutaCard);
+                      }
+                  })
+                  .catch((error) => {
+                      console.error("Error al cargar las minutas:", error);
+                  });
+          });
+      </script>
+      
+        
+        
+        
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h6>Participantes</h6>
             </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project/minuta'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project/minuta'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></spa>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Segunda fila (de ejemplo (Se acomodan sola en otra fila cuando son mas de 4)) -->
-
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project/minuta'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project/minuta'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project/minuta'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project/minuta'">
-            <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row">
-                <div class="col-8 text-start">
-                  <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                    <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                  <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                    Minuta Microsoft
-                  </h5>
-                </div>
-                <div class="col-4">
-                  <div class="dropstart text-end mb-6">
-                    <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-h text-white"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                  <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">29-nov-2024</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-12">
-            <div class="card mb-4">
-              <div class="card-header pb-0">
-                <h6>Participantes</h6>
-              </div>
-              <div class="card-body px-0 pt-0 pb-2">
-                <div class="table-responsive p-0">
-                  <table class="table align-items-center mb-0">
-                    <thead>
-                      <tr>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Usuario</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Correo</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Rol</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <div class="d-flex px-2 py-1">
-                            <div>
-                              <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                              <h6 class="mb-0 text-sm">John Michael</h6>
-                            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Usuario</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Correo</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Rol</th>
+                    </tr>
+                  </thead>
+                  <tbody id="user-list">
+                    <!-- Los colaboradores actuales se agregarán aquí dinámicamente -->
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <select class="form-select" id="adduser" required>
+                              <option value="" disabled selected>Agregar usuario</option>
+                              <!-- Los usuarios disponibles se agregarán aquí dinámicamente -->
+                            </select>
                           </div>
-                        </td>
-                        <td>
-                          <p class="text-xs text-secondary mb-0">dasdsa@dsads.dsada</p>
-                        </td>
-                        <td>
-                          <p class="text-xs text-secondary mb-0">Backend</p>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td>
-                          <div class="d-flex px-2 py-1">
-                            <div>
-                              <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
-                            </div>
-                              <select class="form-select" id="adduser" required>
-                                <option value="" disabled selected>Agregar usuario</option>
-                                <option value="activo">Usuario 1</option>
-                                <option value="Inactivo">Usuario n</option>
-                              </select>
-                          </div>
-                        </td>
-    
-                        <td>
-                          <input type="text" class="text-xs text-secondary mb-0" placeholder="Rol">
-                        </td>
-
-                        <td>
-                          <div class="collapse navbar-collapse d-flex" id="navigation">          
-                            <button type="" class="btn btn-round mb-0 me-1 bg-gradient-info text-white">+</button>          
-                          </div>
-                        </td>
-
-                      </tr>
-
-                    </tbody>
-                  </table>
-                </div>
+                        </div>
+                      </td>
+                      <td>
+                        <input type="text" class="text-xs text-secondary mb-0" id="user-role" placeholder="Rol">
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-round mb-0 me-1 bg-gradient-info text-white" id="add-user-btn">+</button>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
             </div>
           </div>
-        </div>  
+        </div>
+      </div>
+      
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          // Función para obtener los usuarios actuales del proyecto
+          const fetchUsers = async () => {
+            try {
+              const response = await fetch("/usuarios"); // Ruta para obtener los usuarios
+              if (response.ok) {
+                const users = await response.json();
+                const userSelect = document.getElementById("adduser");
+                const userList = document.getElementById("user-list");
+      
+                // Limpiar las opciones previas
+                userSelect.innerHTML = '<option value="" disabled selected>Agregar usuario</option>';
+      
+                // Añadir usuarios al select
+                users.forEach(user => {
+                  const option = document.createElement("option");
+                  option.value = user.id;
+                  option.textContent = `${user.name} (${user.email})`;
+                  userSelect.appendChild(option);
+                });
+      
+                // Si los usuarios ya están en el proyecto, los mostramos en la tabla
+                users.forEach(user => {
+                  const row = document.createElement("tr");
+                  row.innerHTML = `
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">${user.name}</h6>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs text-secondary mb-0">${user.email}</p>
+                    </td>
+                    <td>
+                      <p class="text-xs text-secondary mb-0">colaborador</p>
+                    </td>
+                  `;
+                  userList.appendChild(row);
+                });
+      
+              } else {
+                console.error("Error al cargar los usuarios");
+              }
+            } catch (error) {
+              console.error("Error al obtener usuarios:", error);
+            }
+          };
+      
+          // Función para agregar un usuario al proyecto
+          const addUserToProject = async (userId, role) => {
+            try {
+              const response = await fetch("/usuarios", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  user_id: userId,
+                  role: role,
+                }),
+              });
+      
+              if (response.ok) {
+                alert("Usuario agregado exitosamente");
+                fetchUsers();  // Recargar la lista de usuarios después de agregar uno nuevo
+              } else {
+                alert("Hubo un error al agregar al usuario");
+              }
+            } catch (error) {
+              console.error("Error al agregar usuario:", error);
+            }
+          };
+      
+          // Cargar los usuarios cuando la página se cargue
+          fetchUsers();
+      
+          // Event listener para el botón de agregar usuario
+          document.getElementById("add-user-btn").addEventListener("click", () => {
+            const userSelect = document.getElementById("adduser");
+            const roleInput = document.getElementById("user-role");
+            const selectedUserId = userSelect.value;
+            const role = roleInput.value.trim();
+      
+            if (selectedUserId && role) {
+              // Agregar el usuario al proyecto
+              addUserToProject(selectedUserId, role);
+            } else {
+              alert("Por favor, selecciona un usuario y un rol.");
+            }
+          });
+        });
+      </script>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
       </div>
       <!-- Final de las cartas -->

@@ -272,7 +272,7 @@
                                                       <i class="fa fa-ellipsis-h text-white"></i>
                                                     </a>
                                                     <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                                                      <li><a class="dropdown-item border-radius-md" href="/project">Ver</a></li>
+                                                      <li><a class="dropdown-item border-radius-md" href="/project/${project.id}">Ver</a></li>
                                                       <li><a class="dropdown-item border-radius-md" href="/edit-project">Editar</a></li>
                                                       <li><a class="dropdown-item border-radius-md" href="javascript:;">Eliminar</a></li>
                                                     </ul>
@@ -283,7 +283,8 @@
 
                                                 // Hacer una solicitud para obtener el nombre del usuario que creó el proyecto
                                                 fetch(
-                                                    `/usuarios/${project.created_by}`) // Rutas para obtener el usuario por su ID
+                                                        `/usuarios/${project.created_by}`
+                                                        ) // Rutas para obtener el usuario por su ID
                                                     .then(response => response.json())
                                                     .then(user => {
                                                         // Actualizar el nombre del creador del proyecto
@@ -305,9 +306,16 @@
                                             const projectCards = document.querySelectorAll(".project-card");
                                             projectCards.forEach(card => {
                                                 card.addEventListener("click", () => {
-                                                    window.location.href = "/project";
+                                                    const url = card.getAttribute("data-url");
+                                                    if (url) {
+                                                        window.location.href = url;
+                                                    } else {
+                                                        console.error(
+                                                            "No se encontró la URL en la tarjeta.");
+                                                    }
                                                 });
                                             });
+
                                         })
                                         .catch(error => {
                                             console.error("Error al cargar los proyectos del usuario:", error);
