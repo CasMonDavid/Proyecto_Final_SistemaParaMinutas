@@ -86,5 +86,105 @@ class UserProjectSeeder extends Seeder
         $userProject->user_id = 2;
         $userProject->role = "Secretario";
         $userProject->save();
+
+        //Proyecto 6
+
+        $userProject = new User_project();
+        $userProject->project_id = 6;
+        $userProject->user_id = 9;
+        $userProject->role = "Backend Developer";
+        $userProject->save();
+
+        $userProject = new User_project();
+        $userProject->project_id = 6;
+        $userProject->user_id = 4;
+        $userProject->role = "Secretario";
+        $userProject->save();
+
+        $userProject = new User_project();
+        $userProject->project_id = 6;
+        $userProject->user_id = 5;
+        $userProject->role = "Frontend Developer";
+        $userProject->save();
+
+        //Proyecto 7
+
+        $userProject = new User_project();
+        $userProject->project_id = 7;
+        $userProject->user_id = 10;
+        $userProject->role = "Scrum Master";
+        $userProject->save();
+
+        $userProject = new User_project();
+        $userProject->project_id = 7;
+        $userProject->user_id = 2;
+        $userProject->role = "Full Stack Developer";
+        $userProject->save();
+
+        $userProject = new User_project();
+        $userProject->project_id = 7;
+        $userProject->user_id = 8;
+        $userProject->role = "Frontend Developer";
+        $userProject->save();
+
+        //Proyecto 8
+
+        $userProject = new User_project();
+        $userProject->project_id = 8;
+        $userProject->user_id = 1;
+        $userProject->role = "Full Stack Developer";
+        $userProject->save();
+
+        //Proyecto 9
+
+        $userProject = new User_project();
+        $userProject->project_id = 9;
+        $userProject->user_id = 9;
+        $userProject->role = "DevOps Engineer";
+        $userProject->save();
+
+        $userProject = new User_project();
+        $userProject->project_id = 9;
+        $userProject->user_id = 1;
+        $userProject->role = "Full Stack Developer";
+        $userProject->save();
+
+        $userProject = new User_project();
+        $userProject->project_id = 9;
+        $userProject->user_id = 5;
+        $userProject->role = "Frontend Developer";
+        $userProject->save();
+
+        $userProject = new User_project();
+        $userProject->project_id = 9;
+        $userProject->user_id = 6;
+        $userProject->role = "QA Tester";
+        $userProject->save();
+
+        //Proyecto 10
+
+        $userProject = new User_project();
+        $userProject->project_id = 10;
+        $userProject->user_id = 1;
+        $userProject->role = "Data Analyst";
+        $userProject->save();
+
+        $userProject = new User_project();
+        $userProject->project_id = 10;
+        $userProject->user_id = 2;
+        $userProject->role = "UI/UX Designer";
+        $userProject->save();
+
+        $userProject = new User_project();
+        $userProject->project_id = 10;
+        $userProject->user_id = 5;
+        $userProject->role = "Mobile Developer";
+        $userProject->save();
+
+        $userProject = new User_project();
+        $userProject->project_id = 10;
+        $userProject->user_id = 8;
+        $userProject->role = "Full Stack Developer";
+        $userProject->save();
     }
 }

@@ -15,17 +15,6 @@ class User extends Authenticatable
 
     protected $fillable = ['name', 'email', 'password', 'birthday'];
 
-    protected function name(): Attribute{
-        return Attribute::make(
-            set: function($value){
-                return strtolower($value);
-            },
-            get: function($value){
-                return ucfirst($value);
-            },
-        );
-    }
-
     public function projects(){
         return $this->belongsToMany(Project::class, 'user_project', 'user_id', 'project_id')
             ->withPivot('role')
