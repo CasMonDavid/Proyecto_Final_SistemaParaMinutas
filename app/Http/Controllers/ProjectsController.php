@@ -73,17 +73,17 @@ class ProjectsController extends Controller
     public function update(Request $request, int $project_id){
         $enum = ['En curso', 'En riesgo', 'Terminado'];
 
-        $validated = $request->validate([
-            'name' => ['required','string','max:255'],
-            'description' => ['required','string','max:10000'],
-            'status' => ['required',Rule::in($enum)],
-            'collaborators' => ['array'],
-            'collaborators.*.user_id' => ['required','exists:users,id'],
-            'collaborators.*.role' => ['required','string']
-        ]);
-
         DB::beginTransaction();
         try{
+            $validated = $request->validate([
+                'name' => ['required','string','max:255'],
+                'description' => ['required','string','max:10000'],
+                'status' => ['required',Rule::in($enum)],
+                'collaborators' => ['array'],
+                'collaborators.*.user_id' => ['required','exists:users,id'],
+                'collaborators.*.role' => ['required','string']
+            ]);
+
             $project = Project::findOrFail($project_id);
             $project->update([
                 'name' => $validated['name'],
