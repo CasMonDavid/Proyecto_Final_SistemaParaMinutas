@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('/assets/img/apple-icon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('/assets/img/favicon.png') }}">
     <title>
@@ -218,137 +220,166 @@
                 <!-- script que genera las cartas -->
                 <script>
                     document.addEventListener("DOMContentLoaded", () => {
-    const projectContainer = document.getElementById("project-container");
+                        const projectContainer = document.getElementById("project-container");
 
-    if (projectContainer !== null) {
-        // ID del usuario que inició sesión 
-        const loggedInUserId = {{ auth()->id() }};
+                        if (projectContainer !== null) {
+                            // ID del usuario que inició sesión
+                            const loggedInUserId = {{ auth()->id() }};
 
-        // Realizar solicitud AJAX al endpoint de los proyectos
-        fetch('proyectos') // Ruta para obtener todos los proyectos
-            .then(response => response.json())
-            .then(projects => {
-                // Realizar solicitud para obtener los proyectos del usuario
-                fetch('/user_project') // Endpoint que devuelve todos los proyectos de usuarios
-                    .then(response => response.json())
-                    .then(userProjects => {
-                        const userProjectIds = userProjects
-                            .filter(up => up.user_id === loggedInUserId)
-                            .map(up => up.project_id);
-
-                        // Incluir los proyectos creados por el usuario
-                        const createdProjectsIds = projects.filter(project => project.created_by === loggedInUserId).map(project => project.id);
-
-                        // Combinamos los proyectos creados y los en los que el usuario colabora
-                        const allUserProjectsIds = [...new Set([...userProjectIds, ...createdProjectsIds])];
-
-                        // Filtrar los proyectos según los IDs combinados
-                        const userProjectsFiltered = projects.filter(project =>
-                            allUserProjectsIds.includes(project.id)
-                        );
-
-                        // Renderizar los proyectos filtrados
-                        userProjectsFiltered.forEach(project => {
-                            // Crear dinámicamente la tarjeta del proyecto
-                            const card = document.createElement('div');
-                            card.className = "col-lg-3 col-md-4 col-sm-6 col-12 mb-4";
-                            card.innerHTML = `
-                            <div class="position-relative">
-                              <div class="card h-100 cursor-pointer position-relative project-card" data-url="/project/${project.id}">
-                                <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-                                <div class="card-body p-3 position-relative">
-                                  <div class="row">
-                                    <div class="col-12 text-start">
-                                      <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                                        <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
-                                      </div>
-                                      <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                                        ${project.name}
-                                      </h5>
-                                      <span class="text-white text-sm" id="creator-${project.id}">
-                                        Cargando creador...
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="dropstart mb-6 position-absolute top-10 end-0 w-10 h-5">
-                                <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fa fa-ellipsis-h text-white"></i>
-                                </a>
-                                <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                                  <li><a class="dropdown-item border-radius-md" href="/project/${project.id}">Ver</a></li>
-                                  <li><a class="dropdown-item border-radius-md" href="/edit-project">Editar</a></li>
-                                  <li><a class="dropdown-item border-radius-md" href="javascript:;">Eliminar</a></li>
-                                </ul>
-                              </div>
-                            </div>
-                          `;
-                            projectContainer.appendChild(card);
-
-                            // Hacer una solicitud para obtener el nombre del usuario que creó el proyecto
-                            fetch(`/usuarios/${project.created_by}`) // Ruta para obtener el usuario por su ID
+                            // Realizar solicitud AJAX al endpoint de los proyectos
+                            fetch('proyectos') // Ruta para obtener todos los proyectos
                                 .then(response => response.json())
-                                .then(user => {
-                                    // Actualizar el nombre del creador del proyecto
-                                    const creatorElement = document.getElementById(`creator-${project.id}`);
-                                    creatorElement.innerHTML =
-                                        `Creado por ${user.name} - ${new Date(project.created_at).toLocaleDateString()}`;
+                                .then(projects => {
+                                    // Realizar solicitud para obtener los proyectos del usuario
+                                    fetch('/user_project') // Endpoint que devuelve todos los proyectos de usuarios
+                                        .then(response => response.json())
+                                        .then(userProjects => {
+                                            const userProjectIds = userProjects
+                                                .filter(up => up.user_id === loggedInUserId)
+                                                .map(up => up.project_id);
+
+                                            // Incluir los proyectos creados por el usuario
+                                            const createdProjectsIds = projects.filter(project => project.created_by ===
+                                                loggedInUserId).map(project => project.id);
+
+                                            // Combinamos los proyectos creados y los en los que el usuario colabora
+                                            const allUserProjectsIds = [...new Set([...userProjectIds, ...
+                                                createdProjectsIds
+                                            ])];
+
+                                            // Filtrar los proyectos según los IDs combinados
+                                            const userProjectsFiltered = projects.filter(project =>
+                                                allUserProjectsIds.includes(project.id)
+                                            );
+
+                                            // Renderizar los proyectos filtrados
+                                            userProjectsFiltered.forEach(project => {
+                                                // Crear dinámicamente la tarjeta del proyecto
+                                                const card = document.createElement('div');
+                                                card.className = "col-lg-3 col-md-4 col-sm-6 col-12 mb-4";
+                                                card.innerHTML = `
+                                                    <div class="position-relative">
+                                                    <div class="card h-100 cursor-pointer position-relative project-card" data-url="/project/${project.id}">
+                                                        <span class="mask bg-dark opacity-10 border-radius-lg"></span>
+                                                        <div class="card-body p-3 position-relative">
+                                                        <div class="row">
+                                                            <div class="col-12 text-start">
+                                                            <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
+                                                                <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                                                            </div>
+                                                            <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                                                ${project.name}
+                                                            </h5>
+                                                            <span class="text-white text-sm" id="creator-${project.id}">
+                                                                Cargando creador...
+                                                            </span>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="dropstart mb-6 position-absolute top-10 end-0 w-10 h-5">
+                                                        <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-h text-white"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
+                                                        <li><a class="dropdown-item border-radius-md" href="/project/${project.id}">Ver</a></li>
+                                                        <li><a class="dropdown-item border-radius-md" href="/edit-project/${project.id}">Editar</a></li>
+                                                        <li><a class="dropdown-item border-radius-md delete-project" href="javascript:void(0);" data-id="${project.id}">Eliminar</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    </div>
+                                                `;
+                                                projectContainer.appendChild(card);
+
+                                                // Hacer una solicitud para obtener el nombre del usuario que creó el proyecto
+                                                fetch(
+                                                    `/usuarios/${project.created_by}`) // Ruta para obtener el usuario por su ID
+                                                    .then(response => response.json())
+                                                    .then(user => {
+                                                        // Actualizar el nombre del creador del proyecto
+                                                        const creatorElement = document.getElementById(
+                                                            `creator-${project.id}`);
+                                                        creatorElement.innerHTML =
+                                                            `Creado por ${user.name} - ${new Date(project.created_at).toLocaleDateString()}`;
+                                                    })
+                                                    .catch(error => {
+                                                        console.error("Error al cargar el usuario:", error);
+                                                        const creatorElement = document.getElementById(
+                                                            `creator-${project.id}`);
+                                                        creatorElement.innerHTML =
+                                                            "Error al cargar el creador";
+                                                    });
+
+                                            });
+
+                                            // Añadir funcionalidad para clics en las tarjetas
+                                            const projectCards = document.querySelectorAll(".project-card");
+                                            projectCards.forEach(card => {
+                                                card.addEventListener("click", () => {
+                                                    const url = card.getAttribute("data-url");
+                                                    if (url) {
+                                                        window.location.href = url;
+                                                    } else {
+                                                        console.error(
+                                                            "No se encontró la URL en la tarjeta.");
+                                                    }
+                                                });
+                                            });
+
+                                            // Añadir funcionalidad de eliminación de proyecto
+                                            const deleteButtons = document.querySelectorAll('.delete-project');
+                                            deleteButtons.forEach(button => {
+                                                button.addEventListener('click', function(event) {
+                                                    event
+                                                .stopPropagation(); // Para evitar que el click en el botón dispare otros eventos
+                                                    const projectId = button.getAttribute('data-id');
+                                                    // Realizar solicitud de eliminación
+                                                    fetch(`/proyectos/${projectId}`, {
+                                                            method: 'DELETE',
+                                                            headers: {
+                                                                'Content-Type': 'application/json',
+                                                                'X-CSRF-TOKEN': document
+                                                                    .querySelector(
+                                                                        'meta[name="csrf-token"]')
+                                                                    .getAttribute(
+                                                                    'content') // Asegúrate de incluir el token CSRF
+                                                            }
+                                                        })
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            if (data.status) {
+                                                                // Eliminar la tarjeta del proyecto de la vista
+                                                                const cardToDelete = button.closest(
+                                                                    '.col-lg-3'
+                                                                    ); // Encuentra el contenedor de la tarjeta
+                                                                cardToDelete.remove();
+                                                            } else {
+                                                                alert(
+                                                                    "No se pudo eliminar el proyecto");
+                                                            }
+                                                        })
+                                                        .catch(error => {
+                                                            console.error(
+                                                                'Error al eliminar el proyecto:',
+                                                                error);
+                                                        });
+                                                });
+                                            });
+
+                                        })
+                                        .catch(error => {
+                                            console.error("Error al cargar los proyectos del usuario:", error);
+                                        });
                                 })
                                 .catch(error => {
-                                    console.error("Error al cargar el usuario:", error);
-                                    const creatorElement = document.getElementById(`creator-${project.id}`);
-                                    creatorElement.innerHTML =
-                                        "Error al cargar el creador";
+                                    console.error("Error al cargar los proyectos:", error);
                                 });
-                        });
-
-                        // Añadir funcionalidad para clics en las tarjetas
-                        const projectCards = document.querySelectorAll(".project-card");
-                        projectCards.forEach(card => {
-                            card.addEventListener("click", () => {
-                                const url = card.getAttribute("data-url");
-                                if (url) {
-                                    window.location.href = url;
-                                } else {
-                                    console.error("No se encontró la URL en la tarjeta.");
-                                }
-                            });
-                        });
-
-                    })
-                    .catch(error => {
-                        console.error("Error al cargar los proyectos del usuario:", error);
+                        } else {
+                            console.error('El contenedor "project-container" no existe en el DOM');
+                        }
                     });
-            })
-            .catch(error => {
-                console.error("Error al cargar los proyectos:", error);
-            });
-    } else {
-        console.error('El contenedor "project-container" no existe en el DOM');
-    }
-});
-
                 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

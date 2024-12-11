@@ -153,57 +153,122 @@
     <!-- End Navbar -->
     <div class="container-fluid py-4">
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <h6>Editar proyecto</h6>
 
       <form action="/home">
         <!-- Nombre -->
         <div class="mb-3">
-          <label for="name" class="form-label">Nombre del proyecto</label>
-          <input type="text" class="form-control" id="name" placeholder="Nombre del proyecto" required>
+            <label for="name" class="form-label">Nombre del proyecto</label>
+            <input type="text" class="form-control" id="name" placeholder="Nombre del proyecto" required>
         </div>
-
+    
+        <!-- Descripción -->
         <div class="mb-3">
-          <label for="description" class="form-label">Descripcion</label>
-          <textarea type="text" class="form-control" id="description" required></textarea>
+            <label for="description" class="form-label">Descripción</label>
+            <textarea class="form-control" id="description" required></textarea>
         </div>
-
+    
+        <!-- Estado -->
         <div class="mb-3">
-          <label for="description" class="form-label">Estado</label>
-          <select class="form-select" id="options" required>
-            <option value="" disabled selected>Elige una opción</option>
-            <option value="activo">Activo</option>
-            <option value="Inactivo">Inactivo</option>
-          </select>
+            <label for="status" class="form-label">Estado</label>
+            <select class="form-select" id="status" required>
+                <option value="" disabled selected>Elige una opción</option>
+                <option value="En curso">En curso</option>
+                <option value="En riesgo">En riesgo</option>
+                <option value="Terminado">Terminado</option>
+            </select>
         </div>
-
+    
+        <!-- Agregar usuario -->
         <div class="mb-3">
-          <label for="adduser" class="form-label">Agregar usuario</label>
-          <select class="form-select" id="adduser" required>
-            <option value="" disabled selected>Selecciona el usuario</option>
-            <option value="activo">Usuario 1</option>
-            <option value="Inactivo">Usuario n</option>
-          </select>
+            <label for="adduser" class="form-label">Agregar usuario</label>
+            <select class="form-select" id="adduser" required>
+                <option value="" disabled selected>Selecciona el usuario</option>
+                <option value="activo">Usuario 1</option>
+                <option value="inactivo">Usuario n</option>
+            </select>
         </div>
-
+    
+        <!-- Rol -->
         <div class="mb-3">
-          <label for="rol" class="form-label">Rol</label>
-          <input type="text" class="form-control" id="rol" placeholder="Rol del usuario" required>
+            <label for="rol" class="form-label">Rol</label>
+            <input type="text" class="form-control" id="rol" placeholder="Rol del usuario" required>
         </div>
-
+    
         <div class="d-flex">
-          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
-            <i class="bi bi-plus-circle"></i> Agregar otro usuario
-          </button>
+            <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+                <i class="bi bi-plus-circle"></i> Agregar otro usuario
+            </button>
         </div>
-        
+    
         <!-- Submit Button -->
         <div class="collapse navbar-collapse d-flex" id="navigation">
-          <div class="ms-auto d-flex align-items-center">
-            <a class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" href="/home">Cancelar</a>
-            <button type="submit" class="btn btn-lg btn-round mb-0 me-1 bg-gradient-dark">Guardar</button>
-          </div>
+            <div class="ms-auto d-flex align-items-center">
+                <a class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" href="/home">Cancelar</a>
+                <button type="submit" class="btn btn-lg btn-round mb-0 me-1 bg-gradient-dark">Guardar</button>
+            </div>
         </div>
-      </form>
+    </form>
+
+    
+    <script>
+
+document.addEventListener('DOMContentLoaded', function () {
+     // Obtener el ID del proyecto desde la URL
+    const projectId = window.location.pathname.split('/').pop();; 
+    fetch(`/proyectos/${projectId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status) {
+                // Asignar los datos del proyecto al formulario
+                document.getElementById('name').value = data.project.name;
+                document.getElementById('description').value = data.project.description;
+                document.getElementById('status').value = data.project.status;
+
+                // Si tienes colaboradores, puedes cargar aquí también
+                const collaborators = data.collaborators;
+                const addUserSelect = document.getElementById('adduser');
+                // Aquí puedes añadir lógica para pre-seleccionar los colaboradores si es necesario.
+                collaborators.forEach(collaborator => {
+                    const option = document.createElement('option');
+                    option.value = collaborator.user_id;
+                    option.textContent = `Usuario ${collaborator.user_id}`; // Asegúrate de mostrar el nombre correcto
+                    addUserSelect.appendChild(option);
+                });
+            }
+        })
+        .catch(error => console.error('Error al cargar el proyecto:', error));
+});
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <!-- Final de las cartas -->
       <footer class="footer pt-3  ">
