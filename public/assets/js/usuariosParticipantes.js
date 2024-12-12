@@ -8,13 +8,39 @@ window.addEventListener("DOMContentLoaded", () => {
             const response = await fetch(`/user_project/getByProject/${projectId}`); // Llamada al endpoint correspondiente
             if (response.ok) {
                 const participants = await response.json(); // Obtener los datos en formato JSON
-                updateParticipantsTable(participants); // Llenar la tabla con los datos obtenidos
+                const enrichedParticipants = await enrichParticipantsData(participants); // Enriquecer datos de participantes
+                updateParticipantsTable(enrichedParticipants); // Llenar la tabla con los datos obtenidos
             } else {
                 console.error("Error al obtener los participantes del proyecto");
             }
         } catch (error) {
             console.error("Error en la solicitud de participantes:", error);
         }
+    };
+
+    // Función para enriquecer los datos de los participantes obteniendo nombre y correo
+    const enrichParticipantsData = async (participants) => {
+        const enrichedData = await Promise.all(participants.map(async (participant) => {
+            try {
+                const userResponse = await fetch(`/usuarios/${participant.user_id}`); // Obtener datos del usuario por ID
+                if (userResponse.ok) {
+                    const userData = await userResponse.json();
+                    return {
+                        ...participant,
+                        user_name: userData.name || "Desconocido",
+                        user_email: userData.email || "Correo desconocido",
+                    };
+                }
+            } catch (error) {
+                console.error(`Error al obtener los datos del usuario con ID ${participant.user_id}:`, error);
+            }
+            return {
+                ...participant,
+                user_name: "Desconocido",
+                user_email: "Correo desconocido",
+            };
+        }));
+        return enrichedData;
     };
 
     // Función para actualizar la tabla de participantes
@@ -28,12 +54,12 @@ window.addEventListener("DOMContentLoaded", () => {
                 <td>
                     <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">${participant.name || "Desconocido"}</h6>
+                            <h6 class="mb-0 text-sm">${participant.user_name || "Desconocido"}</h6>
                         </div>
                     </div>
                 </td>
                 <td>
-                    <p class="text-xs text-secondary mb-0">${participant.email || "Correo desconocido"}</p>
+                    <p class="text-xs text-secondary mb-0">${participant.user_email || "Correo desconocido"}</p>
                 </td>
                 <td>
                     <span class="text-xs font-weight-bold">${participant.role || "Rol no especificado"}</span>
