@@ -146,7 +146,7 @@
                   <div class="form-check form-check-info text-left">
                       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked required>
                       <label class="form-check-label" for="flexCheckDefault">
-                          Acepto los <a href="#" class="text-dark font-weight-bolder">Términos y condiciones</a>
+                          Acepto los <a href="https://www.minutas.co/final806.pdf" target="_blank" class="text-dark font-weight-bolder">Términos y condiciones</a>
                       </label>
                   </div>
                   <div class="text-center">
