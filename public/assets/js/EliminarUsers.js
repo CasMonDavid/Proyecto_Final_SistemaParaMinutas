@@ -35,12 +35,12 @@ document.addEventListener("DOMContentLoaded", function() {
                     actionsCell.classList.add("align-middle");
                     actionsCell.innerHTML = `
                         <a href="/users/edit-users/${user.id}" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
-      Editar
-    </a>
-    <button class="text-secondary font-weight-bold text-xs delete-btn" data-id="${user.id}" data-name="${user.name}">
-        Eliminar
-    </button>
-                    `;
+                        Editar
+                        </a>
+                        <button class="text-secondary font-weight-bold text-xs delete-btn" data-id="${user.id}" data-name="${user.name}">
+                            Eliminar
+                        </button>
+                                        `;
                     row.appendChild(actionsCell);
 
                     usersList.appendChild(row);
