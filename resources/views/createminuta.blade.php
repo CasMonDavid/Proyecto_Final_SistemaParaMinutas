@@ -317,11 +317,9 @@
             <button type="submit" class="btn btn-lg btn-round mb-0 me-1 bg-gradient-dark">Guardar</button>
         </div>
     </form>
- 
-    
     
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
+      document.addEventListener('DOMContentLoaded', () => {
     // Cargar usuarios dinámicamente
     fetch('/usuarios')
         .then(response => response.json())
@@ -329,15 +327,16 @@
             if (Array.isArray(users)) {
                 const asistenciaSelect = document.getElementById('asistencia');
                 const ausenciaSelect = document.getElementById('ausencia');
-
+  
+                // Rellenar los selectores de usuarios
                 users.forEach(user => {
                     const option = document.createElement('option');
                     option.value = user.id;
                     option.textContent = user.name;
-
-                    // Clonar la opción para evitar referencias
+  
+                    // Clonar la opción para el otro select
                     const optionClone = option.cloneNode(true);
-
+  
                     // Agregar las opciones a los selectores
                     asistenciaSelect.appendChild(option);
                     ausenciaSelect.appendChild(optionClone);
@@ -345,20 +344,21 @@
             }
         })
         .catch(error => console.error('Error al cargar usuarios:', error));
-
+  
     // Agregar nueva asistencia
     document.getElementById('addAttendanceButton').addEventListener('click', () => {
+        const attendanceCount = document.querySelectorAll('[name^="attendance"]').length;
         const newAttendance = document.createElement('div');
         newAttendance.classList.add('mb-3');
         newAttendance.innerHTML = `
             <label for="asistencia" class="form-label">Asistencia</label>
-            <select class="form-select" name="attendance[][status]" required>
+            <select class="form-select" name="attendance[${attendanceCount}][id_user]" required>
                 <option value="" disabled selected>Elige una opción</option>
             </select>
-            <input type="hidden" name="attendance[][id_user]" value="">
+            <input type="hidden" name="attendance[${attendanceCount}][status]" value="Confirmado">
         `;
         document.getElementById('asistenciaSection').appendChild(newAttendance);
-
+  
         // Agregar usuarios al nuevo select
         fetch('/usuarios')
             .then(response => response.json())
@@ -370,23 +370,30 @@
                     option.textContent = user.name;
                     newSelect.appendChild(option);
                 });
+
+                // Actualizar el valor de id_user al cambiar la opción
+                newSelect.addEventListener('change', (e) => {
+                    const userIdInput = newAttendance.querySelector('input[type="hidden"]');
+                    userIdInput.value = 'Confirmado'; // Guardar "Confirmado" como estado
+                });
             })
             .catch(error => console.error('Error al cargar usuarios:', error));
     });
-
+  
     // Agregar nueva ausencia
     document.getElementById('addAbsenceButton').addEventListener('click', () => {
+        const absenceCount = document.querySelectorAll('[name^="attendance"]').length;
         const newAbsence = document.createElement('div');
         newAbsence.classList.add('mb-3');
         newAbsence.innerHTML = `
             <label for="ausencia" class="form-label">Ausencia</label>
-            <select class="form-select" name="attendance[][status]" required>
+            <select class="form-select" name="attendance[${absenceCount}][id_user]" required>
                 <option value="" disabled selected>Elige una opción</option>
             </select>
-            <input type="hidden" name="attendance[][id_user]" value="">
+            <input type="hidden" name="attendance[${absenceCount}][status]" value="Ausente">
         `;
         document.getElementById('ausenciaSection').appendChild(newAbsence);
-
+  
         // Agregar usuarios al nuevo select
         fetch('/usuarios')
             .then(response => response.json())
@@ -398,62 +405,26 @@
                     option.textContent = user.name;
                     newSelect.appendChild(option);
                 });
+
+                // Actualizar el valor de id_user al cambiar la opción
+                newSelect.addEventListener('change', (e) => {
+                    const userIdInput = newAbsence.querySelector('input[type="hidden"]');
+                    userIdInput.value = 'Ausente'; // Guardar "Ausente" como estado
+                });
             })
             .catch(error => console.error('Error al cargar usuarios:', error));
     });
 
-    // Agregar nueva decisión
-    document.getElementById('topicsSection').addEventListener('click', (event) => {
-        if (event.target.classList.contains('addDecisionButton')) {
-            const topicDiv = event.target.closest('.topic');
-            const newDecision = document.createElement('input');
-            newDecision.type = 'text';
-            newDecision.classList.add('form-control', 'mb-3');
-            newDecision.name = 'topics[][decisions][][description]';
-            newDecision.placeholder = 'Decisión';
-            topicDiv.insertBefore(newDecision, event.target);
-        }
-    });
-
-    // Agregar nueva acción
-    document.getElementById('topicsSection').addEventListener('click', (event) => {
-        if (event.target.classList.contains('addActionButton')) {
-            const topicDiv = event.target.closest('.topic');
-            const newAction = document.createElement('input');
-            newAction.type = 'text';
-            newAction.classList.add('form-control', 'mb-3');
-            newAction.name = 'topics[][actions][][description]';
-            newAction.placeholder = 'Elemento de acción';
-            topicDiv.insertBefore(newAction, event.target);
-        }
-    });
-
-    // Agregar nuevo tema
-    document.getElementById('addTopicButton').addEventListener('click', () => {
-        const newTopic = document.createElement('div');
-        newTopic.classList.add('topic', 'mb-3');
-        newTopic.innerHTML = `
-            <label for="decisiones" class="form-label">Tema</label>
-            <input type="text" class="form-control mb-3" name="topics[][decisions][0][description]" placeholder="Decisión" required>
-            <button type="button" class="btn btn-secondary border-0 px-4 shadow-sm addDecisionButton">
-                <i class="bi bi-plus-circle"></i> Agregar Decisión
-            </button>
-            <input type="text" class="form-control mb-3" name="topics[][actions][0][description]" placeholder="Elemento de acción" required>
-            <button type="button" class="btn btn-secondary  border-0 px-4 shadow-sm addActionButton">
-                <i class="bi bi-plus-circle"></i> Agregar Acción
-            </button>
-        `;
-        document.getElementById('topicsSection').appendChild(newTopic);
-    });
-
+    const creadorr =window.location.pathname.split('/').pop();
     // Imprimir el JSON en consola al enviar el formulario
     document.getElementById('minutaForm').addEventListener('submit', (event) => {
         event.preventDefault(); // Evita el envío tradicional del formulario
-
+  
         const formData = new FormData(event.target);
         const jsonObject = {};
         formData.forEach((value, key) => {
             const keys = key.split("[");
+
             if (keys.length > 1) {
                 let obj = jsonObject;
                 for (let i = 0; i < keys.length - 1; i++) {
@@ -468,11 +439,52 @@
             }
         });
 
-        console.log(JSON.stringify(jsonObject, null, 2)); // Imprime el JSON en consola
+        
+        // Estructura del JSON para el controlador
+        const finalJson = {
+            _token: jsonObject._token,
+            project_id: creadorr, // Este valor debe ser el ID correcto del proyecto
+            created_by:  {{ auth()->id() }},  // Este valor debe ser el ID del creador
+            date: jsonObject.fecha,
+            direction: jsonObject.lugar,
+            attendance: jsonObject.attendance.map(attendance => ({
+                status: attendance.status,
+                id_user: attendance.id_user
+            })),
+            topics: jsonObject.topics.map(topic => ({
+                decisions: topic.decisions.map(decision => ({
+                    description: decision.description
+                })),
+                actions: topic.actions.map(action => ({
+                    description: action.description
+                }))
+            }))
+        };
+  
+        console.log(JSON.stringify(finalJson, null, 2)); // Imprime el JSON en consola
+  
+        // Enviar el JSON al backend usando fetch
+        fetch('/ruta-del-controlador', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(finalJson)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Respuesta del servidor:', data);
+        })
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+        });
     });
 });
 
-      </script>
+  </script>
+      
+      
+      
       
       
 
