@@ -243,75 +243,48 @@
         </div>
     
         <!-- Asistencia -->
-        
-        <div id="asistenciaSection" class="mb-3">
-          <label for="asistencia" class="form-label">Asistencia</label>
-          @foreach ( $minuta->attendance as $asis )
-              @if ($asis->status == "Confirmado")
+        <div id="usuariosSection" class="mb-3">
+            <label for="usuarios" class="form-label">Asistencia</label>
 
-              <select class="form-select" id="asistencia{{$asis->id}}" name="hola" required>
-                <option value="-1" disabled selected>Elige una opción</option>
-
-                @foreach ( $users as $user )
-                  <option value="{{ $user->id }}" @if ($asis->user_id == $user->id)
-                    selected
-                  @endif >{{ $user->name }}</option>
-                @endforeach
-
-              </select>
-
-              @endif
-          @endforeach
-        </div>
-      
-          <div class="d-flex">
-              <button type="button" id="addAttendanceButton" class="btn btn-secondary">
-                  <i class="bi bi-plus-circle"></i> Agregar otra asistencia
-              </button>
-          </div>
-
-    
-        <!-- Ausencia -->
-        <div id="ausenciaSection" class="mb-3">
-          <label for="asistencia" class="form-label">Ausencia</label>
-            @foreach ( $minuta->attendance as $asis )
-                @if ($asis->status == "Ausente")
-
-                <select class="form-select" id="asistencia{{$asis->id}}" name="hola" required>
-                  <option value="-1" disabled selected>Elige una opción</option>
-
-                  @foreach ( $users as $user )
-                    <option value="{{ $user->id }}" @if ($asis->user_id == $user->id)
+            @for ( $i=0; $i< count($minuta->attendance); $i++ )
+              <select class="form-select" id="usuarios" name="attendance[{{$i}}][id_user]" required>
+                  <option value="" disabled selected>Selecciona un usuario</option>
+                  @foreach ($users as $user)
+                    <option value="<?= $user->id ?>" @if ($minuta->attendance[$i]->user_id == $user->id)
                       selected
-                    @endif >{{ $user->name }}</option>
+                    @endif >{{$user->name}}</option>
                   @endforeach
+              </select>
+              <select class="form-select mt-2" name="attendance[{{$i}}][status]" required>
+                  @if ($minuta->attendance[$i]->status == "Confirmado")
+                    <option value="Confirmado" selected>Confirmado</option>
+                    <option value="Ausente">Ausente</option>
+                  @else
+                    <option value="Confirmado">Confirmado</option>
+                    <option value="Ausente" selected>Ausente</option>
+                  @endif
+              </select>
+              <br>
+            @endfor
 
-                </select>
-
-                @endif
-            @endforeach
         </div>
     
         <div class="d-flex">
-            <button type="button" id="addAbsenceButton" class="btn btn-secondary">
-                <i class="bi bi-plus-circle"></i> Agregar otra ausencia
+            <button type="button" id="addUserButton" class="btn btn-secondary">
+                <i class="bi bi-plus-circle"></i> Agregar otro usuario
             </button>
         </div>
     
         <!-- Tema -->
-        <div id="topicsSection">
-            <div class="topic mb-3">
-                <label for="decisiones" class="form-label">Tema</label>
-                <input type="text" class="form-control mb-3" name="topics[0][decisions][0][description]" placeholder="Decisión" required>
-                <button type="button" class="btn btn-secondary addDecisionButton">
-                    <i class="bi bi-plus-circle"></i> Agregar Decisión
-                </button>
-                <input type="text" class="form-control mb-3" name="topics[0][actions][0][description]" placeholder="Elemento de acción" required>
-                <button type="button" class="btn btn-secondary addActionButton">
-                    <i class="bi bi-plus-circle"></i> Agregar Acción
-                </button>
-            </div>
-        </div>
+        @for ($i = 0; $i < count($minuta->topics_decision); $i++ )
+          <div id="topicsSection">
+              <div class="topic mb-3">
+                  <label for="decisiones" class="form-label">Tema</label>
+                  <input type="text" class="form-control mb-3" name="topics[{{$i}}][decisions][0][description]" placeholder="Decisión" value="<?= $minuta->topics_decision[$i]->description ?>" required>  
+                  <input type="text" class="form-control mb-3" name="topics[{{$i}}][actions][0][description]" placeholder="Elemento de acción" value="<?= $minuta->topics_action[$i]->description ?>" required>
+              </div>
+          </div>
+        @endfor
     
         <div class="d-flex">
             <button type="button" id="addTopicButton" class="btn btn-primary btn-lg">
@@ -346,6 +319,179 @@
       </footer>
     </div>
   </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const selectedUsers = new Set(); // Mantendrá un registro de los usuarios seleccionados
+
+    // Cargar usuarios dinámicamente
+    fetch('/usuarios')
+        .then(response => response.json())
+        .then(users => {
+            if (Array.isArray(users)) {
+                const usuariosSelect = document.getElementById('usuarios');
+
+                // Rellenar el selector de usuarios
+                users.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.textContent = user.name;
+                    usuariosSelect.appendChild(option);
+                });
+            }
+        })
+        .catch(error => console.error('Error al cargar usuarios:', error));
+
+    // Agregar nuevo usuario
+    document.getElementById('addUserButton').addEventListener('click', () => {
+        const userCount = document.querySelectorAll('[name^="attendance"]').length;
+        const newUser = document.createElement('div');
+        newUser.classList.add('mb-3');
+        newUser.innerHTML = `
+            <label for="usuarios" class="form-label">Usuarios</label>
+            <select class="form-select" name="attendance[${userCount}][id_user]" required>
+                <option value="" disabled selected>Selecciona un usuario</option>
+            </select>
+            <label for="status" class="form-label">Estatus</label>
+            <select class="form-select" name="attendance[${userCount}][status]" required>
+                <option value="Confirmado">Confirmado</option>
+                <option value="Ausente">Ausente</option>
+            </select>
+            <button type="button" class="btn btn-danger btn-sm mt-2 removeUserButton">Eliminar</button>
+        `;
+        document.getElementById('usuariosSection').appendChild(newUser);
+
+        // Agregar usuarios al nuevo select y filtrarlos
+        fetch('/usuarios')
+            .then(response => response.json())
+            .then(users => {
+                const newSelect = newUser.querySelector('select[name="attendance[' + userCount + '][id_user]"]');
+
+                users
+                    .filter(user => !selectedUsers.has(user.id)) // Filtrar usuarios ya seleccionados
+                    .forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.textContent = user.name;
+                        newSelect.appendChild(option);
+                    });
+
+                // Manejar cambios en la selección de usuario
+                newSelect.addEventListener('change', (event) => {
+                    const selectedValue = parseInt(event.target.value);
+                    if (selectedValue) {
+                        selectedUsers.add(selectedValue); // Agregar el usuario al conjunto de seleccionados
+                    }
+                });
+            })
+            .catch(error => console.error('Error al cargar usuarios:', error));
+
+        // Agregar funcionalidad de eliminar al botón
+        newUser.querySelector('.removeUserButton').addEventListener('click', () => {
+            const removedUser = newUser.querySelector('select[name="attendance[' + userCount + '][id_user]"]');
+            const removedValue = parseInt(removedUser.value);
+            if (removedValue) {
+                selectedUsers.delete(removedValue); // Eliminar el usuario del conjunto de seleccionados
+            }
+            newUser.remove();
+        });
+    });
+
+    // Agregar nuevo tema
+    document.getElementById('addTopicButton').addEventListener('click', () => {
+        const topicCount = document.querySelectorAll('[name^="topics"]').length;
+        const newTopic = document.createElement('div');
+        newTopic.classList.add('topic', 'mb-3');
+        newTopic.innerHTML = `
+            <label for="decisiones" class="form-label">Tema</label>
+            <input type="text" class="form-control mb-3" name="topics[${topicCount}][decisions][0][description]" placeholder="Decisión" required>
+            
+            <input type="text" class="form-control mb-3" name="topics[${topicCount}][actions][0][description]" placeholder="Elemento de acción" required>
+            <button type="button" class="btn btn-danger btn-sm mt-2 removeTopicButton">Eliminar</button>
+        `;
+        document.getElementById('topicsSection').appendChild(newTopic);
+
+        // Agregar funcionalidad de eliminar al botón
+        newTopic.querySelector('.removeTopicButton').addEventListener('click', () => {
+            newTopic.remove();
+        });
+    });
+
+    // Enviar el formulario como JSON
+    document.getElementById('minutaForm').addEventListener('submit', (event) => {
+        event.preventDefault(); // Evita el envío tradicional del formulario
+
+        const formData = new FormData(event.target);
+        const jsonObject = {};
+        formData.forEach((value, key) => {
+            const keys = key.split("[");
+
+            // Verifica si la clave pertenece a 'attendance' y si tiene valores no nulos
+            if (keys.length > 1) {
+                let obj = jsonObject;
+                for (let i = 0; i < keys.length - 1; i++) {
+                    const currentKey = keys[i].replace("]", "");
+                    if (!obj[currentKey]) obj[currentKey] = isNaN(parseInt(keys[i + 1])) ? {} : [];
+                    obj = obj[currentKey];
+                }
+                const finalKey = keys[keys.length - 1].replace("]", "");
+                if (value && value !== "") {  // Solo agregar valores no nulos
+                    obj[finalKey] = value;
+                }
+            } else {
+                if (value && value !== "") {  // Solo agregar valores no nulos
+                    jsonObject[key] = value;
+                }
+            }
+        });
+
+        // Elimina cualquier entrada de asistencia nula antes de enviarlo
+        jsonObject.attendance = jsonObject.attendance.filter(att => att && att.id_user);
+
+        const projectIddd = window.location.pathname.split('/').pop();
+
+        // Concatenar la fecha y hora para obtener el formato completo
+        //const fecha = jsonObject.fecha;  // "2024-12-09"
+        //const hora = jsonObject.hora;  // "14:30"
+        //const fullDateTime = `${fecha} ${hora}:00`;  // "2024-12-09 14:30:00"
+
+        const finalJson = {
+            _token: jsonObject._token,
+            project_id: {{$minuta->project_id}}, // Establecemos el ID del proyecto
+            created_by: {{ auth()->id() }}, // Establecemos el ID del creador
+            date: jsonObject.fecha,  // Formato: "2024-12-09 14:30:00"
+            direction: jsonObject.lugar,
+            attendance: jsonObject.attendance.map(attendance => ({
+                id_user: attendance.id_user,
+                status: attendance.status
+            })),
+            topics: jsonObject.topics.filter(topic => topic && topic.decisions && topic.actions) // Filtra temas nulos
+        };
+
+        console.log(JSON.stringify(finalJson, null, 2)); // Imprime el JSON en consola
+
+
+
+        // Enviar el JSON al backend usando fetch
+        fetch('/minutas/{{$minuta->id}}', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(finalJson)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Respuesta del servidor:', data);
+            window.location.href = `/project/${projectIddd}`;
+        })
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+        });
+    });
+});
+  </script>
+  
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
