@@ -344,7 +344,7 @@
                   // Agregar el evento de clic a la tarjeta de minuta
                  minutaCard.addEventListener('click', () => {
                  // Redirigir a la página de la minuta
-                 window.location.href = `minutas/${minuta.id}/edit`;
+                 window.location.href = `/project/minuta/${minuta.id}`;
           });
 
                   minutasList.appendChild(minutaCard);

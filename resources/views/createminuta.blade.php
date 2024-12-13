@@ -293,7 +293,7 @@
 
         <div class="ms-auto d-flex align-items-center">
           <li class="nav-item d-flex align-items-center">
-            <button class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" target="_blank" href="">Descargar</button>
+            <a class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" href="/home">Cancelar</a>
           </li>
           <ul class="navbar-nav d-lg-block d-none">
             <li class="nav-item">
