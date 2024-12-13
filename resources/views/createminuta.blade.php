@@ -235,7 +235,7 @@
 
 
 
-      <form id="minutaForm">
+      <form id="minutaForm"> 
         @csrf
         <!-- Nombre -->
         <div class="mb-3">
@@ -261,33 +261,21 @@
             <input type="text" class="form-control" id="lugar" name="lugar" placeholder="Ingresa el lugar" required>
         </div>
     
-        <!-- Asistencia -->
-        <div id="asistenciaSection" class="mb-3">
-            <label for="asistencia" class="form-label">Asistencia</label>
-            <select class="form-select" id="asistencia" name="attendance[0][status]" required>
-                <option value="" disabled selected>Elige una opción</option>
+        <!-- Usuarios -->
+        <div id="usuariosSection" class="mb-3">
+            <label for="usuarios" class="form-label">Usuarios</label>
+            <select class="form-select" id="usuarios" name="attendance[0][id_user]" required>
+                <option value="" disabled selected>Selecciona un usuario</option>
             </select>
-            <input type="hidden" name="attendance[0][id_user]" id="asistenciaUserId" value="">
+            <select class="form-select mt-2" name="attendance[0][status]" required>
+                <option value="Confirmado" selected>Confirmado</option>
+                <option value="Ausente">Ausente</option>
+            </select>
         </div>
     
         <div class="d-flex">
-            <button type="button" id="addAttendanceButton" class="btn btn-secondary">
-                <i class="bi bi-plus-circle"></i> Agregar otra asistencia
-            </button>
-        </div>
-    
-        <!-- Ausencia -->
-        <div id="ausenciaSection" class="mb-3">
-            <label for="ausencia" class="form-label">Ausencia</label>
-            <select class="form-select" id="ausencia" name="attendance[1][status]" required>
-                <option value="" disabled selected>Elige una opción</option>
-            </select>
-            <input type="hidden" name="attendance[1][id_user]" id="ausenciaUserId" value="">
-        </div>
-    
-        <div class="d-flex">
-            <button type="button" id="addAbsenceButton" class="btn btn-secondary">
-                <i class="bi bi-plus-circle"></i> Agregar otra ausencia
+            <button type="button" id="addUserButton" class="btn btn-secondary">
+                <i class="bi bi-plus-circle"></i> Agregar otro usuario
             </button>
         </div>
     
@@ -296,13 +284,8 @@
             <div class="topic mb-3">
                 <label for="decisiones" class="form-label">Tema</label>
                 <input type="text" class="form-control mb-3" name="topics[0][decisions][0][description]" placeholder="Decisión" required>
-                <button type="button" class="btn btn-secondary addDecisionButton">
-                    <i class="bi bi-plus-circle"></i> Agregar Decisión
-                </button>
+                
                 <input type="text" class="form-control mb-3" name="topics[0][actions][0][description]" placeholder="Elemento de acción" required>
-                <button type="button" class="btn btn-secondary addActionButton">
-                    <i class="bi bi-plus-circle"></i> Agregar Acción
-                </button>
             </div>
         </div>
     
@@ -312,119 +295,133 @@
             </button>
         </div>
     
-        <!-- Submit Button -->
-        <div class="d-flex">
-            <button type="submit" class="btn btn-lg btn-round mb-0 me-1 bg-gradient-dark">Guardar</button>
+
+
+        <div class="ms-auto d-flex align-items-center">
+          <li class="nav-item d-flex align-items-center">
+            <button class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" target="_blank" href="">Descargar</button>
+          </li>
+          <ul class="navbar-nav d-lg-block d-none">
+            <li class="nav-item">
+              <button type="submit" class="btn btn-lg btn-round mb-0 me-1 bg-gradient-dark">Guardar</button>
+            </li>
+          </ul>
         </div>
+
+
+
+        
+
+
     </form>
     
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
+       document.addEventListener('DOMContentLoaded', () => {
+    const selectedUsers = new Set(); // Mantendrá un registro de los usuarios seleccionados
+
     // Cargar usuarios dinámicamente
     fetch('/usuarios')
         .then(response => response.json())
         .then(users => {
             if (Array.isArray(users)) {
-                const asistenciaSelect = document.getElementById('asistencia');
-                const ausenciaSelect = document.getElementById('ausencia');
-  
-                // Rellenar los selectores de usuarios
+                const usuariosSelect = document.getElementById('usuarios');
+
+                // Rellenar el selector de usuarios
                 users.forEach(user => {
                     const option = document.createElement('option');
                     option.value = user.id;
                     option.textContent = user.name;
-  
-                    // Clonar la opción para el otro select
-                    const optionClone = option.cloneNode(true);
-  
-                    // Agregar las opciones a los selectores
-                    asistenciaSelect.appendChild(option);
-                    ausenciaSelect.appendChild(optionClone);
+                    usuariosSelect.appendChild(option);
                 });
             }
         })
         .catch(error => console.error('Error al cargar usuarios:', error));
-  
-    // Agregar nueva asistencia
-    document.getElementById('addAttendanceButton').addEventListener('click', () => {
-        const attendanceCount = document.querySelectorAll('[name^="attendance"]').length;
-        const newAttendance = document.createElement('div');
-        newAttendance.classList.add('mb-3');
-        newAttendance.innerHTML = `
-            <label for="asistencia" class="form-label">Asistencia</label>
-            <select class="form-select" name="attendance[${attendanceCount}][id_user]" required>
-                <option value="" disabled selected>Elige una opción</option>
+
+    // Agregar nuevo usuario
+    document.getElementById('addUserButton').addEventListener('click', () => {
+        const userCount = document.querySelectorAll('[name^="attendance"]').length;
+        const newUser = document.createElement('div');
+        newUser.classList.add('mb-3');
+        newUser.innerHTML = `
+            <label for="usuarios" class="form-label">Usuarios</label>
+            <select class="form-select" name="attendance[${userCount}][id_user]" required>
+                <option value="" disabled selected>Selecciona un usuario</option>
             </select>
-            <input type="hidden" name="attendance[${attendanceCount}][status]" value="Confirmado">
+            <label for="status" class="form-label">Estatus</label>
+            <select class="form-select" name="attendance[${userCount}][status]" required>
+                <option value="Confirmado">Confirmado</option>
+                <option value="Ausente">Ausente</option>
+            </select>
+            <button type="button" class="btn btn-danger btn-sm mt-2 removeUserButton">Eliminar</button>
         `;
-        document.getElementById('asistenciaSection').appendChild(newAttendance);
-  
-        // Agregar usuarios al nuevo select
+        document.getElementById('usuariosSection').appendChild(newUser);
+
+        // Agregar usuarios al nuevo select y filtrarlos
         fetch('/usuarios')
             .then(response => response.json())
             .then(users => {
-                const newSelect = newAttendance.querySelector('select');
-                users.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.textContent = user.name;
-                    newSelect.appendChild(option);
-                });
+                const newSelect = newUser.querySelector('select[name="attendance[' + userCount + '][id_user]"]');
 
-                // Actualizar el valor de id_user al cambiar la opción
-                newSelect.addEventListener('change', (e) => {
-                    const userIdInput = newAttendance.querySelector('input[type="hidden"]');
-                    userIdInput.value = 'Confirmado'; // Guardar "Confirmado" como estado
+                users
+                    .filter(user => !selectedUsers.has(user.id)) // Filtrar usuarios ya seleccionados
+                    .forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.textContent = user.name;
+                        newSelect.appendChild(option);
+                    });
+
+                // Manejar cambios en la selección de usuario
+                newSelect.addEventListener('change', (event) => {
+                    const selectedValue = parseInt(event.target.value);
+                    if (selectedValue) {
+                        selectedUsers.add(selectedValue); // Agregar el usuario al conjunto de seleccionados
+                    }
                 });
             })
             .catch(error => console.error('Error al cargar usuarios:', error));
+
+        // Agregar funcionalidad de eliminar al botón
+        newUser.querySelector('.removeUserButton').addEventListener('click', () => {
+            const removedUser = newUser.querySelector('select[name="attendance[' + userCount + '][id_user]"]');
+            const removedValue = parseInt(removedUser.value);
+            if (removedValue) {
+                selectedUsers.delete(removedValue); // Eliminar el usuario del conjunto de seleccionados
+            }
+            newUser.remove();
+        });
     });
-  
-    // Agregar nueva ausencia
-    document.getElementById('addAbsenceButton').addEventListener('click', () => {
-        const absenceCount = document.querySelectorAll('[name^="attendance"]').length;
-        const newAbsence = document.createElement('div');
-        newAbsence.classList.add('mb-3');
-        newAbsence.innerHTML = `
-            <label for="ausencia" class="form-label">Ausencia</label>
-            <select class="form-select" name="attendance[${absenceCount}][id_user]" required>
-                <option value="" disabled selected>Elige una opción</option>
-            </select>
-            <input type="hidden" name="attendance[${absenceCount}][status]" value="Ausente">
+
+    // Agregar nuevo tema
+    document.getElementById('addTopicButton').addEventListener('click', () => {
+        const topicCount = document.querySelectorAll('[name^="topics"]').length;
+        const newTopic = document.createElement('div');
+        newTopic.classList.add('topic', 'mb-3');
+        newTopic.innerHTML = `
+            <label for="decisiones" class="form-label">Tema</label>
+            <input type="text" class="form-control mb-3" name="topics[${topicCount}][decisions][0][description]" placeholder="Decisión" required>
+            
+            <input type="text" class="form-control mb-3" name="topics[${topicCount}][actions][0][description]" placeholder="Elemento de acción" required>
+            <button type="button" class="btn btn-danger btn-sm mt-2 removeTopicButton">Eliminar</button>
         `;
-        document.getElementById('ausenciaSection').appendChild(newAbsence);
-  
-        // Agregar usuarios al nuevo select
-        fetch('/usuarios')
-            .then(response => response.json())
-            .then(users => {
-                const newSelect = newAbsence.querySelector('select');
-                users.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.textContent = user.name;
-                    newSelect.appendChild(option);
-                });
+        document.getElementById('topicsSection').appendChild(newTopic);
 
-                // Actualizar el valor de id_user al cambiar la opción
-                newSelect.addEventListener('change', (e) => {
-                    const userIdInput = newAbsence.querySelector('input[type="hidden"]');
-                    userIdInput.value = 'Ausente'; // Guardar "Ausente" como estado
-                });
-            })
-            .catch(error => console.error('Error al cargar usuarios:', error));
+        // Agregar funcionalidad de eliminar al botón
+        newTopic.querySelector('.removeTopicButton').addEventListener('click', () => {
+            newTopic.remove();
+        });
     });
 
-    const creadorr =window.location.pathname.split('/').pop();
-    // Imprimir el JSON en consola al enviar el formulario
+    // Enviar el formulario como JSON
     document.getElementById('minutaForm').addEventListener('submit', (event) => {
         event.preventDefault(); // Evita el envío tradicional del formulario
-  
+
         const formData = new FormData(event.target);
         const jsonObject = {};
         formData.forEach((value, key) => {
             const keys = key.split("[");
 
+            // Verifica si la clave pertenece a 'attendance' y si tiene valores no nulos
             if (keys.length > 1) {
                 let obj = jsonObject;
                 for (let i = 0; i < keys.length - 1; i++) {
@@ -433,36 +430,41 @@
                     obj = obj[currentKey];
                 }
                 const finalKey = keys[keys.length - 1].replace("]", "");
-                obj[finalKey] = value;
+                if (value && value !== "") {  // Solo agregar valores no nulos
+                    obj[finalKey] = value;
+                }
             } else {
-                jsonObject[key] = value;
+                if (value && value !== "") {  // Solo agregar valores no nulos
+                    jsonObject[key] = value;
+                }
             }
         });
 
-        
-        // Estructura del JSON para el controlador
+        // Elimina cualquier entrada de asistencia nula antes de enviarlo
+        jsonObject.attendance = jsonObject.attendance.filter(att => att && att.id_user);
+
+        const projectIddd = window.location.pathname.split('/').pop();
+
+        // Concatenar la fecha y hora para obtener el formato completo
+        const fecha = jsonObject.fecha;  // "2024-12-09"
+        const hora = jsonObject.hora;  // "14:30"
+        const fullDateTime = `${fecha} ${hora}:00`;  // "2024-12-09 14:30:00"
+
         const finalJson = {
             _token: jsonObject._token,
-            project_id: creadorr, // Este valor debe ser el ID correcto del proyecto
-            created_by:  {{ auth()->id() }},  // Este valor debe ser el ID del creador
-            date: jsonObject.fecha,
+            project_id: projectIddd, // Establecemos el ID del proyecto
+            created_by: {{ auth()->id() }}, // Establecemos el ID del creador
+            date: fullDateTime,  // Formato: "2024-12-09 14:30:00"
             direction: jsonObject.lugar,
             attendance: jsonObject.attendance.map(attendance => ({
-                status: attendance.status,
-                id_user: attendance.id_user
+                id_user: attendance.id_user,
+                status: attendance.status
             })),
-            topics: jsonObject.topics.map(topic => ({
-                decisions: topic.decisions.map(decision => ({
-                    description: decision.description
-                })),
-                actions: topic.actions.map(action => ({
-                    description: action.description
-                }))
-            }))
+            topics: jsonObject.topics.filter(topic => topic && topic.decisions && topic.actions) // Filtra temas nulos
         };
-  
+
         console.log(JSON.stringify(finalJson, null, 2)); // Imprime el JSON en consola
-  
+
         // Enviar el JSON al backend usando fetch
         fetch('/ruta-del-controlador', {
             method: 'POST',
@@ -481,8 +483,14 @@
     });
 });
 
-  </script>
+
+    </script>
+    
+    
       
+    
+    
+    
       
       
       
