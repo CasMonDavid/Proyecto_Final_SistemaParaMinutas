@@ -52,8 +52,8 @@
                                 </li>
                                 <ul class="navbar-nav d-lg-block d-none">
                                     <li class="nav-item">
-                                        <a href=""
-                                            class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark">Descargar app</a>
+                                        <a href="" class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark">Descargar
+                                            app</a>
                                     </li>
                                 </ul>
                             </div>
@@ -83,9 +83,8 @@
 
                                         <label>Email</label>
                                         <div class="mb-3">
-                                            <input type="email" name="email" class="form-control"
-                                                placeholder="Email" aria-label="Email" aria-describedby="email-addon"
-                                                required>
+                                            <input type="email" name="email" class="form-control" placeholder="Email"
+                                                aria-label="Email" aria-describedby="email-addon" required>
                                         </div>
                                         <label>Contraseña</label>
                                         <div class="mb-3">
@@ -94,8 +93,7 @@
                                                 aria-describedby="password-addon" required>
                                         </div>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="rememberMe"
-                                                checked="">
+                                            <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
                                             <label class="form-check-label" for="rememberMe">Recordarme</label>
                                         </div>
                                         <div class="text-center">

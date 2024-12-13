@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-//use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -23,7 +23,7 @@ class UsersController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
-                'message' => 'La validacion fallo.',
+                'message' => 'La validación falló.',
                 'errors' => $validator->errors(),
             ], 422);
         }
@@ -32,50 +32,63 @@ class UsersController extends Controller
         $validated['password'] = bcrypt($validated['password']);
         $user = User::create($validated);
 
-        // Respuestas
+        // Iniciar sesión automáticamente
+        Auth::login($user);
+
+        // Respuesta JSON o redirección
         if ($request->expectsJson()) {
             return response()->json([
                 'status' => true,
-                'message' => 'Usuario añadido con exito.',
+                'message' => 'Usuario registrado y autenticado con éxito.',
                 'user' => $user,
             ], 201);
-        } else {
-            return redirect()->route('user.index');
         }
+
+        return redirect()->route('user.index');
     }
 
     // Elimina un usuario en base a su id
-    public function destroy(User $user_id)
+    public function destroy(User $user)
     {
-        $user_id->delete();
+        $user->delete();
         return response()->json([
             'status' => true,
-            'message' => 'Usuario eliminado con exito',
+            'message' => 'Usuario eliminado con éxito',
         ], 200);
     }
 
     // Actualiza un usuario en base a su id
-    public function update(Request $request, User $user_id)
+    public function update(Request $request, User $user)
     {
-
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => "required|email|max:255|unique:App\Models\User,email,{$user_id->id}",
+            'email' => "required|email|max:255|unique:App\Models\User,email,{$user->id}",
             'password' => 'required|string|min:5|max:255',
             'birthday' => 'required|date',
         ]);
 
-        $request['password'] = bcrypt($request['password']);
+        $validatedData['password'] = bcrypt($validatedData['password']);
+        $user->update($validatedData);
 
-        $user_id->update($request->all());
-
-        return redirect()->route('user.show', $user_id->id);
+        return response()->json([
+            'status' => true,
+            'message' => 'Usuario actualizado con éxito.',
+            'user' => $user,
+        ], 200);
     }
 
     // Muestra un usuario en base a su id
     public function show(int $user_id)
     {
         $user = User::find($user_id);
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Usuario no encontrado.',
+            ], 404);
+        }
+
         return response()->json($user, 200);
     }
 
