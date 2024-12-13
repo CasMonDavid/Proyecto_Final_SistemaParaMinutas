@@ -192,25 +192,6 @@
 
             <!-- Cartas -->
             <div class="row">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <!-- contenedor de las Cartas -->
                 <div id="project-container" class="row">
                     <!-- crear proyecto -->
