@@ -51,9 +51,9 @@ Route::get('/project/create-minuta/{id}', function () {
     return view('createminuta');
 });
 
-Route::get('/project/edit-minuta/{id}', function () {
+/*Route::get('/project/edit-minuta/{id}', function () {
     return view('editminuta');
-});
+});*/
 
 Route::get('/project/{id}', function () {
     return view('project');
@@ -102,7 +102,7 @@ Route::post('/user_project', [Users_ProjectsController::class, 'store']);
 Route::resource('minutas', MinutasController::class)
     ->except(['create','edit'])
     ->parameters(['minutas' => 'minuta_id']);
-Route::get('/project/minutas/{minuta_id}/edit', [MinutasController::class, 'edit']); // MINUTAS EDITAR
+Route::get('/project/edit-minuta/{minuta_id}', [MinutasController::class, 'edit']); // MINUTAS EDITAR
 Route::get('/attendance/{attendance_id}', [AttendanceController::class, 'show']);
 Route::get('/minutas/attendance/{minuta_id}', [AttendanceController::class, 'getByIdMinuta']);
 Route::get('/attendance', [AttendanceController::class, 'index']);
