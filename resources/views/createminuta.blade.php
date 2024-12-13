@@ -192,17 +192,18 @@
     <!-- End Navbar -->
     <div class="container-fluid py-4">
 
-      <div class="col-lg-12 col-md-12 col-sm- col-12 mb-4">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-4">
         <div class="card h-100 cursor-pointer">
           <span class="mask bg-primary opacity-10 border-radius-lg"></span>
           <div class="card-body p-3 position-relative">
             <div class="row">
               <div class="col-8 text-start">
-                <h5 class="text-white">
+                <h5 class="text-white font-weight-bolder mb-0 mt-3" id="project-name">
                   Crear minuta
                 </h5>
-
-                <span class="text-white text-sm">Nombre del proyecto</span>
+                <span class="text-white text-sm" id="project-creator">
+                  Creador del proyecto
+                </span>
               </div>
               <div class="col-4">
                 <div class="dropstart text-end mb-6">
@@ -216,87 +217,103 @@
                     <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
                   </ul>
                 </div>
-                <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">Fecha de creacion</p>
+                <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0" id="project-date">
+                  Fecha de creación
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- formulario -->
 
-      <form action="/minutas" method="POST">
+      <script  src="{{ asset('assets/js/BuscarProyect.js') }}"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- formulario -->
+      <form id="minutaForm">
         @csrf
         <!-- nombre -->
         <div class="mb-3">
           <label for="name" class="form-label">Nombre de la minuta</label>
-          <input type="text" class="form-control" id="name" placeholder="Nombre de la minuta" required>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la minuta" required>
         </div>
         <!-- fecha -->
         <div class="mb-3">
           <label for="fecha" class="form-label">Fecha</label>
-          <input type="date" class="form-control" id="fecha" required>
+          <input type="date" class="form-control" id="fecha" name="fecha" required>
         </div>
         <!-- Hora -->
         <div class="mb-3">
           <label for="hora" class="form-label">Hora</label>
-          <input type="time" class="form-control" id="hora" required>
+          <input type="time" class="form-control" id="hora" name="hora" required>
         </div>
         <!-- Lugar -->
         <div class="mb-3">
           <label for="lugar" class="form-label">Lugar</label>
-          <input type="text" class="form-control" id="lugar" placeholder="Ingresa el lugar" required>
+          <input type="text" class="form-control" id="lugar" name="lugar" placeholder="Ingresa el lugar" required>
         </div>
-
+      
         <div class="mb-3">
           <label for="asistencia" class="form-label">Asistencia</label>
-          <select class="form-select" id="asistencia" required>
+          <select class="form-select" id="asistencia" name="attendance[0][status]" required>
             <option value="" disabled selected>Elige una opción</option>
             <option value="activo">Usuario 1</option>
-            <option value="Inactivo">Usuario n</option>
+            <option value="inactivo">Usuario n</option>
           </select>
+          <input type="hidden" name="attendance[0][id_user]" value="user_id_1">
         </div>
-
+      
         <div class="d-flex">
-          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+          <button type="button" id="addAttendanceButton" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
             <i class="bi bi-plus-circle"></i> Agregar otra asistencia
           </button>
         </div>
-
+      
         <div class="mb-3">
           <label for="ausencia" class="form-label">Ausencia</label>
-          <select class="form-select" id="ausencia" required>
+          <select class="form-select" id="ausencia" name="attendance[1][status]" required>
             <option value="" disabled selected>Elige una opción</option>
             <option value="activo">Usuario 1</option>
-            <option value="Inactivo">Usuario n</option>
+            <option value="inactivo">Usuario n</option>
           </select>
+          <input type="hidden" name="attendance[1][id_user]" value="user_id_2">
         </div>
-
+      
         <div class="d-flex">
-          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+          <button type="button" id="addAbsenceButton" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
             <i class="bi bi-plus-circle"></i> Agregar otra ausencia
           </button>
         </div>
-        <!-- tema -->
-        <div class="mb-3"> <!-- Para el front este se debe de repetir n veces -->
+      
+        <!-- Tema -->
+        <div class="mb-3">
           <label for="decisiones" class="form-label">Tema numero n</label>
-          <input type="text" class="form-control mb-3" id="decisiones" placeholder="Decision n"
-            required><!-- Para el front este se debe de repetir n veces igual -->
-          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+          <input type="text" class="form-control mb-3" id="decisiones" name="topics[0][decisions][0][description]" placeholder="Decision n" required>
+          <button type="button" id="addDecisionButton" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
             <i class="bi bi-plus-circle"></i> Decision
           </button>
-          <input type="text" class="form-control mb-3" id="accion" placeholder="Elemento de accion n"
-            required><!-- Para el front este se debe de repetir n veces igual -->
-          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
-            <i class="bi bi-plus-circle"></i> accion
+          <input type="text" class="form-control mb-3" id="accion" name="topics[0][actions][0][description]" placeholder="Elemento de accion n" required>
+          <button type="button" id="addActionButton" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+            <i class="bi bi-plus-circle"></i> Acción
           </button>
           <div class="d-flex">
-            <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
+            <button type="button" id="addTopicButton" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
               <i class="bi bi-plus-circle"></i> Agregar Tema
             </button>
           </div>
-
         </div>
-
+      
         <!-- Submit Button -->
         <div class="collapse navbar-collapse d-flex" id="navigation">
           <div class="ms-auto d-flex align-items-center">
@@ -311,8 +328,73 @@
           </div>
         </div>
       </form>
+      
 
-      <!-- Final del formulario -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('minutaForm'); // Seleccionar formulario
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault(); // Evitar que la página se recargue
+
+    const formData = new FormData(form);
+    const formValues = {};
+
+    // Convertir FormData en un objeto
+    formData.forEach((value, key) => {
+      if (formValues[key]) {
+        // Si la clave ya existe, convertir el valor en un array
+        if (!Array.isArray(formValues[key])) {
+          formValues[key] = [formValues[key]];
+        }
+        formValues[key].push(value);
+      } else {
+        formValues[key] = value;
+      }
+    });
+
+    // Mostrar los datos del formulario en formato JSON en la consola
+    console.log('Datos del formulario:', JSON.stringify(formValues, null, 2));
+
+    // Ahora puedes enviar estos datos a tu controlador utilizando fetch o cualquier otra técnica AJAX
+    fetch('/ruta-del-controlador', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      },
+      body: JSON.stringify(formValues), // Envía los datos JSON
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Respuesta del servidor:', data);
+    })
+    .catch(error => {
+      console.error('Error al enviar los datos:', error);
+    });
+  });
+});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
 
       <footer class="footer pt-3  ">
         <div class="container-fluid">

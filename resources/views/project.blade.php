@@ -201,50 +201,7 @@
         </div>
       </div>
 
-      <script>
-        document.addEventListener("DOMContentLoaded", () => {
-          // Obtener el ID del proyecto desde la URL
-          const projectId = window.location.pathname.split('/').pop();
-
-          // Función para obtener los datos del proyecto
-          const fetchProjectDetails = async (projectId) => {
-            try {
-              // Realizamos la solicitud GET a la API para obtener el proyecto usando su ID
-              const response = await fetch(`/proyectos/${projectId}`);
-              if (response.ok) {
-                const data = await response.json();
-                const project = data.project;
-
-                // Actualizar el DOM con los datos del proyecto
-                document.getElementById("project-name").textContent = project.name || "Nombre del proyecto";
-                document.getElementById("project-creator").textContent = await fetchCreatorName(project.created_by);
-                document.getElementById("project-date").textContent = project.created_at ? new Date(project.created_at).toLocaleDateString("es-ES") : "Fecha de creación";
-              }
-            } catch (error) {
-              console.error("Error al obtener los detalles del proyecto:", error);
-            }
-          };
-
-          // Función para obtener el nombre del creador (basado en el ID del creador)
-          const fetchCreatorName = async (userId) => {
-            if (!userId) return "Autor desconocido";
-
-            try {
-              const response = await fetch(`/usuarios/${userId}`);
-              if (response.ok) {
-                const user = await response.json();
-                return user.name || "Autor desconocido";
-              }
-            } catch (error) {
-              console.error(`Error al obtener el creador ${userId}:`, error);
-            }
-            return "Autor desconocido";
-          };
-
-          // Obtener los detalles del proyecto con el ID obtenido
-          fetchProjectDetails(projectId);
-        });
-      </script>
+      <script  src="{{ asset('assets/js/BuscarProyect.js') }}"></script>
 
 
 
@@ -255,36 +212,40 @@
       <!-- Cartas -->
       <div class="row">
 
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-          <div class="card h-100 cursor-pointer" onclick="window.location.href='/project/create-minuta'">
-            <span class="mask bg-white opacity-10 border-radius-lg"></span>
-            <div class="card-body p-3 position-relative">
-              <div class="row h-100 d-flex justify-content-center align-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="black" class="bi bi-plus"
-                  viewBox="0 0 16 16">
-                  <path
-                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                </svg>
+        <div id="agregar-list"></div>
+
+
+        <script>
+          const projectId = window.location.pathname.split('/').pop();
+          
+          // Crear el div con la tarjeta y agregarlo al DOM
+          const minutasList = document.getElementById('agregar-list'); //
+        
+          const minutaCard = document.createElement('div');
+          minutaCard.classList.add('col-lg-3', 'col-md-4', 'col-sm-6', 'col-12', 'mb-4');
+          
+          // Crear el contenido de la tarjeta
+          minutaCard.innerHTML = `
+            <div class="card h-100 cursor-pointer" onclick="window.location.href='/project/create-minuta/${projectId}'">
+              <span class="mask bg-white opacity-10 border-radius-lg"></span>
+              <div class="card-body p-3 position-relative">
+                <div class="row h-100 d-flex justify-content-center align-items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="black" class="bi bi-plus"
+                    viewBox="0 0 16 16">
+                    <path
+                      d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                  </svg>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </div>`;
+        
+          // Agregar la tarjeta al contenedor
+          minutasList.appendChild(minutaCard);
+        </script>
+        
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
 
 
         <div class="row" id="minutas-list">
