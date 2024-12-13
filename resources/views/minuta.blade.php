@@ -10,6 +10,9 @@
     Home
   </title>
 
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -160,7 +163,7 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Paginas</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Proyectos</li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Minutas</li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Nombre de la minuta</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Descargar</li>
           </ol>
         </nav>
         <ul class="navbar-nav justify-content-end">
@@ -189,39 +192,26 @@
       <!-- Minuta -->
       <div class="mb-3">
         <h3>Minuta</h3>
-        <h4>Minuta</h4>
       </div>
 
       <!-- fecha -->
       <div class="mb-3">
-        <h5>Fecha</h5>
-        <p>Fecha</p>
-      </div>
-      <!-- Hora -->
-      <div class="mb-3">
-        <h5>Hora</h5>
-        <p>Hora</p>
+        <h5>Fecha y hora</h5>
+        <p id="fecha">Fecha</p>
       </div>
       <!-- Lugar -->
       <div class="mb-3">
         <h5>Lugar</h5>
-        <p>Lugar</p>
+        <p id="lugar">Lugar</p>
       </div>
 
       <div class="mb-3">
-        <h5>Asistencia</h5>
-        <p>Asistencia</p>
-      </div>
-
-      <div class="mb-3">
-        <h5>Ausencia</h5>
-        <p>Ausencia</p>
+        <h5>Participantes</h5>
+        <p id="nombre-participante">Participante</p>
       </div>
 
       <div class="mb-3">
         <h5>Tema</h5>
-        <p>Desicion</p>
-        <p>Accion</p>
       </div>
 
     </div>
@@ -250,19 +240,115 @@
   <!--   Core JS Files   -->
 
   <script>
-    function minuta() {
-      // Selecciona el div con el contenido que quieres imprimir
-      var contenido = document.getElementById("print").innerHTML;
-      
-      // Abre una nueva ventana o un iframe para imprimir
-      var ventanaImpresion = window.open('', '', 'width=800,height=600');
-      ventanaImpresion.document.write('<html><head><title></title></head><body>');
-      ventanaImpresion.document.write(contenido);
-      ventanaImpresion.document.write('</body></html>');
-      ventanaImpresion.document.close();
-      ventanaImpresion.print();
-      ventanaImpresion.close();
-    }
+
+window.addEventListener("DOMContentLoaded", () => {
+    // Obtener el ID de la minuta desde la URL (o configurarlo de otra manera)
+    const minutaId = window.location.pathname.split('/').pop(); // Asegúrate de que el ID sea el último segmento de la URL
+
+    // Función para cargar la minuta desde el servidor
+    const fetchMinuta = async (id) => {
+        try {
+            const response = await fetch(`/minutas/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+
+            if (!response.ok) {
+                console.error("Error al obtener la minuta:", {
+                    status: response.status,
+                    statusText: response.statusText,
+                    url: response.url
+                });
+                alert(`No se pudo cargar la minuta. Error ${response.status}: ${response.statusText}`);
+                return;
+            }
+
+            const minuta = await response.json();
+            console.log("Datos de la minuta:", minuta);
+
+            // Llenar los elementos HTML con los datos de la minuta
+            document.getElementById("fecha").textContent = minuta.date || "Sin fecha";
+            document.getElementById("lugar").textContent = minuta.direction || "Sin lugar";
+
+            // Asistencia
+            const attendanceContainer = document.getElementById("nombre-participante");
+            attendanceContainer.innerHTML = ""; // Limpiar contenido previo
+            minuta.attendance.forEach(att => {
+                const user = minuta.usuarios.find(u => u.id === att.user_id);
+                const attendanceElement = document.createElement("p");
+                attendanceElement.textContent = `${user?.name || "Usuario desconocido"} (${att.status})`;
+                attendanceContainer.appendChild(attendanceElement);
+            });
+
+            // Temas de decisión y acción
+            const temasContainer = document.querySelector("#print");
+
+            minuta.topics_decision.forEach(topic => {
+                const topicElement = document.createElement("div");
+                topicElement.classList.add("mb-3");
+
+                topicElement.innerHTML = `
+                    <p>Desicion: ${topic.description || "Sin descripción"}</p>
+                `;
+                temasContainer.appendChild(topicElement);
+            });
+
+            minuta.topics_action.forEach(topic => {
+                const topicElement = document.createElement("div");
+                topicElement.classList.add("mb-3");
+
+                topicElement.innerHTML = `
+                    <p> accion: ${topic.description || "Sin descripción"}</p>
+                `;
+                temasContainer.appendChild(topicElement);
+            });
+
+        } catch (error) {
+            console.error("Error en la solicitud de minuta:", error);
+            alert(`Hubo un error al cargar la minuta: ${error.message}`);
+        }
+    };
+
+    // Función para imprimir la minuta
+    const minuta = () => {
+        const contenido = document.getElementById("print");
+        if (!contenido) {
+            alert("No se encontró el contenido para imprimir.");
+            return;
+        }
+
+        // Crear una nueva ventana para imprimir
+        const ventanaImpresion = window.open('', '', 'width=800,height=600');
+        ventanaImpresion.document.write(`
+            <html>
+                <head>
+                    <title>Imprimir Minuta</title>
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+                </head>
+                <body>
+                    ${contenido.innerHTML}
+                </body>
+            </html>
+        `);
+        ventanaImpresion.document.close();
+
+        // Esperar a que se cargue el contenido antes de imprimir
+        ventanaImpresion.onload = () => {
+            ventanaImpresion.print();
+            ventanaImpresion.close();
+        };
+    };
+
+    // Llamar a la función para cargar los datos de la minuta
+    fetchMinuta(minutaId);
+
+    // Asignar la función de impresión al botón
+    document.querySelector("button[onclick='minuta()']").onclick = minuta;
+});
+
   </script>
 
   <script src="../assets/js/core/popper.min.js"></script>
