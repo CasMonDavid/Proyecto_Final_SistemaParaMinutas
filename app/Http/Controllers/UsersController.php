@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Exception;
 
 class UsersController extends Controller
 {
@@ -48,9 +49,16 @@ class UsersController extends Controller
     }
 
     // Elimina un usuario en base a su id
-    public function destroy(User $user)
+    public function destroy(User $user_id)
     {
-        $user->delete();
+        try{
+            $user_id->delete();
+        }catch(Exception $e){
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage(),
+            ], 422);
+        }
         return response()->json([
             'status' => true,
             'message' => 'Usuario eliminado con éxito',
@@ -58,22 +66,22 @@ class UsersController extends Controller
     }
 
     // Actualiza un usuario en base a su id
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user_id)
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => "required|email|max:255|unique:App\Models\User,email,{$user->id}",
+            'email' => "required|email|max:255|unique:App\Models\User,email,{$user_id->id}",
             'password' => 'required|string|min:5|max:255',
             'birthday' => 'required|date',
         ]);
 
         $validatedData['password'] = bcrypt($validatedData['password']);
-        $user->update($validatedData);
+        $user_id->update($validatedData);
 
         return response()->json([
             'status' => true,
             'message' => 'Usuario actualizado con éxito.',
-            'user' => $user,
+            'user' => $user_id,
         ], 200);
     }
 
