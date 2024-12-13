@@ -87,6 +87,7 @@ Route::resource('usuarios', UsersController::class)
     ->parameters(['usuarios' => 'user_id'])
     ->names('user');
 
+
 // PROYECTOS
 Route::resource('proyectos', ProjectsController::class)
     ->except(['create', 'edit'])
@@ -95,6 +96,7 @@ Route::resource('proyectos', ProjectsController::class)
 Route::get('/user_project/getByProject/{project}', [Users_ProjectsController::class, 'getByProject']);
 Route::get('/user_project/getById/{id}', [Users_ProjectsController::class, 'show']);
 Route::get('/user_project', [Users_ProjectsController::class, 'index']);
+Route::post('/user_project', [Users_ProjectsController::class, 'store']);
 
 // MINUTAS
 Route::resource('minutas', MinutasController::class)

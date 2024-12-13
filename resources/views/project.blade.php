@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="apple-touch-icon" sizes="76x76" href="{{asset('/assets/img/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="{{asset('/assets/img/favicon.png')}}">
   <title>
@@ -195,7 +196,7 @@
         </div>
       </div>
 
-      <script  src="{{ asset('assets/js/BuscarProyect.js') }}"></script>
+      <script src="{{ asset('assets/js/BuscarProyect.js') }}"></script>
 
 
 
@@ -211,13 +212,13 @@
 
         <script>
           const projectId = window.location.pathname.split('/').pop();
-          
+
           // Crear el div con la tarjeta y agregarlo al DOM
           const minutasList = document.getElementById('agregar-list'); //
-        
+
           const minutaCard = document.createElement('div');
           minutaCard.classList.add('col-lg-3', 'col-md-4', 'col-sm-6', 'col-12', 'mb-4');
-          
+
           // Crear el contenido de la tarjeta
           minutaCard.innerHTML = `
             <div class="card h-100 cursor-pointer" onclick="window.location.href='/project/create-minuta/${projectId}'">
@@ -233,13 +234,13 @@
               </div>
             </div>
           </div>`;
-        
+
           // Agregar la tarjeta al contenedor
           minutasList.appendChild(minutaCard);
         </script>
-        
 
-        
+
+
 
 
         <div class="row" id="minutas-list">
@@ -417,8 +418,8 @@
           </div>
         </div>
 
-         <!-- Script para cargar los usuarios -->
-         <script src="{{ asset('assets/js/usuariosParticipantes.js') }}"></script>
+        <!-- Script para cargar los usuarios -->
+        <script src="{{ asset('assets/js/usuariosParticipantes.js') }}"></script>
 
 
 
