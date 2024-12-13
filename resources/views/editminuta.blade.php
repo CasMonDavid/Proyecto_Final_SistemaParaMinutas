@@ -483,7 +483,7 @@
         .then(response => response.json())
         .then(data => {
             console.log('Respuesta del servidor:', data);
-            window.location.href = `/project/${projectIddd}`;
+            window.location.href = `/project/{{$minuta->project_id}}`;
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
