@@ -184,131 +184,50 @@
       </div>
     </nav>
     <!-- End Navbar -->
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4" id="print">
 
-      <div class="col-lg-12 col-md-12 col-sm- col-12 mb-4">
-        <div class="card h-100 cursor-pointer">
-          <span class="mask bg-primary opacity-10 border-radius-lg"></span>
-          <div class="card-body p-3 position-relative">
-            <div class="row">
-              <div class="col-8 text-start">
-                <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                  Nombre de la minuta
-                </h5>
-                <span class="text-white text-sm">Nombre del proyecto</span>
-              </div>
-              <div class="col-4">
-                <div class="dropstart text-end mb-6">
-                  <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <i class="fa fa-ellipsis-h text-white"></i>
-                  </a>
-                  <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                  </ul>
-                </div>
-                <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">Fecha de creacion</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- Minuta -->
+      <div class="mb-3">
+        <h3>Minuta</h3>
+        <h4>Minuta</h4>
       </div>
-      <!-- formulario -->
 
+      <!-- fecha -->
+      <div class="mb-3">
+        <h5>Fecha</h5>
+        <p>Fecha</p>
+      </div>
+      <!-- Hora -->
+      <div class="mb-3">
+        <h5>Hora</h5>
+        <p>Hora</p>
+      </div>
+      <!-- Lugar -->
+      <div class="mb-3">
+        <h5>Lugar</h5>
+        <p>Lugar</p>
+      </div>
 
+      <div class="mb-3">
+        <h5>Asistencia</h5>
+        <p>Asistencia</p>
+      </div>
 
+      <div class="mb-3">
+        <h5>Ausencia</h5>
+        <p>Ausencia</p>
+      </div>
 
+      <div class="mb-3">
+        <h5>Tema</h5>
+        <p>Desicion</p>
+        <p>Accion</p>
+      </div>
 
+    </div>
 
+    <button class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" target="" onclick="minuta()">Descargar</button>
 
-
-      <form action="/minutas_id">
-        <!-- fecha -->
-        <div class="mb-3">
-          <label for="fecha" class="form-label">Fecha</label>
-          <input type="date" class="form-control" id="fecha" required>
-        </div>
-        <!-- Hora -->
-        <div class="mb-3">
-          <label for="hora" class="form-label">Hora</label>
-          <input type="time" class="form-control" id="hora" required>
-        </div>
-        <!-- Lugar -->
-        <div class="mb-3">
-          <label for="lugar" class="form-label">Lugar</label>
-          <input type="text" class="form-control" id="lugar" placeholder="Ingresa el lugar" required>
-        </div>
-
-        <div class="mb-3">
-          <label for="asistencia" class="form-label">Asistencia</label>
-          <select class="form-select" id="asistencia" required>
-            <option value="" disabled selected>Elige una opción</option>
-            <option value="activo">Usuario 1</option>
-            <option value="Inactivo">Usuario n</option>
-          </select>
-        </div>
-
-        <div class="d-flex">
-          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
-            <i class="bi bi-plus-circle"></i> Agregar otra asistencia
-          </button>
-        </div>
-
-        <div class="mb-3">
-          <label for="ausencia" class="form-label">Ausencia</label>
-          <select class="form-select" id="ausencia" required>
-            <option value="" disabled selected>Elige una opción</option>
-            <option value="activo">Usuario 1</option>
-            <option value="Inactivo">Usuario n</option>
-          </select>
-        </div>
-
-        <div class="d-flex">
-          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
-            <i class="bi bi-plus-circle"></i> Agregar otra ausencia
-          </button>
-        </div>
-
-        <!-- tema -->
-        <div class="mb-3"> <!-- Para el front este se debe de repetir n veces -->
-          <label for="decisiones" class="form-label">Tema numero n</label>
-          <input type="text" class="form-control mb-3" id="decisiones" placeholder="Decision n"
-            required><!-- Para el front este se debe de repetir n veces igual -->
-          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
-            <i class="bi bi-plus-circle"></i> Decision
-          </button>
-          <input type="text" class="form-control mb-3" id="accion" placeholder="Elemento de accion n"
-            required><!-- Para el front este se debe de repetir n veces igual -->
-          <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
-            <i class="bi bi-plus-circle"></i> accion
-          </button>
-          <div class="d-flex">
-            <button id="addTopicButton" name="tema" class="btn btn-outline-light btn-lg border-0 px-4 shadow-sm">
-              <i class="bi bi-plus-circle"></i> Agregar Tema
-            </button>
-          </div>
-
-        </div>
-
-        <!-- Submit Button -->
-        <div class="collapse navbar-collapse d-flex" id="navigation">
-          <div class="ms-auto d-flex align-items-center">
-            <li class="nav-item d-flex align-items-center">
-              <button class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" target="_blank"
-                href="https://create.microsoft.com/es-es/templates/acta">Descargar</button>
-            </li>
-            <ul class="navbar-nav d-lg-block d-none">
-              <li class="nav-item">
-                <button type="submit" class="btn btn-lg btn-round mb-0 me-1 bg-gradient-dark">Guardar</button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </form>
-
-      <!-- Final del formulario -->
 
       <footer class="footer pt-3  ">
         <div class="container-fluid">
@@ -329,6 +248,23 @@
     </div>
   </main>
   <!--   Core JS Files   -->
+
+  <script>
+    function minuta() {
+      // Selecciona el div con el contenido que quieres imprimir
+      var contenido = document.getElementById("print").innerHTML;
+      
+      // Abre una nueva ventana o un iframe para imprimir
+      var ventanaImpresion = window.open('', '', 'width=800,height=600');
+      ventanaImpresion.document.write('<html><head><title></title></head><body>');
+      ventanaImpresion.document.write(contenido);
+      ventanaImpresion.document.write('</body></html>');
+      ventanaImpresion.document.close();
+      ventanaImpresion.print();
+      ventanaImpresion.close();
+    }
+  </script>
+
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
