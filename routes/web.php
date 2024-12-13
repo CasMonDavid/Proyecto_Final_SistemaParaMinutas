@@ -51,6 +51,10 @@ Route::get('/project/create-minuta/{id}', function () {
     return view('createminuta');
 });
 
+Route::get('/project/edit-minuta/{id}', function () {
+    return view('editminuta');
+});
+
 Route::get('/project/{id}', function () {
     return view('project');
 });
