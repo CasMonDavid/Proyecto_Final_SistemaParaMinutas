@@ -44,7 +44,7 @@ Route::get('/project/minuta/{id}', function () {
     return view('minuta');
 });
 
-Route::get('/project/create-minuta', function () {
+Route::get('/project/{id}/create-minuta', function () {
     return view('createminuta');
 });
 
