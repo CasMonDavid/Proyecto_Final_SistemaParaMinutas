@@ -466,7 +466,7 @@
         console.log(JSON.stringify(finalJson, null, 2)); // Imprime el JSON en consola
 
         // Enviar el JSON al backend usando fetch
-        fetch('/ruta-del-controlador', {
+        fetch('/minutas', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

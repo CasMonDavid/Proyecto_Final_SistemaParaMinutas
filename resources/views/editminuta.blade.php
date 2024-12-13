@@ -1,3 +1,7 @@
+<?php
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -224,65 +228,68 @@
 
       <script  src="{{ asset('assets/js/BuscarProyect.js') }}"></script>
 
-
-
-
-
-
-
-
-
-
-
-
       <form id="minutaForm">
         @csrf
-        <!-- Nombre -->
-        <div class="mb-3">
-            <label for="name" class="form-label">Nombre de la minuta</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la minuta" required>
-        </div>
-    
         <!-- Fecha -->
         <div class="mb-3">
-            <label for="fecha" class="form-label">Fecha</label>
-            <input type="date" class="form-control" id="fecha" name="fecha" required>
-        </div>
-    
-        <!-- Hora -->
-        <div class="mb-3">
-            <label for="hora" class="form-label">Hora</label>
-            <input type="time" class="form-control" id="hora" name="hora" required>
+            <label for="fecha" class="form-label">Fecha y hora</label>
+            <input type="datetime-local" class="form-control" id="fecha" name="fecha" value="<?= $minuta->date ?>" required>
         </div>
     
         <!-- Lugar -->
         <div class="mb-3">
             <label for="lugar" class="form-label">Lugar</label>
-            <input type="text" class="form-control" id="lugar" name="lugar" placeholder="Ingresa el lugar" required>
+            <input type="text" class="form-control" id="lugar" name="lugar" placeholder="Ingresa el lugar" value="<?= $minuta->direction ?>" required>
         </div>
     
         <!-- Asistencia -->
+        
         <div id="asistenciaSection" class="mb-3">
-            <label for="asistencia" class="form-label">Asistencia</label>
-            <select class="form-select" id="asistencia" name="attendance[0][status]" required>
-                <option value="" disabled selected>Elige una opción</option>
-            </select>
-            <input type="hidden" name="attendance[0][id_user]" id="asistenciaUserId" value="">
+          <label for="asistencia" class="form-label">Asistencia</label>
+          @foreach ( $minuta->attendance as $asis )
+              @if ($asis->status == "Confirmado")
+
+              <select class="form-select" id="asistencia{{$asis->id}}" name="hola" required>
+                <option value="-1" disabled selected>Elige una opción</option>
+
+                @foreach ( $users as $user )
+                  <option value="{{ $user->id }}" @if ($asis->user_id == $user->id)
+                    selected
+                  @endif >{{ $user->name }}</option>
+                @endforeach
+
+              </select>
+
+              @endif
+          @endforeach
         </div>
-    
-        <div class="d-flex">
-            <button type="button" id="addAttendanceButton" class="btn btn-secondary">
-                <i class="bi bi-plus-circle"></i> Agregar otra asistencia
-            </button>
-        </div>
+      
+          <div class="d-flex">
+              <button type="button" id="addAttendanceButton" class="btn btn-secondary">
+                  <i class="bi bi-plus-circle"></i> Agregar otra asistencia
+              </button>
+          </div>
+
     
         <!-- Ausencia -->
         <div id="ausenciaSection" class="mb-3">
-            <label for="ausencia" class="form-label">Ausencia</label>
-            <select class="form-select" id="ausencia" name="attendance[1][status]" required>
-                <option value="" disabled selected>Elige una opción</option>
-            </select>
-            <input type="hidden" name="attendance[1][id_user]" id="ausenciaUserId" value="">
+          <label for="asistencia" class="form-label">Ausencia</label>
+            @foreach ( $minuta->attendance as $asis )
+                @if ($asis->status == "Ausente")
+
+                <select class="form-select" id="asistencia{{$asis->id}}" name="hola" required>
+                  <option value="-1" disabled selected>Elige una opción</option>
+
+                  @foreach ( $users as $user )
+                    <option value="{{ $user->id }}" @if ($asis->user_id == $user->id)
+                      selected
+                    @endif >{{ $user->name }}</option>
+                  @endforeach
+
+                </select>
+
+                @endif
+            @endforeach
         </div>
     
         <div class="d-flex">
@@ -320,184 +327,6 @@
           </div>
         </div>
     </form>
- 
-    
-    
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-    // Cargar usuarios dinámicamente
-    fetch('/usuarios')
-        .then(response => response.json())
-        .then(users => {
-            if (Array.isArray(users)) {
-                const asistenciaSelect = document.getElementById('asistencia');
-                const ausenciaSelect = document.getElementById('ausencia');
-
-                users.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.textContent = user.name;
-
-                    // Clonar la opción para evitar referencias
-                    const optionClone = option.cloneNode(true);
-
-                    // Agregar las opciones a los selectores
-                    asistenciaSelect.appendChild(option);
-                    ausenciaSelect.appendChild(optionClone);
-                });
-            }
-        })
-        .catch(error => console.error('Error al cargar usuarios:', error));
-
-    // Agregar nueva asistencia
-    document.getElementById('addAttendanceButton').addEventListener('click', () => {
-        const newAttendance = document.createElement('div');
-        newAttendance.classList.add('mb-3');
-        newAttendance.innerHTML = `
-            <label for="asistencia" class="form-label">Asistencia</label>
-            <select class="form-select" name="attendance[][status]" required>
-                <option value="" disabled selected>Elige una opción</option>
-            </select>
-            <input type="hidden" name="attendance[][id_user]" value="">
-        `;
-        document.getElementById('asistenciaSection').appendChild(newAttendance);
-
-        // Agregar usuarios al nuevo select
-        fetch('/usuarios')
-            .then(response => response.json())
-            .then(users => {
-                const newSelect = newAttendance.querySelector('select');
-                users.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.textContent = user.name;
-                    newSelect.appendChild(option);
-                });
-            })
-            .catch(error => console.error('Error al cargar usuarios:', error));
-    });
-
-    // Agregar nueva ausencia
-    document.getElementById('addAbsenceButton').addEventListener('click', () => {
-        const newAbsence = document.createElement('div');
-        newAbsence.classList.add('mb-3');
-        newAbsence.innerHTML = `
-            <label for="ausencia" class="form-label">Ausencia</label>
-            <select class="form-select" name="attendance[][status]" required>
-                <option value="" disabled selected>Elige una opción</option>
-            </select>
-            <input type="hidden" name="attendance[][id_user]" value="">
-        `;
-        document.getElementById('ausenciaSection').appendChild(newAbsence);
-
-        // Agregar usuarios al nuevo select
-        fetch('/usuarios')
-            .then(response => response.json())
-            .then(users => {
-                const newSelect = newAbsence.querySelector('select');
-                users.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.textContent = user.name;
-                    newSelect.appendChild(option);
-                });
-            })
-            .catch(error => console.error('Error al cargar usuarios:', error));
-    });
-
-    // Agregar nueva decisión
-    document.getElementById('topicsSection').addEventListener('click', (event) => {
-        if (event.target.classList.contains('addDecisionButton')) {
-            const topicDiv = event.target.closest('.topic');
-            const newDecision = document.createElement('input');
-            newDecision.type = 'text';
-            newDecision.classList.add('form-control', 'mb-3');
-            newDecision.name = 'topics[][decisions][][description]';
-            newDecision.placeholder = 'Decisión';
-            topicDiv.insertBefore(newDecision, event.target);
-        }
-    });
-
-    // Agregar nueva acción
-    document.getElementById('topicsSection').addEventListener('click', (event) => {
-        if (event.target.classList.contains('addActionButton')) {
-            const topicDiv = event.target.closest('.topic');
-            const newAction = document.createElement('input');
-            newAction.type = 'text';
-            newAction.classList.add('form-control', 'mb-3');
-            newAction.name = 'topics[][actions][][description]';
-            newAction.placeholder = 'Elemento de acción';
-            topicDiv.insertBefore(newAction, event.target);
-        }
-    });
-
-    // Agregar nuevo tema
-    document.getElementById('addTopicButton').addEventListener('click', () => {
-        const newTopic = document.createElement('div');
-        newTopic.classList.add('topic', 'mb-3');
-        newTopic.innerHTML = `
-            <label for="decisiones" class="form-label">Tema</label>
-            <input type="text" class="form-control mb-3" name="topics[][decisions][0][description]" placeholder="Decisión" required>
-            <button type="button" class="btn btn-secondary border-0 px-4 shadow-sm addDecisionButton">
-                <i class="bi bi-plus-circle"></i> Agregar Decisión
-            </button>
-            <input type="text" class="form-control mb-3" name="topics[][actions][0][description]" placeholder="Elemento de acción" required>
-            <button type="button" class="btn btn-secondary  border-0 px-4 shadow-sm addActionButton">
-                <i class="bi bi-plus-circle"></i> Agregar Acción
-            </button>
-        `;
-        document.getElementById('topicsSection').appendChild(newTopic);
-    });
-
-    // Imprimir el JSON en consola al enviar el formulario
-    document.getElementById('minutaForm').addEventListener('submit', (event) => {
-        event.preventDefault(); // Evita el envío tradicional del formulario
-
-        const formData = new FormData(event.target);
-        const jsonObject = {};
-        formData.forEach((value, key) => {
-            const keys = key.split("[");
-            if (keys.length > 1) {
-                let obj = jsonObject;
-                for (let i = 0; i < keys.length - 1; i++) {
-                    const currentKey = keys[i].replace("]", "");
-                    if (!obj[currentKey]) obj[currentKey] = isNaN(parseInt(keys[i + 1])) ? {} : [];
-                    obj = obj[currentKey];
-                }
-                const finalKey = keys[keys.length - 1].replace("]", "");
-                obj[finalKey] = value;
-            } else {
-                jsonObject[key] = value;
-            }
-        });
-
-        console.log(JSON.stringify(jsonObject, null, 2)); // Imprime el JSON en consola
-    });
-});
-
-      </script>
-      
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
 
       <footer class="footer pt-3  ">
         <div class="container-fluid">

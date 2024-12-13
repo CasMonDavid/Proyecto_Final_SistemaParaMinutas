@@ -100,7 +100,7 @@ Route::post('/user_project', [Users_ProjectsController::class, 'store']);
 
 // MINUTAS
 Route::resource('minutas', MinutasController::class)
-    ->except(['create', 'edit'])
+    ->except(['create'])
     ->parameters(['minutas' => 'minuta_id']);
 Route::get('/attendance/{attendance_id}', [AttendanceController::class, 'show']);
 Route::get('/minutas/attendance/{minuta_id}', [AttendanceController::class, 'getByIdMinuta']);

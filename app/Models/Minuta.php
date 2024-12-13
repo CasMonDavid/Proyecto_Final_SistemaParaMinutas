@@ -30,6 +30,10 @@ class Minuta extends Model
         return $this->hasMany(Attendance::class, 'minuta_id');
     }
 
+    public function usuarios(){
+        return $this->belongsToMany(User::class,'attendance','minuta_id','user_id');
+    }
+
     public function topics_decision()
     {
         return $this->hasManyThrough(Decision::class, Topic::class, 'minuta_id', 'topic_id', 'id', 'id');

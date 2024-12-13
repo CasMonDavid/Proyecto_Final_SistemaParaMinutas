@@ -8,6 +8,7 @@ use App\Models\Decision;
 use App\Models\Elements_action;
 use App\Models\Minuta;
 use App\Models\Topic;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -189,9 +190,19 @@ class MinutasController extends Controller
         ], 422);
     }
 
+    public function edit(int $minuta_id){
+        $minuta = Minuta::with(['attendance', 'topics_decision', 'topics_action'])->find($minuta_id);
+        $users = User::all();
+        if (isset($minuta)){
+            return view('editminuta', compact('minuta','users'));
+        }else{
+            return redirect('/home')->with('error','Ocurrio un problema, minuta no existe');
+        }
+    }
+
     public function show(int $minuta_id)
     {
-        $minuta = Minuta::with(['attendance', 'topics_decision', 'topics_action'])->find($minuta_id);
+        $minuta = Minuta::with(['attendance', 'topics_decision', 'topics_action','usuarios'])->find($minuta_id);
         return response()->json($minuta, 200);
     }
 

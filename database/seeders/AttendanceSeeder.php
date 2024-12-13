@@ -31,21 +31,21 @@ class AttendanceSeeder extends Seeder
         $attendance = new Attendance();
         $attendance->minuta_id = 3;
         $attendance->user_id = 4;
-        $attendance->status= "Justificado";
+        $attendance->status= "Ausente";
         $attendance->save();
 
         // Asistencia 4
         $attendance = new Attendance();
         $attendance->minuta_id = 4;
         $attendance->user_id = 3;
-        $attendance->status= "Justificado";
+        $attendance->status= "Confirmado";
         $attendance->save();
 
         // Asistencia 5
         $attendance = new Attendance();
         $attendance->minuta_id = 5;
         $attendance->user_id = 1;
-        $attendance->status= "Justificado";
+        $attendance->status= "Confirmado";
         $attendance->save();
 
         // Asistencia 6
@@ -80,7 +80,7 @@ class AttendanceSeeder extends Seeder
         $attendance = new Attendance();
         $attendance->minuta_id = 10;
         $attendance->user_id = 9;
-        $attendance->status= "Justificado";
+        $attendance->status= "Ausente";
         $attendance->save();
 
         // Asistencia 11
@@ -115,7 +115,21 @@ class AttendanceSeeder extends Seeder
         $attendance = new Attendance();
         $attendance->minuta_id = 15;
         $attendance->user_id = 5;
-        $attendance->status= "Justificado";
+        $attendance->status= "Ausente";
+        $attendance->save();
+
+        // Asistencia 16
+        $attendance = new Attendance();
+        $attendance->minuta_id = 1;
+        $attendance->user_id = 10;
+        $attendance->status= "Confirmado";
+        $attendance->save();
+
+        // Asistencia 17
+        $attendance = new Attendance();
+        $attendance->minuta_id = 1;
+        $attendance->user_id = 9;
+        $attendance->status= "Ausente";
         $attendance->save();
     }
 }
