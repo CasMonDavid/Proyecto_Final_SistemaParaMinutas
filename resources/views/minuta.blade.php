@@ -216,6 +216,8 @@
 
     </div>
 
+    <a id="editar" class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" href="">Editar</a>
+
     <button class="btn btn-round btn-lg mb-0 btn-outline-dark me-2" target="" onclick="minuta()">Descargar</button>
 
 
@@ -241,7 +243,7 @@
 
   <script>
 
-window.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("DOMContentLoaded", () => {
     // Obtener el ID de la minuta desde la URL (o configurarlo de otra manera)
     const minutaId = window.location.pathname.split('/').pop(); // Asegúrate de que el ID sea el último segmento de la URL
 
@@ -347,6 +349,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // Asignar la función de impresión al botón
     document.querySelector("button[onclick='minuta()']").onclick = minuta;
+
+    // Actualizar el href del botón de edición
+    const editarButton = document.getElementById("editar");
+    if (editarButton) {
+        editarButton.href = `/project/edit-minuta/${minutaId}`;
+    }
 });
 
   </script>
