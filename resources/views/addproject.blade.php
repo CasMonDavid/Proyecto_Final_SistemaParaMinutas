@@ -148,12 +148,6 @@
                         <span class="nav-link-text ms-1">Perfil</span>
                     </a>
                 </li>
-                <li>
-                    <div class="sidenav-footer mx-3 ">
-                        <a class="btn btn-primary mt-3 w-100" target="_blank"
-                            href="https://www.instagram.com/ivanrios_ss/">Cambiate a Diamante</a>
-                    </div>
-                </li>
                 </ul>
         </div>
     </aside>
@@ -427,26 +421,6 @@
                                 <a href="https://www.instagram.com/ivanrios_ss/" class="font-weight-bold"
                                     target="_blank">Riondave</a>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                                <li class="nav-item">
-                                    <a href="https://www.instagram.com/ivanrios_ss/" class="nav-link text-muted"
-                                        target="_blank">Compañia</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.instagram.com/ivanrios_ss/" class="nav-link text-muted"
-                                        target="_blank">Sobre nosotros</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.instagram.com/ivanrios_ss/" class="nav-link text-muted"
-                                        target="_blank">Blog</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.instagram.com/ivanrios_ss/" class="nav-link pe-0 text-muted"
-                                        target="_blank">Licencia</a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>

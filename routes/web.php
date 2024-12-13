@@ -5,6 +5,7 @@ use App\Http\Controllers\Users_ProjectsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\MinutasController;
 use App\Http\Controllers\ProjectsController;
 use Illuminate\Http\Request;
@@ -13,6 +14,8 @@ use Illuminate\Http\Request;
 // ESTO LES PERMITIRA VER LAS RUTAS EN SU TOTALIDAD
 
 Route::redirect('/', '/login');
+
+Route::put('/proyectos/{id}', [ProjectController::class, 'update']);
 
 /*Route::get('/', function () {
     return view('dashboard');

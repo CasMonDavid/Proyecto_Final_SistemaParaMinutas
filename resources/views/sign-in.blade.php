@@ -52,7 +52,7 @@
                                 </li>
                                 <ul class="navbar-nav d-lg-block d-none">
                                     <li class="nav-item">
-                                        <a href="" class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark">Descargar
+                                        <a href="https://apps.apple.com/mx/app/minutes/id1483067743" class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark" target="_blank">Descargar
                                             app</a>
                                     </li>
                                 </ul>
@@ -129,42 +129,6 @@
 
     <footer class="footer py-5">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mb-4 mx-auto text-center">
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                        Compañia
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                        Sobre nosotros
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                        Equipo
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                        Productos
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                        Blog
-                    </a>
-                </div>
-                <div class="col-lg-8 mx-auto text-center mb-4 mt-2">
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-                        <span class="text-lg fab fa-dribbble"></span>
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-                        <span class="text-lg fab fa-twitter"></span>
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-                        <span class="text-lg fab fa-instagram"></span>
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-                        <span class="text-lg fab fa-pinterest"></span>
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-                        <span class="text-lg fab fa-github"></span>
-                    </a>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-8 mx-auto text-center mt-1">
                     <p class="mb-0 text-secondary">
